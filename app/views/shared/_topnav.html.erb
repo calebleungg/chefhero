@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg" id="main-nav">
+    <a class="navbar-brand" href="/"> <strong>Chef<span>Hero</span></strong> </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav my-2 my-lg-0">
+            <% if user_signed_in? %>
+                <li class="nav-item">
+                    <%= link_to "Explore", root_path, class:"nav-link"%>
+                </li>
+                <% if current_user.account_type == "chefhero" %>
+                    <%= link_to "Create Dish", new_dish_path, class:"nav-link"%>
+                <% elsif current_user.account_type == "foodie" %>
+                    <%= link_to "Become a ChefHero", root_path, class:"nav-link"%>
+                <% end %>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= image_tag current_user.get_display_picture %> <%= current_user.name %>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <%= link_to "Profile", user_path(current_user.id), class:"dropdown-item" %>
+                        <%= link_to "Account", details_path(current_user), class:"dropdown-item" %>
+                        <%= link_to "Order History", order_history_path(current_user), class:"dropdown-item" %>
+                        <% if current_user.account_type == "chefhero" %>
+                            <%= link_to "Dashboard", manager_path(:option => "Manager"), class:"dropdown-item" %>
+                        <% end %>
+                        <%= link_to "Log Out", destroy_user_session_path, method: :delete, class:"dropdown-item" %>
+                    </div>
+                </li>
+            <% else %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/sign_in">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/sign_up">Sign Up</a>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+</nav>

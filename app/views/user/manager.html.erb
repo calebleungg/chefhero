@@ -1,0 +1,187 @@
+<div class="manager-details-display">
+    <div class="availability-manager">
+        <h3> Schedule | <%= link_to "Edit", manager_path(:option => "Manager", :edit => "schedule") %> </h3> 
+        <% if params[:edit] == "schedule" %>
+            <p id="schedule-prompt"> Enter in times you are willing to take orders (e.g 10am-4pm).<br/> Keep in mind preparation/customer collection times. </p>
+            <%= form_with model: @availability, url: update_availability_path do |form| %>
+                <table>
+                    <tr> 
+                        <td> Monday </td> 
+                        <td> <%= form.text_field :monday, placeholder: @availability.monday, id:"data-input"  %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Tuesday </td> 
+                        <td> <%= form.text_field :tuesday, placeholder: @availability.tuesday, id:"data-input"  %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Wednesday </td> 
+                        <td> <%= form.text_field :wednesday, placeholder: @availability.wednesday, id:"data-input"  %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Thursday </td> 
+                        <td> <%= form.text_field :thursday, placeholder: @availability.thursday, id:"data-input"  %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Friday </td> 
+                        <td> <%= form.text_field :friday, placeholder: @availability.friday, id:"data-input"  %> </td>
+
+                    </tr>
+                    <tr> 
+                        <td> Saturday </td> 
+                        <td> <%= form.text_field :saturday, placeholder: @availability.saturday, id:"data-input"  %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Sunday </td> 
+                        <td> <%= form.text_field :sunday, placeholder: @availability.sunday, id:"data-input"  %> </td>
+                    </tr>
+                </table>
+                <%= form.submit "Save", id:"save-button"%>
+            <% end %>
+        <% else %>
+            <table>
+                <tr> 
+                    <td> Monday </td> 
+                    <td> <%= @availability.monday %> </td>
+                </tr>
+                <tr> 
+                    <td> Tuesday </td> 
+                    <td> <%= @availability.tuesday %> </td>
+                </tr>
+                <tr> 
+                    <td> Wednesday </td> 
+                    <td> <%= @availability.wednesday %> </td>
+                </tr>
+                <tr> 
+                    <td> Thursday </td> 
+                    <td> <%= @availability.thursday %> </td>
+                </tr>
+                <tr> 
+                    <td> Friday </td> 
+                    <td> <%= @availability.friday %> </td>
+                </tr>
+                <tr> 
+                    <td> Saturday </td> 
+                    <td> <%= @availability.saturday %> </td>
+                </tr>
+                <tr> 
+                    <td> Sunday </td> 
+                    <td> <%= @availability.sunday %> </td>
+                </tr>
+            </table>
+        <% end %>
+    </div>
+    <div class="address-manager">
+        <h3> Address | <%= link_to "Edit", manager_path(:option => "Manager", :edit => "address") %> </h3> 
+        <% if params[:edit] == "address"%>
+            <p id="schedule-prompt"> Enter all fields to get a more accurate location displayed on your profile </p>
+            <%= form_with model: @address, url: update_address_path do |form| %>
+                <table>
+                    <tr> 
+                        <td> Street </td> 
+                        <td> <%= form.text_field :street, placeholder: @address.street, id:"data-input" %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Suburb </td> 
+                        <td> <%= form.text_field :suburb, placeholder: @address.suburb, id:"data-input" %> </td>
+                    </tr>
+                    <tr> 
+                        <td> City </td> 
+                        <td> <%= form.text_field :city, placeholder: @address.city, id:"data-input" %> </td>
+                    </tr>
+                    <tr> 
+                        <td> State </td> 
+                        <td> <%= form.text_field :state, placeholder: @address.state, id:"data-input" %> </td>
+                    </tr>
+                    <tr> 
+                        <td> Postcode </td> 
+                        <td> <%= form.text_field :postcode, placeholder: @address.postcode, id:"data-input" %> </td>
+
+                    </tr>
+                    <tr> 
+                        <td> Country </td> 
+                        <td> <%= form.text_field :country, placeholder: @address.country, id:"data-input" %> </td>
+                    </tr>
+                </table>
+                <%= form.submit "Save", id:"save-button"%>
+            <% end %>
+        <% else %>    
+            <table>
+                <tr> 
+                    <td> Street </td> 
+                    <td> <%= @address.street %> </td>
+                </tr>
+                <tr> 
+                    <td> Suburb </td> 
+                    <td> <%= @address.suburb %> </td>
+                </tr>
+                <tr> 
+                    <td> City </td> 
+                    <td> <%= @address.city %> </td>
+                </tr>
+                <tr> 
+                    <td> State </td> 
+                    <td> <%= @address.state %> </td>
+                </tr>
+                <tr> 
+                    <td> Postcode </td> 
+                    <td> <%= @address.postcode %> </td>
+                </tr>
+                <tr> 
+                    <td> Country </td> 
+                    <td> <%= @address.country %> </td>
+                </tr>
+            </table>
+        <% end %>
+    </div>
+</div>
+<hr>
+
+<div class="manager-dish-display">
+    <div class="dish-dashboard-title">
+        <div>
+            <h3> Your dishes: </h3>
+            <p> Use the options at the end to manager your dishes. In the status column, press the button to list / unlist your dish on the open market </p>
+        </div>
+        <%= link_to '<i class="far fa-plus-square"> </i> Create Dish'.html_safe, new_dish_path(), id:"create-button", class:"btn btn-success" %>
+    </div>
+    <% if flash[:alert] %>
+        <p class="alert-success"> <%= alert %> </p>
+    <% end %>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <td> </td>
+                <td> Name</td>
+                <td> Price </td>
+                <td> Orders </td>
+                <td> Status </td>
+                <td> Created on </td>
+            </tr>
+        </thead>
+        <tbody>
+            <% for dish in @dishes %>
+                <tr>
+                    <td id="image-td"> <%= image_tag dish.get_image, id:"small-dish-image" %> </td>
+                    <td id="name-td"> <%= dish.name %> </td>
+                    <td> <%= number_to_currency dish.price %> </td>
+                    <td> <%= dish.total_orders.to_i %> Orders </td>
+                    <% if dish.available %>
+                        <td id="status-td"> 
+                            <%= link_to "Listed", unlist_dish_path(dish.id), class:"btn btn-success", method: :patch %>
+                        </td>
+                    <% else %>
+                        <td id="status-td"> 
+                            <%= link_to "Unlisted", list_dish_path(dish.id), class:"btn btn-danger", method: :patch %>
+                        </td>
+                    <% end %>
+                    <td> <%= DateFormat.change_to(dish.created_at, "ONLY_DATE") %> </td>
+                    <td> 
+                        <i class="far fa-edit"></i>
+                        <%= link_to '<i class="far fa-trash-alt"> </i>'.html_safe, delete_dish_path(dish.id), method: :delete, data: { confirm: "Are you sure you want to delete #{dish.name} from your menu? There is no going back."} %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

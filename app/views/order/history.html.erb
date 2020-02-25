@@ -1,0 +1,52 @@
+<div class="container details-container">
+
+    <div>
+        <h1> Account > <span>Order History<span> </h1>
+
+        <% if @orders.length > 0 %>
+            <table>
+                <thead>
+                    <th>
+                        </tr>
+                            <td> <h3> Order # </h3> </td>
+                            <td> <h3> Item </h3> </td>
+                            <td> <h3> ChefHero </h3> </td>
+                            <td> <h3> Price </h3> </td>
+                            <td> <h3> Quantity </h3> </td>
+                            <td> <h3> Total </h3> </td>
+                            <td> <h3> Status </h3> </td>
+                        </tr>
+                    </th>
+                </thead>
+                <tbody>
+                    <% for order in @orders %>
+                        <tr>
+                            <td> <p> <%= order.id %> </p> </td> 
+                            <td> <p> <%= order.get_dish.name %> </p> </td> 
+                            <td> <p> <%= order.get_dish.get_chef.name %> </p> </td> 
+                            <td> <p> <%= number_to_currency order.get_dish.price %> </p> </td> 
+                            <td> <p> <%= order.quantity.to_i%> </p> </td> 
+                            <td> <p> <%= number_to_currency order.get_total %> </p> </td> 
+                            <td> <p> <%= order.status %> </p> </td> 
+                            <% case order.status %>
+                                <% when "placed" || "ready" %>
+                                    <td> <p> <%= link_to "Directions", order_summary_path(order.id) %> </p> </td> 
+                                <% when "collected" %>
+                                    <td> <p> <%= link_to "Summary", order_summary_path(order.id) %> </p> </td> 
+                            <% end %>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+
+        <% else %>
+            <p> No orders to display. Go <%= link_to "explore", root_path %> great food now!  </p>
+        <% end %>
+
+    </div>
+
+    <div class="profile-control-panel">
+        <%= link_to "Personal Info", details_path(current_user)%>
+        <%= link_to "Order History", order_history_path(current_user) %>
+    </div>
+</div>

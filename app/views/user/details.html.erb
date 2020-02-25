@@ -1,0 +1,33 @@
+<div class="container details-container">
+
+    <section class="details">
+        <h1> Account > <span>Personal Info</span> </h1>
+        <h5> Name </h5>
+        <p> <%= current_user.name%> </p>
+        <hr>
+        <h5> Bio </h5>
+        <p> <%= current_user.about? ? current_user.about.html_safe : "Say something about yourself!"%> </p>
+        <hr>
+        <h5> Email </h5>
+        <p> <%= current_user.email%> </p>
+        <hr>
+        <h5> Phone </h5>
+        <p> <%= number_to_phone(current_user.phone.to_i, country_code: 61, pattern: /(\d{1,3})(\d{3})(\d{3})$/) %> </p>
+        <hr>
+        <h5> Location </h5>
+        <p> <%= current_user.location%> </p>
+        <hr>
+        <h5> Membership </h5>
+        <p> <%= current_user.account_type.capitalize %> </p>
+        <hr>
+        <%= link_to "Edit", edit_details_path, class: "btn"%>
+        <p class="save-notice"> <%= notice if notice%> </p>
+
+    </section>
+
+    <div class="profile-control-panel">
+        <%= link_to "Personal Info", details_path(current_user)%>
+        <%= link_to "Order History", order_history_path(current_user) %>
+    </div>
+
+</div>

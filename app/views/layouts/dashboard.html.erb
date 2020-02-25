@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chefhero</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+	
+		<!-- Mapbox script -->
+		<script src="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js"></script>
+		<link href="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css" rel="stylesheet" />
+		<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
+		<link
+		rel="stylesheet"
+		href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
+		type="text/css"
+		/>
+
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+		<%= favicon_link_tag asset_path('hat-icon.png') %>
+
+        <script src="https://kit.fontawesome.com/9828386ba7.js" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+            <%= render "shared/topnav" %>
+            <div class="container dashboard-container">
+                <div class="profile-control-panel">
+                    <%= link_to "Manager", manager_path(:option => "Manager") %>
+                    <%= link_to "Orders", manager_path(:option => "Orders") %>
+                    <%= link_to "Earnings", manager_path(:option => "Earnings") %>
+                    <%= link_to "Resources", manager_path(:option => "Resources") %>
+                </div>
+                <div class="dashboard-main">
+                    <h1> Dashboard > <span><%= params[:option] %><span> </h1>
+                    <%= yield %>
+                </div>
+
+            </div>
+        </div>
+	</body>
+</html>

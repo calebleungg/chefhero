@@ -1,0 +1,811 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+ @import "bootstrap";
+ @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap');
+ 
+ $headings: 'Montserrat', sans-serif;
+ $text: 'Source Sans Pro', sans-serif;
+ $secondary-color: #236e05;
+ 
+ body {
+     font-family: $headings;
+     font-size: 90%;
+ 
+ }
+
+ .tinymce {
+     font-family: $headings;
+ }
+ 
+ .btn {
+     border-radius: 0px;
+ }
+ 
+ .container-fluid {
+     padding: 0px;
+ }
+ 
+ .navbar {
+    height: 8vh;
+    img {
+        max-width: 30px;
+        max-height: 30px;
+        border-radius: 100%;
+        margin-right: 5px;
+    }
+
+    .dropdown-item {
+        font-size: 80%;
+        &:hover {
+            background-color: white;
+        }
+        &:active {
+            background-color: white;
+            color: black;
+        }
+    }
+
+ }
+ 
+ .navbar-brand {
+     font-weight: 700px;
+     span {
+         color: $secondary-color;
+     }
+ }
+ 
+ .nav-link, .navbar-brand {
+     color: black;
+     &:hover {
+         color: $secondary-color;
+     }
+ }
+ 
+ 
+ 
+ 
+ #main-nav {
+     font-family: $headings;
+     align-items: flex-end;
+     li:nth-child(2) {
+         padding-right: 50px;
+     }
+     a {
+         height: 100%;
+     }
+ }
+ 
+ #navbarSupportedContent {
+     display: flex;
+     justify-content: flex-end;
+ }
+ 
+ .splash-page {
+     border-top: 1px solid #e0dddd;
+     height: 92vh;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     font-family: $headings;
+     h1 {
+         font-size: 80px;
+         font-weight: 700;
+         font-family: $headings;
+     }
+ 
+     p {
+         font-size: 30px;
+         text-align: center;
+     }
+ 
+     .btn {
+         width: 200px;
+         height: 50px;
+         font-size: 30px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         margin: 0 20px;
+         &:first-child {
+             background-color: $secondary-color;
+             color: white;
+         }
+     }
+ 
+     .splash-buttons {
+         display: flex;
+         flex-direction: row;
+     }
+     span {
+         color: $secondary-color;
+     }
+ }
+ 
+ .signup-form, .default-form {
+     // background-color: lightgrey;
+     height: 94vh;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     font-family: $headings;
+     h1 {
+         font-weight: 700;
+         margin-bottom: 50px;
+     }
+     input, select, textarea {
+         width: 300px;
+         padding: 5px;
+         border: none;
+         background-color: #f0f0f0;
+         color: black;
+     }
+     #signup-error-message {
+         font-size: 13px;
+         color: red;
+         text-align: center;
+         margin-top: 10px;
+     }
+ 
+     a, span {
+         color: $secondary-color;
+     }
+     label {
+         width: 300px
+     }
+     
+ }
+ 
+ .signup-selection--buttons {
+     .btn {
+         width: 300px;
+         height: 100px;
+         font-size: 50px;
+         &:first-child {
+             background-color: $secondary-color;
+         }
+         color: white;
+     }
+ 
+ 
+ }
+ 
+ .profile-box {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 300px;
+     border: 1px lightgrey solid;
+     img {
+         width: 150px;
+         height: 150px;
+         border-radius: 100%;
+     }
+     .display-picture {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-direction: column;
+         margin-top: 30px;
+         margin-bottom: 10px;
+     }
+     margin-right: 100px;
+ 
+     .profile-badges {
+         align-items: flex-start;
+         width: 250px;
+ 
+         #tick {
+             color: green;
+         }
+         #review-badge {
+             color: #c4c440;
+         }
+     }
+ 
+ }
+
+ .availability-box {
+
+    width: 300px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+
+    h3 {
+        font-weight: 700;
+        font-size: 100%;
+        text-align: center;
+    }
+
+    .day-tile {
+        font-size: 80%;
+        // box-shadow: 1px 1px 3px $secondary-color;
+        border: 1px solid lightgrey;
+        height: 30px;
+        width: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 0;
+    }
+
+    .days-open {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+ }
+
+ .map-box {
+    margin-top: 20px;
+    h3 {
+        font-weight: 700;
+        font-size: 100%;
+        text-align: center;
+    }
+     width: 300px;
+     #map {
+        width: 100%;
+        height: 300px;
+     }
+     p {
+        font-size: 80%;
+         text-align: center;
+     }
+}
+ 
+ .profile-page-container {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: flex-start;
+     align-items: flex-start;
+     padding-top: 80px;
+     width: 100vw;
+     i {
+         margin-right: 10px;
+     }
+     h5 {
+         font-weight: 900;
+     }
+     .fa-quote-left, .fa-grip-lines, .about-prompt {
+         opacity: 40%;
+     }
+     a {
+         color: $secondary-color;
+     }
+ }
+ 
+ .profile-content {
+     width: 30vw;
+ }
+ 
+ .review-title {
+     margin-bottom: 30px;
+ }
+ 
+ .review-item {
+     .review-date {
+         font-size: 12px;
+         font-weight: 600;
+     }
+     span:first-child {
+         font-weight: 600;
+     }
+     span:last-child {
+         font-size: 12px;
+     }
+     a {
+         text-decoration: none;
+         color: black;
+     }
+     img {
+         margin-right: 10px;
+         width: 40px;
+         height: 40px;
+     }
+     .reviewer-item {
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         img {
+             border-radius: 100px;
+         }
+     }
+ }
+ 
+ #img_prev {
+     border-radius: 100px;
+     width: 200px;
+     height: 200px;
+ }
+
+
+ 
+ .modal-content {
+     font-family: $headings;
+     .close {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+     }
+ }
+ 
+ .details-container {
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     align-items: flex-start;
+     .details, input, textarea {
+         width: 500px;
+     }
+     padding: 80px 0;
+
+     span {
+         color: $secondary-color;
+     }
+ 
+     input, textarea {
+         border: none;
+         background-color: #f0f0f0;
+         color: black;
+         padding: 10px;
+     }
+ 
+     h1 {
+         font-weight: 700;
+         text-align: left;
+         font-size: 30px;
+         margin-bottom: 60px;
+     }
+ 
+     h5 {
+         font-weight: 700;
+         font-size: 15px;
+     }
+ 
+     p {
+         opacity: 80%;
+     }
+ 
+     .btn {
+         background-color: $secondary-color;
+         color: white;
+         width: 200px;
+     }
+ 
+     .name-input {
+         width: 230px;
+         &:first-child {
+             margin-right: 35px;
+         }
+     }
+ 
+     .save-notice {
+         color: green
+     }
+ 
+     .save-alert {
+         color: red;
+     }
+
+     a {
+         color: $secondary-color;
+     }
+
+     .profile-control-panel {
+         a {
+             padding: 10px;
+             color: $secondary-color;
+         }
+         border: 1px solid lightgrey;
+         width: 150px;
+         height: 100px;
+         display: flex;
+         justify-content: center;
+         flex-direction: column;
+         align-items: center;
+         margin-left: 100px;
+         font-size: 90%;
+
+     }
+
+     table {
+         a {
+             color: $secondary-color;
+         }
+         h3 {
+             font-weight: 600;
+             font-size: 80%;
+         }
+         thead {
+             margin-bottom: 20px;
+         }
+        td {
+            width: 150px;
+        }
+        tbody {
+            td {
+                &:last-child {
+                    font-size: 80%;
+                    width: 70px;
+                }
+            }
+        }
+    }
+
+
+ 
+ }
+
+ .dish-list {
+     width: 45vw;
+     display: flex;
+     flex-direction: row;
+     padding: 10px 0;
+     overflow-y: scroll;
+     height: 500px;
+
+     .modal-content {
+         img {
+            height: 400px;
+         }
+     }
+ }
+
+ #dish-card {
+    min-width: 300px;
+    max-width: 300px;
+    height: 450px;
+    margin: 0 10px;
+
+    .btn {
+        color: white;
+    }
+    .card-img-top {
+        height: 50%;
+    }
+
+    #dish-description {
+        height: 40%;
+        overflow: scroll;
+        font-size: 80%;
+    }
+
+    .card-title {
+        max-width: 70%;
+    }
+
+}
+#order-submission {
+    #quantity {
+        width: 80px;
+        text-align: center;
+    }
+    font-size: 1.3em;
+    #order-button  {
+        border: none;
+        color: $secondary-color;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+}
+
+.small-chef-tag {
+    background-color: white;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    left: 10px;
+
+    width: 130px;
+    height: 30px;
+    font-size: 70%;
+    font-weight: 600;
+    border-radius: 20px;
+    box-shadow: 1px 1px 3px grey;
+    img {
+        margin-left: 5px;
+        max-height: 20px;
+        max-width: 20px;
+        border-radius: 100%;
+    }
+}
+
+#chef-label {
+    a {
+        color: black;
+    }
+}
+
+.card-body {
+    #price {
+        font-weight: 600;
+        font-size: 150%;
+        position: absolute;
+        top: 53%;
+        right: 15px;
+    }
+}
+
+ .dish-details-input {
+    height: 80vh;
+    margin-right: 100px;
+ }
+ 
+ #dish-form {
+     display: flex;
+     flex-direction: row;
+     img {
+        width: 500px;
+        height: 500px;
+        border-radius: 0px;
+     }
+
+     #img-prev {
+         max-width: 500px;
+         max-height: 500px;
+         border-radius: 0px;
+     }
+
+     textarea {
+         height: 150px;
+     }
+     #info-warning {
+         width: 500px;
+         font-size: 90%;
+         span {
+             font-weight: 600;
+         }
+
+         i {
+             color: red;
+         }
+
+     }
+}
+    
+.dish-create-container {
+    padding: 80px 0;
+
+ }
+
+ .order-summary-container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     padding-top: 80px;
+
+     h2 {
+         font-weight: 700;
+     }
+     img {
+         width: 70px;
+         height: 70px;
+         border-radius: 100%;
+         margin-left: 10px;
+     }
+     .order-details {
+         margin-top: 30px;
+         justify-content: flex-start;
+     }
+
+     span, a {
+         color: $secondary-color;
+         font-weight: 600;
+     }
+
+     td {
+         &:nth-child(even) {
+             padding-left: 10px;
+         }
+     }
+
+     #map {
+         width: 800px;
+         height: 500px;
+         margin-left: 10px;
+     }
+
+     .summary-directions {
+         div {
+             width: 300px;
+         }
+         display: flex;
+         flex-direction: row;
+         padding-bottom: 200px;
+         #helper {
+             font-size: 70%;
+         }
+
+     }
+
+ }
+
+ .dashboard-container {
+     padding: 80px 0;
+     display: flex;
+     flex-direction: row;
+     align-items: flex-start;
+     justify-content: flex-start;
+     min-width: 90vw;
+     
+     
+     h1 {
+        font-weight: 700;
+        text-align: left;
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    span {
+        color: $secondary-color;
+    }
+
+    .profile-control-panel {
+        a {
+            padding: 10px;
+            color: $secondary-color;
+        }
+        margin-right: 50px;
+        border: 1px solid lightgrey;
+        width: 150px;
+        height: 170px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        font-size: 90%;
+    }
+
+    #small-dish-image {
+        width: 50px;
+        height: 50px;
+    }
+
+    td {
+        width: 200px;
+        &:first-child {
+            width: 60px;
+        }
+    }
+
+    #image-td {
+        text-align: center;
+        max-width: 60px;
+    }
+
+    #name-td {
+
+        a {
+            color: $secondary-color;
+            &:hover {
+                color: $secondary-color;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .btn {
+        font-size: 12px;
+        width: 60px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: 600;
+
+        &:hover {
+            color: white;
+        }
+    }
+
+
+    thead {
+        font-weight: 600;
+        font-size: 90%;
+        td {
+            padding-bottom: 10px;
+        }
+    }
+    i {
+        margin: 0 5px;
+        color: $secondary-color;
+    }
+ }
+
+ .manager-details-display {
+     margin-bottom: 30px;
+     i {
+         color: $secondary-color;
+     }
+     display: flex;
+     flex-direction: row;
+ }
+
+ .availability-manager, .address-manager {
+     td {
+         &:nth-child(odd) {
+             width: 150px;
+         }
+     }
+
+     a {
+         color: $secondary-color;
+         &:hover {
+             color: $secondary-color;
+         }
+     }
+     margin-right: 100px;
+
+     input {
+        padding: 5px;
+        border: none;
+        background-color: #f0f0f0;
+        color: black;
+
+    }
+    #save-button {
+        background-color: $secondary-color;
+        color: white;
+    }
+
+     #data-input {
+         width: 250px;
+     }
+
+     #schedule-prompt {
+         opacity: 80%;
+         font-size: 90%;
+     }
+}
+     
+     
+.manager-dish-display {
+    #create-button {
+        width: 200px;
+        height: 50px;
+        i {
+            color: white;
+        }
+        font-size: 1.2em;
+        margin-left: 100px;
+    }
+}
+
+.dish-dashboard-title {
+    display: flex;
+    flex-direction: row;
+}

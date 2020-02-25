@@ -1,0 +1,71 @@
+<div class="container dish-create-container">
+    <section class="default-form" id="dish-creation-form">
+        <h1> Create new <span>dish<span> </h1>
+
+        <%= form_with model:@dish, url: create_dish_path, id:"dish-form" do |form| %>
+
+            <div class="dish-details-input">
+                <div class="field form-group">
+                    <%= form.label :name, "Give your dish a name" %><br/>
+                    <%= form.text_field :name, autofocus: true%>
+                </div>
+
+                <div class="field form-group">
+                    <%= form.label :category, "Food Category (eg. Japanese, Western, Smoothie)" %><br/>
+                    <%= form.text_field :category, autofocus: true%>
+                </div>
+
+                <div class="field form-group">
+                    <%= form.label :price, "Set a price. (Not too expensive, not too cheap...) " %><br/>
+                    <%= form.number_field :price, step: 0.01, autofocus: true %>
+                </div>
+
+                <div class="field form-group" id="about-input">
+                    <%= form.label :about, "Describe your dish (keep it short and sweet)" %><br/>
+                    <%= form.text_area :about, autofocus: true%>
+                </div>
+
+                <div class="field form-group">
+                    <%= form.label :ingredients, "List the ingredients" %><br/>
+                    <%= form.text_area :ingredients, autofocus: true%>
+                </div>
+
+
+                <div class="actions">
+                <%= form.submit "Post Now!" %>
+            </div>
+            </div>
+
+            <div class="field form-group" id="dish-image">
+                <%= form.label :image, "Show off your dish!"%><br/>
+                <%= image_tag "default-dish.png", id: "img_prev" %> <br/>
+                <%= form.file_field :image, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %><br/>
+                <br/>
+                <div id="info-warning">
+                    <h5> <strong>Tips:</strong> </h5>
+                    <p> Your dish will be listed straight away upon creation. Navigate to your <span>ChefHero Dasboard</span> if you wish to unlist your dish. </p>
+                    <p> It is recommended that you have enough stock levels for at least 10 orders to be made if you are just starting out on ChefHero. </p>
+                    <p> <i class="fas fa-exclamation-circle"></i> Please ensure you have listed <strong>all the ingredients</strong> for your customers to be aware of any allergy issues. </p>
+                </div>
+            </div>
+            
+
+        <% end %>
+        
+    </section>
+</div>
+
+<script>
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+        $('#img_prev')
+            .attr('src', e.target.result)
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+    }
+</script>

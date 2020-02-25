@@ -1,0 +1,10 @@
+<section class="splash-page"> 
+    <div>
+        <h1> Become a Chef<span>Hero</span> now.</h1>
+        <p> Have a sick dish? Flex it. </p>
+    </div>
+    <div class="splash-buttons">
+        <%= link_to "Join", user_signed_in? ? root_path : new_user_registration_path(), class: "btn btn-light" %>
+    </div>
+
+</section>

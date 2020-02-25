@@ -1,0 +1,92 @@
+<div class="container order-summary-container">
+    <h2> Food is ordered! </h2>
+    <p> Hi <%= current_user.first_name %>- Thank you for your order.  </p>
+    <p> And thank you for supporting one of your local ChefHeroes <%= link_to @chef.first_name, user_path(@chef) %> </p>
+    <p> Be sure to leave them a  <%= link_to "review!", user_path(@chef) %> </p>
+
+    <div class="order-details">
+        <h4> Order details below: </h4>
+        <hr>
+        <table>
+            <tr>
+                <td> <p> Order Number:</p> </td>
+                <td>  <p> <%= @order.id %> </p> </td>
+            </tr>
+            <tr>
+                <td> <p> Item:</p> </td>
+                <td> <p> <%= @dish.name %> </p> </td>
+            </tr>
+            <tr>
+                <td> <p> Quantity: </p> </td>
+                <td> <p> <%= @order.quantity.to_i %> </p> </td>
+            </tr>
+            <tr>
+                <td> <p> Total: </p> </td>
+                <td> <p> <%= number_to_currency @total %> </p> </td>
+            </tr>
+        </table>
+        <hr>
+        <h4> Go get your food now! </h4>
+        <br/>
+        <div class="summary-directions">
+            <div>
+                <p> <strong>Your ChefHero: </strong> <div> <%= @chef.name %> <%= image_tag @chef.avatar %> </div> </p>
+                <p> <strong>Address: </strong> <%= @chef.address.display_full %> </p>
+                <p id="helper"> You can use the directions helper on the map to find the best route! <br/> Either click on the map to choose your locations or type it in the address bar. </p>
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsZWJsZXVuZ2ciLCJhIjoiY2s2YmZpdzhyMDB5czNvbXcxd2Rqd2kybSJ9.W8uq-6F01vXhBq1Bkr8eKQ';
+    var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: <%= @address_coordinates %>, // starting position [lng, lat]
+    zoom: 12 // starting zoom
+    });
+
+    map.on('load', function() {
+        map.loadImage(
+        '/assets/pin.png',
+        function(error, image) {
+        if (error) throw error;
+        map.addImage('pin', image);
+        map.addSource('point', {
+        'type': 'geojson',
+        'data': {
+        'type': 'FeatureCollection',
+        'features': [
+        {
+        'type': 'Feature',
+        'geometry': {
+        'type': 'Point',
+        'coordinates': <%= @address_coordinates %>
+        }
+        }
+        ]
+        }
+        });
+        map.addLayer({
+        'id': 'points',
+        'type': 'symbol',
+        'source': 'point',
+        'layout': {
+        'icon-image': 'pin',
+        'icon-size': 0.1
+        }
+        });
+        }
+        );
+        });
+
+    map.addControl(
+    new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+    }),
+    'top-left'
+    );
+
+</script>

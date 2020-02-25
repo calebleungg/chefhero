@@ -1,0 +1,234 @@
+<div class="container profile-page-container">
+
+    <div class="secondary-content">
+
+        <div class="profile-box">
+            <div class="display-picture">
+                <%= image_tag @user.get_display_picture %><br/>
+                <%= link_to "Update photo", user_path(current_user.id), "data-toggle" => "modal", 'data-target' => '#uploadPhotoModal' if current_user.name == @user.name %>
+                <%= link_to "Manage your business", manager_path(:option => "Manager") if current_user.account_type == "chefhero" %>
+            </div>
+            <div class="profile-badges">
+                <hr>
+                <p> <i class="fas fa-comments" id="review-badge" ></i> <%= "#{@user.reviews.length} Reviews"%> </p>
+                <% if @user.account_type == "foodie" %>
+                    <p> <i class="fas fa-utensils"></i>Foodie</p>
+                <% end %>
+                <% if @user.account_type == "chefhero" %>
+                    <p> <i class="fas fa-store"></i> ChefHero</p>
+                    <p> <i class="fas fa-concierge-bell"></i> <%= @total_orders%> Total Orders</p>
+                <% end %>
+                <hr>
+                <p> <%= "#{@user.first_name} Provided"%> </p>
+                <% if @user.email? %>
+                    <p> <i class="far fa-check-circle" id="tick"></i> Email address </p>
+                <% end %>
+                <% if @user.phone? %>
+                    <p> <i class="far fa-check-circle" id="tick"></i> Phone Number </p>
+                <% end %>
+            </div>
+        </div>
+        <% if @user.account_type == "chefhero" %>
+            <div class="availability-box">
+                <h3> <%= @user.first_name%> is open on: </h3>
+                <div class="days-open">
+                    <% for key,value in @days_open %>
+                        <div class="day-tile">
+                            <%= key.capitalize %> | <%= value %>
+                        </div>
+                        
+                    <% end %>
+                </div>
+            </div>
+                <div class="map-box">
+                    <h3> <%= @user.first_name%>'s ChefHero Location: </h3>
+                    <p> <%= @user.address.display_full %> </p>
+                    <% if @address_coordinates %>
+                        <div id="map"></div>
+                    <% end %>
+                </div>
+        <% end %>
+    </div>
+
+    <div class="profile-content">
+        <h1> <%= "Hi, I'm #{@user.first_name}" %> </h1>
+        <p> <%= "Joined in #{@user.created_at.year}"%> <% if current_user.name == @user.name %> | <%= link_to "Edit", user_path(current_user, :edit => "about") %> <% end %> </p>
+        <br/>
+        <p> <i class="fas fa-quote-left"></i> </p>
+        <% if params[:edit] == "about" %>
+            <%= form_with model: @user, url: update_about_path do |form| %>
+                <%= tinymce %>
+                <p> <%= form.text_area :about, value: @about.html_safe, :class => "tinymce", :rows => 15 %> </p>
+                <%= form.submit "Save", class: "btn btn-success" %>
+            <% end %>
+        <% else %>
+            <% if @user.about == nil || @user.about == "" %>
+                <p> <%= @user.first_name %> has nothing to say about themselves :( </p>
+            <% else %>
+                <%= @user.about.html_safe %>
+            <% end %>
+        <% end %>
+        <p> <i class="fas fa-grip-lines"></i> </p>
+        <p> <i class="fas fa-home"></i> Lives in  <%= @user.location %></p>
+        <% if @user.account_type == "chefhero" %>
+            <p> <i class="fas fa-star"></i> <%= @average_rating %>(<%= @user.reviews.length %>) Rating </p>
+        <% end %>
+        <hr>
+        <%if @user.account_type == "chefhero"%>
+            <% if @dishes.length > 0 %>
+                <h5 class="dishes-title"> Dishes </h5>
+                <p> (Scroll <strong>right</strong> to discover more!)</p>
+                <div class="dish-list">
+                    <% @dishes.each do |dish| %>
+                        <% if dish.available %>
+                            <div class="card" id="dish-card">
+                                <%= image_tag dish.image.attached? ? dish.image : "default-dish.png", class:"card-img-top", alt:"default dish image" %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= dish.name %></h5>
+                                    <p class="card-text"><%= dish.category %> </p>
+                                    <p id="price" data-price="5" > <%= number_to_currency dish.price %></p>
+                                    <p class="card-text" id="dish-description"><%= dish.about %></p>
+                                    <%= link_to "View", dish_path(dish.id), "data-toggle" => "modal", 'data-target' => "#order-modal-#{dish.id}"  %>
+                                </div>
+                            </div>
+
+                            <!-- Order Modal -->
+                            <div class="modal fade" id="order-modal-<%=dish.id%>" tabindex="-1" role="dialog" aria-labelledby="order-modal-<%=dish.id%>Label" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <%= link_to user_path(dish.get_chef), id:"chef-label" do %>
+                                            <div class="small-chef-tag">
+                                                    <%= dish.get_chef.name %>
+                                                    <%= image_tag dish.get_chef.avatar %>
+                                            </div>
+                                        <% end %>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <%= image_tag dish.get_image %>
+                                        <div class="modal-body">
+                                            <h5> <%= dish.name %> </h5>
+                                            <p> <%= dish.about %> </p>
+                                            <p> <strong>Ingredients:</strong> <%= dish.ingredients.to_s.capitalize %> </p>
+                                        </div>
+                                        <div class="modal-footer" id="order-submission">
+                                            <p> <%= number_to_currency dish.price %> &times; </p>
+                                            <%= form_with model: @order, url: create_order_path do |form| %>
+                                                <%= form.hidden_field :dish, value: dish.id %>
+                                                <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
+                                                <%= form.submit "Order", id:"order-button" %>
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% end %>
+
+                    <% end %>
+                </div>
+            <% end %>
+        <hr>
+        <% end %>
+        <h5 class="review-title"> <%= "#{@user.reviews.length} Reviews" %> </h5>
+        <div class="review-item">
+            <% @reviews.each do |review| %>
+                <h6 class="review-date"> <%= DateFormat.change_to(review.created_at, "ONLY_DATE") %> </h6>
+                <p> <%= review.comments %> </p>
+                <div class="reviewer-item"> 
+                    <%= image_tag User.find(review.left_by).get_display_picture %>
+                    <div>
+                        <span> <%= link_to User.find(review.left_by).name, user_path(User.find(review.left_by)) %> </span> <br>
+                        <span> Joined in <%= User.find(review.left_by).created_at.year %>  </span>
+                    </div>
+                </div>
+                <hr>
+            <% end %>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Upload Photo Modal -->
+<div class="modal fade" id="uploadPhotoModal" tabindex="-1" role="dialog" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadPhotoModal">Upload Photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> A display picture is a great way to show who you are! </p>
+                <%= image_tag @user.avatar.attached? ? @user.avatar : "", id: "img_prev" %> 
+                <%= form_with model: @user, url: upload_photo_path, method: :patch do |form| %>
+                    <%= form.file_field :avatar, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %>
+                    <%= form.submit "Upload" %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+        $('#img_prev')
+            .attr('src', e.target.result)
+            .width(200)
+            .height(200);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+    }
+</script>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsZWJsZXVuZ2ciLCJhIjoiY2s2YmZpdzhyMDB5czNvbXcxd2Rqd2kybSJ9.W8uq-6F01vXhBq1Bkr8eKQ';
+    var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: <%= @address_coordinates %>, // starting position [lng, lat]
+    zoom: 12 // starting zoom
+    });
+
+    map.on('load', function() {
+        map.loadImage(
+        '/assets/pin.png',
+        function(error, image) {
+        if (error) throw error;
+        map.addImage('pin', image);
+        map.addSource('point', {
+        'type': 'geojson',
+        'data': {
+        'type': 'FeatureCollection',
+        'features': [
+        {
+        'type': 'Feature',
+        'geometry': {
+        'type': 'Point',
+        'coordinates': <%= @address_coordinates %>
+        }
+        }
+        ]
+        }
+        });
+        map.addLayer({
+        'id': 'points',
+        'type': 'symbol',
+        'source': 'point',
+        'layout': {
+        'icon-image': 'pin',
+        'icon-size': 0.1
+        }
+        });
+        }
+        );
+        });
+
+</script>
