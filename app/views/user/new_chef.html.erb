@@ -1,0 +1,83 @@
+<div class="container">
+
+    <%= form_with model:@user, url:create_chef_path, method: :post do |form| %>
+        <div class=" become-chef-container">
+
+            <div class="main-chef-form">
+                <h1> Chef<span>Hero</span> Registration</h1>
+                
+                <p> So you think you have what it takes... </p><br/>
+                <p> Let customers know where they can come taste your dish<br/><span id="hint">(This can be your home address/commercial address) </span></p>
+
+                <div class="new-address-form">
+                    <%= form.text_field :street, placeholder: "Street name", id:"long-input" %><br/>
+                    <%= form.text_field :suburb, placeholder: "Suburb", id:"long-input" %><br/>
+                    <%= form.text_field :city, placeholder: "City", id:"long-input" %><br/>
+                    <div class="state-postcode-input">
+                        <%= form.text_field :state, placeholder: "State" %>
+                        <%= form.number_field :postcode, placeholder: "Postcode" %>
+                    </div>
+                    <%= form.text_field :country, placeholder: "Country", id:"long-input" %>
+                </div>
+                <br/>
+
+                <p> What days can Foodies come and eat your food? (Open times) <br/> <span id="hint">Leave the days you arent open blank<br/>Keep in mind last order preparation times and customer pickup times<span></p>
+
+                <div class="new-schedule-form">
+                    <table>
+                        <tr> 
+                            <td> Monday </td> 
+                            <td> <%= form.text_field :monday, placeholder: "Eg. 10am-4pm", id:"data-input"  %> </td>
+                        </tr>
+                        <tr> 
+                            <td> Tuesday </td> 
+                            <td> <%= form.text_field :tuesday, id:"data-input"  %> </td>
+                        </tr>
+                        <tr> 
+                            <td> Wednesday </td> 
+                            <td> <%= form.text_field :wednesday, id:"data-input"  %> </td>
+                        </tr>
+                        <tr> 
+                            <td> Thursday </td> 
+                            <td> <%= form.text_field :thursday, id:"data-input"  %> </td>
+                        </tr>
+                        <tr> 
+                            <td> Friday </td> 
+                            <td> <%= form.text_field :friday, id:"data-input"  %> </td>
+
+                        </tr>
+                        <tr> 
+                            <td> Saturday </td> 
+                            <td> <%= form.text_field :saturday, id:"data-input"  %> </td>
+                        </tr>
+                        <tr> 
+                            <td> Sunday </td> 
+                            <td> <%= form.text_field :sunday, id:"data-input"  %> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <br/>
+                <br/>
+                <h4> When your journey starts... </h4>
+                <br/>
+                <ol>
+                    <li> Navigate to the <span><strong>"Create Dish"</strong></span> page where you can start crafting your speciality to sell! </li><br/>
+                    <li> Manager your business through your <span><strong>ChefHero Dashboard</strong></span> </li><br/>
+                    <li> Tell your friends and family! If you dish is as good as you think, make sure you <span><strong>let everyone know!</strong></span></li><br/>
+                </ol>
+                <br/>
+                <p> <i class="far fa-thumbs-up"></i> Good luck to you CheHero <span><strong><%= current_user.first_name %></strong></span>! </p>
+
+                <%= form.submit "Finish", class:"btn btn-success"%>
+
+            </div>
+            
+        </div>
+
+
+    <% end %>
+
+</div>

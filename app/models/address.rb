@@ -4,4 +4,6 @@ class Address < ApplicationRecord
     def display_full
         return "#{street} #{suburb}, #{city} #{state} #{postcode}, #{country}"
     end
+
+    
 end

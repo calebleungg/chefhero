@@ -1,5 +1,5 @@
 <div class="container dish-create-container">
-    <section class="default-form" id="dish-creation-form">
+    <div class="default-form" id="dish-creation-form">
         <h1> Create new <span>dish<span> </h1>
 
         <%= form_with model:@dish, url: create_dish_path, id:"dish-form" do |form| %>
@@ -32,8 +32,8 @@
 
 
                 <div class="actions">
-                <%= form.submit "Post Now!" %>
-            </div>
+                    <%= form.submit "Post Now!", id:"submit-dish" %>
+                </div>
             </div>
 
             <div class="field form-group" id="dish-image">
@@ -52,7 +52,7 @@
 
         <% end %>
         
-    </section>
+    </div>
 </div>
 
 <script>

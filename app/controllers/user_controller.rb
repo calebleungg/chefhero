@@ -24,8 +24,6 @@ class UserController < ApplicationController
             end
             @average_rating = @user.reviews.average(:rating)
         end
-        
-    
     end
     
     def upload_photo
@@ -72,6 +70,15 @@ class UserController < ApplicationController
         
         render layout: "dashboard"
     end
+
+    def new_chef
+        @user = current_user
+    end
+
+    def create_chef
+    end
+
+
 
     private
     def user_params

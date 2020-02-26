@@ -49,4 +49,10 @@ Rails.application.routes.draw do
   # update address
   patch "/address/update", to: "address#update", as: "update_address"
 
+  # become-chefhero form view
+  get "/become-chefhero", to: "user#new_chef", as: "new_chef"
+
+  # update member to chefhero account_type
+  post "/become-chefhero", to: "user#create_chef", as: "create_chef"
+
 end
