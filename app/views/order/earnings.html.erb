@@ -1,0 +1,68 @@
+
+<div class="earnings-container">
+
+    <div class="earnings-info-bar">
+        <div> <p> Net Income:<br/> <span><%= number_to_currency @net_sales %></span> </p> </div>
+        <div> <p> Total Orders:<br/> <span><%= @orders %> </p></span> </div>
+        <div> <p> Available to Withdraw:<br/> <span><%= number_to_currency @available_to_withdraw %></span> </p> </div>
+    </div>
+
+    <div class="payment-options">
+        <p> Withrdaw: </p>
+        <div class="btn btn-success" data-toggle="modal" data-target="#withdrawModal"> Bank Transfer </div>
+        <div class="btn btn-success" id="paypal"> Paypal </div>
+    </div>
+
+    <div class="withdrawal-history">   
+        <p> Transaction History </p>
+        <% if flash[:alert] %>
+            <div class="alert"><%= flash[:alert] %></div>
+        <% end %>
+        <hr>
+        <table>
+            <tr>
+                <td> Date</td>
+                <td> </td>
+                <td> Amount </td>
+            </tr>
+            <% for record in @withdrawals %>
+                <tr>
+                    <td> <%= DateFormat.change_to(record.created_at, "MEDIUM_DATE") %> </td>
+                    <td> </td>
+                    <td> - <%= number_to_currency record.amount %> </td>
+                </tr>
+                <tr id="row-gap">
+                </tr>
+            <% end %>
+        </table>
+
+        <div class="modal fade" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="withdrawModalLabel">Withdraw <i class="fas fa-money-bill-wave"></i> </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p> Look at you, earning money... Keep it up <span>Hero</span>! </p>
+                        <%= form_with modal:@withdrawal, url: withdraw_path(current_user) do |form| %>
+                            $ <%= form.number_field :amount, step: 0.01, placeholder: "Enter Withdrawal Amount", id:"amount-withdraw"  %><br/><br/>
+                            <p> Bank Details (for money to be sent to): </p>
+                            <%= form.text_field :account_name, placeholder: "Full Name" %><br/>
+                            <%= form.text_field :account_number, placeholder: "Account Number" %><br/>
+                            <%= form.text_field :bsb, placeholder: "BSB" %><br/><br>
+                            <%= form.label :description, "Description (change the default if you would like)", id:"desc-hint" %>
+                            <%= form.text_field :description, value:"ChefHero Earnings Withdrawal" %><br/><br/>
+                            <%= form.submit "Confirm", id:"withdraw-confirm" %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+
+</div>

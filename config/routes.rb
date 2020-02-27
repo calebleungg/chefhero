@@ -60,8 +60,13 @@ Rails.application.routes.draw do
   patch "/order/:id/ready", to: "order#ready", as: "order_ready"
   # mark orders as collected
   patch "/order/:id/collected", to: "order#collected", as: "order_collected"
-
   # get chefhero order history
   get "/dashboard/orders/history", to: "order#chef_history", as: "dashboard_order_history"
+
+  # earnings dashboard view
+  get "/dashboard/earnings", to: "order#earnings", as: "earnings_manager"
+
+  # post new withdrawal
+  post "/user/:id/withdraw", to: "withdraw#create", as: "withdraw"
 
 end

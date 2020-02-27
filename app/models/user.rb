@@ -10,6 +10,7 @@ class User < ApplicationRecord
     has_many :orders
     has_one :address
     has_one :availability
+    has_many :withdrawals
 
     def name
         return "#{first_name} #{last_name}"
@@ -25,6 +26,30 @@ class User < ApplicationRecord
 
     def get_display_picture
         return self.avatar.attached? ? self.avatar : "default-profile.png"
+    end
+
+    def get_withdrawn_total
+        sum = 0
+        records = self.withdrawals
+        for record in records
+            sum += record.amount
+        end
+        return sum
+    end
+
+    def get_total_sales
+        orders = Order.where(dish_id: self.get_dish_ids)
+        net = 0
+        for order in orders
+            net += order.get_total
+        end
+        return net
+    end
+
+    def get_total_orders
+
+        orders = Order.where(dish_id: self.get_dish_ids)
+        return orders.length
     end
 
 end

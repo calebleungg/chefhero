@@ -17,8 +17,20 @@
             <td> Collected at</td>
             <td> Duration </td>
         </tr>
-        
+        <% index = 0 %>
         <% for order in @orders %>
+            <% if order.created_at.day != @orders[index-1].created_at.day %>
+                <tr id="row-gap">
+                </tr>
+                <tr id="row-gap">
+                </tr>
+                <tr id="row-gap">
+                </tr>
+                <tr id="row-gap">
+                </tr>
+                <tr id="row-gap">
+                </tr>
+            <% end %>
             <tr>
                 <td> <%= "##{order.id}"%> </td>
                 <td> <%= DateFormat.change_to(order.created_at, "") %> </td>
@@ -33,6 +45,7 @@
             </tr>
             <tr id="row-gap">
             </tr>
+            <% index += 1 %>
         <% end %>
     </table>
 

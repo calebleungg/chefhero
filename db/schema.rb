@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_042336) do
+ActiveRecord::Schema.define(version: 2020_02_27_045215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,14 @@ ActiveRecord::Schema.define(version: 2020_02_25_042336) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "withdrawals", force: :cascade do |t|
+    t.decimal "amount", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_withdrawals_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
   add_foreign_key "availabilities", "users"
@@ -122,4 +130,5 @@ ActiveRecord::Schema.define(version: 2020_02_25_042336) do
   add_foreign_key "orders", "dishes"
   add_foreign_key "orders", "users"
   add_foreign_key "reviews", "users"
+  add_foreign_key "withdrawals", "users"
 end

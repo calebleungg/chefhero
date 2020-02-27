@@ -996,6 +996,7 @@
 .order-tracking-container {
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
     .order-column {
         width: 380px;
     }
@@ -1027,7 +1028,14 @@
         display: flex;
         justify-content: flex-start;
         margin-bottom: 5px;
+        width: 300px;
         span {
+            &:first-child {
+                width: 10px;
+            }
+            &:nth-child(2){
+                width: 70px
+            }
             margin: 0 10px;
             color: black;
         }
@@ -1065,6 +1073,9 @@
             }
             &:nth-child(6) {
                 width: 100px;
+                background-color: $secondary-color;
+                color: white;
+                font-weight: 600;
             }
             &:nth-child(7) {
                 background: white;
@@ -1077,15 +1088,16 @@
                 width: 130px;
             }
         }
-        #row-gap {
-            height: 5px;
-        }
+
     }
     .order-focus-display {
         display: flex;
         flex-direction: column;
 
     }
+}
+#row-gap {
+    height: 5px;
 }
 #order-tracking-back {
     color: $secondary-color;
@@ -1097,5 +1109,129 @@
             width: 450px;
             height: 250px;
         }
+    }
+}
+
+.earnings-info-bar {
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border: 1px solid lightgrey;
+    div {
+        width: 20vw;
+        padding: 20px 20px 10px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        &:nth-child(2) {
+            border-left: 1px solid lightgrey;
+            border-right: 1px solid lightgrey;
+        }
+        span {
+            font-size: 2em;
+        }
+    }
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
+    p {
+        padding-top: 12px;
+        font-weight: 700;
+        margin-right: 10px;
+    }
+    .btn {
+        width: 130px;
+        height: 40px;
+        font-size: 0.8em;
+    }
+    #paypal {
+        margin-left: 10px;
+        background-color: #008cff;
+        border-color: #008cff ;
+        &:hover {
+            background-color: #0b62aa;
+            border-color: #0b62aa ;
+        }
+    }
+}
+
+.withdrawal-history {
+    width: 60vw;
+    .alert {
+        color: red;
+        font-size: 0.8em;
+    }
+    p {
+        font-weight: 700;
+    }
+    table {
+        tr {
+            
+            &:first-child {
+                background-color: white;
+                font-weight: 600;
+                font-size: 0.8em;
+                margin-bottom: 10px;
+            }
+        
+            background-color: #f0f0f0;
+        }
+        td {
+            text-align: center;
+            min-width: 200px;
+            &:first-child {
+                min-width: 150px;
+            }
+            &:nth-child(2){
+                min-width: 10px;
+                max-width: 10px;
+                background-color: white;
+            }
+        }
+    }
+    .modal-body {
+        p {
+            font-weight: 500;
+        }
+        span {
+            color: $secondary-color;
+            font-weight: 700;
+        }
+        i {
+            font-size: 1.5em;
+        }
+
+        #amount-withdraw {
+            width: 150px;
+        }
+        input {
+            width: 300px;
+            padding: 5px;
+            border: none;
+            background-color: #f0f0f0;
+            color: black;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        #withdraw-confirm {
+            background-color: $secondary-color;
+            color: white;
+            &:hover {
+                background-color: green;
+            }
+            width: 100px;
+        }
+        #desc-hint {
+            font-size: 0.8em;
+            opacity: 80%;
+        }
+        
     }
 }

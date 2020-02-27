@@ -1,10 +1,12 @@
 require "date_format"
 
 class UserController < ApplicationController
+    
     def index
     end
 
     def show
+
         @user = User.find(params[:id])
         @reviews = @user.reviews
         if @user.about == nil
