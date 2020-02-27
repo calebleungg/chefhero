@@ -104,7 +104,7 @@
                                         <%= link_to user_path(dish.get_chef), id:"chef-label" do %>
                                             <div class="small-chef-tag">
                                                     <%= dish.get_chef.name %>
-                                                    <%= image_tag dish.get_chef.avatar %>
+                                                    <%= image_tag dish.get_chef.get_display_picture %>
                                             </div>
                                         <% end %>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

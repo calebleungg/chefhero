@@ -9,7 +9,7 @@ class DishController < ApplicationController
         @dish.image.attach(params[:dish][:image])
         @dish.available = true
         if @dish.valid? && @dish.save
-            redirect_to user_path(current_user)
+            redirect_to manager_path(:option => "Manager")
         end
     end
 
