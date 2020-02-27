@@ -1090,3 +1090,12 @@
 #order-tracking-back {
     color: $secondary-color;
 }
+
+#helpModal {
+    .modal-body {
+        img {
+            width: 450px;
+            height: 250px;
+        }
+    }
+}

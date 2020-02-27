@@ -1,4 +1,33 @@
 <p> Manager and track your pending orders here </p>
+<a type="button" data-toggle="modal" data-target="#helpModal"> <i class="far fa-question-circle"></i> Help </a>
+
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpModalLabel">How to track your ordres:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> When a customer places orders, they will first display in the <strong>incoming</strong> column. </p>
+                <p> <strong>1.</strong> Orders are represented by tickets </p>
+                <%= image_tag "order-card.png"%><br/><br/>
+                <p> Use the incoming column to know what orders to start preparing </p>
+                <hr>
+                <p> <strong>2.</strong> When you have finished preparing an order, press the yellow arrow button to progress the ticket </p>
+                <%= image_tag "order-tracking-gif.gif"%><br/><br/>
+                <p> The ready column keeps track of all the orders waiting to be picked up by your customers</p>
+                <hr>
+                <p> <strong>3.</strong> Once a customer has collected their order, you can then press the green bag button to finish your ticket </p>
+                <%= image_tag "order-gif-2.gif"%><br/><br/>
+                <p> You ticket will then be displayed in your order history </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="order-tracking-container">
     <div class="order-column">
         <h2> Incoming </h2>
