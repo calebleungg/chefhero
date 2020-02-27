@@ -117,7 +117,7 @@
         color: $secondary-color;
     }
 
-    .top-chefhero-container {
+    .top-chefhero-container { 
         margin: 80px 0 ;
         .chef-list {
             display: flex;
@@ -140,6 +140,7 @@
                     width: 270px;
                     height: 270px;
                     border-radius: 100%;
+                    
                 }
                 #chef-name {
                     font-size: 1.2em; 
@@ -991,7 +992,7 @@
         align-items: center;
     }
     .order-card-details {
-        width: 230px;
+        width: 200px;
         height: 90px;
         display: flex;
         justify-content: center;
@@ -1074,6 +1075,9 @@
             margin: 0 10px;
             color: black;
         }
+    }
+    #earnings-hint {
+        font-size: 0.8em;
     }
 }
 
@@ -1221,6 +1225,7 @@
         td {
             text-align: center;
             min-width: 200px;
+            padding: 5px;
             &:first-child {
                 min-width: 150px;
             }

@@ -136,7 +136,7 @@
                     <% end %>
                 </div>
             <% else %>
-                <% if current_user.name == @user.name %>
+                <% if user_signed_in? && current_user.name == @user.name %>
                     <p> Go <%= link_to "create", new_dish_path %> a dish now!</p>
                 <% else%>
                     <p> <%= @user.first_name %> has no dishes up for selling currently :( </p>

@@ -32,13 +32,13 @@
     <div class="order-column">
         <h2> Incoming </h2>
         <% if @orders_placed.length == 0 %> <p id="order-column-hint"> Incoming orders will be displayed here </p> <% end %>
-        <% for order in @orders_placed %>
+        <% for order in @orders_placed.reverse %>
             <div class="order-card">
                 <div class="order-card-details">
                     <h5><%= order.get_dish.name %></h5>
                     <p>
                         <%= order.get_user.name %><br/>
-                        <span>order #: <%= order.id%> </span>
+                        <span>order#: <%= order.id%> | placed <%= DateFormat.change_to(order.created_at, "SHORT_TIME")%> </span>
                     </p>
                 </div>
                 <div class="quantity-details">
@@ -86,10 +86,11 @@
             Total Sales: <br/>
             <span id="daily-sales"> <%= number_to_currency @daily_total %> </span>
         </p>
+        <p id="earnings-hint"> Check your <%= link_to "earnings", earnings_manager_path(:option => "Earnings")%> to withdraw </p>
         <h4> Order History </h4>
         <% for order in @orders_collected %>
             <div class="small-history-list-item">
-                <span><%= "##{order.id}"%></span> <span><%= order.get_user.name %></span> <span><%= order.get_dish.name %></span>
+                <span><%= "##{order.id}"%></span> <span><%= order.get_user.name %></span> <span><%= order.get_dish.name %> x <%= order.quantity.to_i %></span>
             </div>
         <% end %>
         <%= link_to "Full history", dashboard_order_history_path(:option => "Orders", :ids => @dish_ids), id:"show-history" %>

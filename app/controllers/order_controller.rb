@@ -50,7 +50,7 @@ class OrderController < ApplicationController
 
         @orders_placed = Order.where(dish_id: current_user.get_dish_ids, status:"placed").order("created_at DESC")
         @orders_ready = Order.where(dish_id: current_user.get_dish_ids, status:"ready").order("created_at DESC")
-        @orders_collected = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("created_at DESC").limit(10)
+        @orders_collected = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC").limit(10)
         @orders_today = 0
         @daily_total = 0
 
@@ -65,7 +65,7 @@ class OrderController < ApplicationController
     end
 
     def chef_history
-        @orders = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("created_at DESC")
+        @orders = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC")
 
         render layout: "dashboard"
     end
