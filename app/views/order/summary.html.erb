@@ -48,40 +48,6 @@
     zoom: 12 // starting zoom
     });
 
-    map.on('load', function() {
-        map.loadImage(
-        '/assets/pin.png',
-        function(error, image) {
-        if (error) throw error;
-        map.addImage('pin', image);
-        map.addSource('point', {
-        'type': 'geojson',
-        'data': {
-        'type': 'FeatureCollection',
-        'features': [
-        {
-        'type': 'Feature',
-        'geometry': {
-        'type': 'Point',
-        'coordinates': <%= @address_coordinates %>
-        }
-        }
-        ]
-        }
-        });
-        map.addLayer({
-        'id': 'points',
-        'type': 'symbol',
-        'source': 'point',
-        'layout': {
-        'icon-image': 'pin',
-        'icon-size': 0.1
-        }
-        });
-        }
-        );
-        });
-
     map.addControl(
     new MapboxDirections({
     accessToken: mapboxgl.accessToken
