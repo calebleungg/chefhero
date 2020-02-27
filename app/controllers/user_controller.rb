@@ -1,8 +1,9 @@
 require "date_format"
 
 class UserController < ApplicationController
-    
+
     def index
+        @most_ordered = User.top_five_ordered
     end
 
     def show
@@ -103,8 +104,6 @@ class UserController < ApplicationController
             render "new_chef"
         end
     end
-
-
 
     private
     def user_params

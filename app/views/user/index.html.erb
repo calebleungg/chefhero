@@ -1,10 +1,26 @@
-<section class="splash-page"> 
-    <div>
-        <h1> Become a Chef<span>Hero</span> now.</h1>
-        <p> Have a sick dish? Flex it. </p>
-    </div>
-    <div class="splash-buttons">
-        <%= link_to "Join", user_signed_in? ? root_path : new_user_registration_path(), class: "btn btn-light" %>
+<div class="container index-page-container">
+
+    <div class="splash-page"> 
+        <h4> Explore great <span>dishes</span>, and greater <span>ChefHeroes</span> </h4>
+
+        <div class="top-chefhero-container">
+            <h2> Most Ordered ChefHeroes</h2>
+            <div class="chef-list">
+                <% top = true %>
+                <% for chef, orders in @most_ordered %>
+                    <%= link_to user_path(chef) do %>
+                        <div class="chef-card">
+                            <%= image_tag User.find(chef).get_display_picture%>
+                            <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= User.find(chef).name %></p>
+                            <p> <span><%= orders %></span> total orders</p>
+                        </div>
+                    <% end %>
+                    <% top = false %>
+                <% end %>
+            </div>
+        </div>
+        
+
     </div>
 
-</section>
+</div>

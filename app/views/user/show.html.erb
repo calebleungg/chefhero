@@ -5,8 +5,8 @@
         <div class="profile-box">
             <div class="display-picture">
                 <%= image_tag @user.get_display_picture %><br/>
-                <%= link_to "Update photo", user_path(current_user.id), "data-toggle" => "modal", 'data-target' => '#uploadPhotoModal' if current_user.name == @user.name %>
-                <%= link_to "Manage your business", manager_path(:option => "Manager") if current_user.account_type == "chefhero" && current_user.name == @user.name %>
+                <%= link_to "Update photo", user_path(current_user.id), "data-toggle" => "modal", 'data-target' => '#uploadPhotoModal' if user_signed_in? && current_user.name == @user.name %>
+                <%= link_to "Manage your business", manager_path(:option => "Manager") if user_signed_in? && current_user.account_type == "chefhero" && current_user.name == @user.name %>
             </div>
             <div class="profile-badges">
                 <hr>
@@ -32,11 +32,15 @@
             <div class="availability-box">
                 <h3> <%= @user.first_name%> is open on: </h3>
                 <div class="days-open">
-                    <% for key,value in @days_open %>
-                        <div class="day-tile">
-                            <%= key.capitalize %> | <%= value %>
-                        </div>
-                        
+                    <% if @days_open.length > 0%>
+                        <% for key,value in @days_open %>
+                            <div class="day-tile">
+                                <%= key.capitalize %> | <%= value %>
+                            </div>
+                            
+                        <% end %>
+                    <% else %>
+                        <p> <%= @user.first_name %> isnt open cooking at the moment </p>
                     <% end %>
                 </div>
             </div>
@@ -52,7 +56,7 @@
 
     <div class="profile-content">
         <h1> <%= "Hi, I'm #{@user.first_name}" %> </h1>
-        <p> <%= "Joined in #{@user.created_at.year}"%> <% if current_user.name == @user.name %> | <%= link_to "Edit", user_path(current_user, :edit => "about") %> <% end %> </p>
+        <p> <%= "Joined in #{@user.created_at.year}"%> <% if user_signed_in? && current_user.name == @user.name %> | <%= link_to "Edit", user_path(current_user, :edit => "about") %> <% end %> </p>
         <br/>
         <p> <i class="fas fa-quote-left"></i> </p>
         <% if params[:edit] == "about" %>
@@ -113,11 +117,15 @@
                                             <p> <strong>Ingredients:</strong> <%= dish.ingredients.to_s.capitalize %> </p>
                                         </div>
                                         <div class="modal-footer" id="order-submission">
-                                            <p> <%= number_to_currency dish.price %> &times; </p>
-                                            <%= form_with model: @order, url: create_order_path do |form| %>
-                                                <%= form.hidden_field :dish, value: dish.id %>
-                                                <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
-                                                <%= form.submit "Order", id:"order-button" %>
+                                            <% if user_signed_in? %>
+                                                <p> <%= number_to_currency dish.price %> &times; </p>
+                                                <%= form_with model: @order, url: create_order_path do |form| %>
+                                                    <%= form.hidden_field :dish, value: dish.id %>
+                                                    <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
+                                                    <%= form.submit "Order", id:"order-button" %>
+                                                <% end %>
+                                            <% else %>
+                                                <p> <%= number_to_currency dish.price %> | <%= link_to "Login", new_user_session_path%> to order now! </p>
                                             <% end %>
                                         </div>
                                     </div>

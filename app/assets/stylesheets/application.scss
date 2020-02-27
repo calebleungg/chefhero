@@ -58,6 +58,7 @@
             color: black;
         }
     }
+    border-bottom: 1px solid #e0dddd;
 
  }
  
@@ -93,47 +94,72 @@
      display: flex;
      justify-content: flex-end;
  }
+ .index-page-container {
+     width: 100vw;
+     display: flex;
+     justify-content: center;
+ }
  
  .splash-page {
-     border-top: 1px solid #e0dddd;
-     height: 92vh;
      display: flex;
      flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     font-family: $headings;
-     h1 {
-         font-size: 80px;
-         font-weight: 700;
-         font-family: $headings;
-     }
- 
-     p {
-         font-size: 30px;
-         text-align: center;
-     }
- 
-     .btn {
-         width: 200px;
-         height: 50px;
-         font-size: 30px;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         margin: 0 20px;
-         &:first-child {
-             background-color: $secondary-color;
-             color: white;
-         }
-     }
- 
-     .splash-buttons {
-         display: flex;
-         flex-direction: row;
-     }
-     span {
-         color: $secondary-color;
-     }
+     justify-content: flex-start;
+     min-width: 90vw;
+    h2 {
+        font-size: 1.5em;
+        font-weight: 700;
+    }
+    h4 {
+        margin-top: 50px;
+
+    }
+    span {
+        color: $secondary-color;
+    }
+
+    .top-chefhero-container {
+        margin: 80px 0 ;
+        .chef-list {
+            display: flex;
+            flex-direction: row;
+            a {
+                color: black;
+                text-decoration: none;
+            }
+            .chef-card {
+                margin-right: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border: 1px blur lightgrey;
+                border-radius: 30px;
+                width: 300px;
+                height: 400px;
+                padding: 20px;
+                img {
+                    width: 270px;
+                    height: 270px;
+                    border-radius: 100%;
+                }
+                #chef-name {
+                    font-size: 1.2em; 
+                    font-weight: 600;
+                    margin-top: 10px;
+                }
+                span {
+                    font-weight: 600;
+                    font-size: 1em;
+                }
+                i {
+                    color: #b69e19;
+                }
+    
+            }
+
+        }
+
+    }
+
  }
  
  .signup-form, .default-form {
@@ -254,6 +280,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+    p {
+        text-align: center;
+        font-size: 0.85em;
     }
 
  }
@@ -483,6 +513,11 @@
         p {
             max-height: 150px;
             overflow: scroll;
+        }
+    }
+    .modal-footer {
+        a {
+            color: $secondary-color;
         }
     }
  }
