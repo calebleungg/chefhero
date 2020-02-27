@@ -30,7 +30,7 @@
         <br/>
         <div class="summary-directions">
             <div>
-                <p> <strong>Your ChefHero: </strong> <div> <%= @chef.name %> <%= image_tag @chef.avatar %> </div> </p>
+                <p> <strong>Your ChefHero: </strong> <div> <%= @chef.name %> <%= image_tag @chef.get_display_picture %> </div> </p>
                 <p> <strong>Address: </strong> <%= @chef.address.display_full %> </p>
                 <p id="helper"> You can use the directions helper on the map to find the best route! <br/> Either click on the map to choose your locations or type it in the address bar. </p>
             </div>
