@@ -10,6 +10,10 @@ class Order < ApplicationRecord
 		return total
 	end
 
+	def get_user
+		return User.find(self.user_id)
+	end
+
 	def get_dish
 		return Dish.find(self.dish_id)
 	end

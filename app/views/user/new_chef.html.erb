@@ -7,17 +7,23 @@
                 <h1> Chef<span>Hero</span> Registration</h1>
                 
                 <p> So you think you have what it takes... </p><br/>
-                <p> Let customers know where they can come taste your dish<br/><span id="hint">(This can be your home address/commercial address) </span></p>
+                <p> 
+                    Let customers know where they can come taste your dish<br/>
+                    <span id="hint">
+                        (This can be your home address/commercial address)<br/>
+                        <i class="fas fa-exclamation-circle"></i> <strong>All address fields are required.</strong>
+                    </span>
+                </p>
 
                 <div class="new-address-form">
-                    <%= form.text_field :street, placeholder: "Street name", id:"long-input" %><br/>
-                    <%= form.text_field :suburb, placeholder: "Suburb", id:"long-input" %><br/>
-                    <%= form.text_field :city, placeholder: "City", id:"long-input" %><br/>
+                    <%= form.text_field :street, required: true, placeholder: "Street name", id:"long-input" %><br/>
+                    <%= form.text_field :suburb, required: true, placeholder: "Suburb", id:"long-input" %><br/>
+                    <%= form.text_field :city, required: true, placeholder: "City", id:"long-input" %><br/>
                     <div class="state-postcode-input">
-                        <%= form.text_field :state, placeholder: "State" %>
-                        <%= form.number_field :postcode, placeholder: "Postcode" %>
+                        <%= form.text_field :state, required: true, placeholder: "State" %>
+                        <%= form.number_field :postcode, required: true, placeholder: "Postcode" %>
                     </div>
-                    <%= form.text_field :country, placeholder: "Country", id:"long-input" %>
+                    <%= form.text_field :country, required: true, placeholder: "Country", id:"long-input" %>
                 </div>
                 <br/>
 
@@ -69,7 +75,7 @@
                     <li> Tell your friends and family! If you dish is as good as you think, make sure you <span><strong>let everyone know!</strong></span></li><br/>
                 </ol>
                 <br/>
-                <p> <i class="far fa-thumbs-up"></i> Good luck to you CheHero <span><strong><%= current_user.first_name %></strong></span>! </p>
+                <p> <i class="far fa-thumbs-up"></i> Good luck to you ChefHero <span><strong><%= current_user.first_name %></strong></span>! </p>
 
                 <%= form.submit "Finish", class:"btn btn-success"%>
 

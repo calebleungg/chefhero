@@ -14,7 +14,7 @@ class UserController < ApplicationController
         end
         
         if @user.account_type == "chefhero"
-            @dishes = @user.dishes.order("created_at DESC").limit(5)
+            @dishes = @user.dishes.where(available: true).order("created_at DESC").limit(5)
             @total_orders = Order.total_for_chef(@user)
             @days_open = @user.availability.days_open if @user.availability
             begin
@@ -76,6 +76,30 @@ class UserController < ApplicationController
     end
 
     def create_chef
+        user = current_user
+        user.create_address(
+            street: params[:user][:street],
+            suburb: params[:user][:suburb],
+            city: params[:user][:city],
+            state: params[:user][:state],
+            postcode: params[:user][:postcode],
+            country: params[:user][:country]
+        )
+        user.create_availability(
+            monday: params[:user][:monday],
+            tuesday: params[:user][:tuesday],
+            wednesday: params[:user][:wednesday],
+            thursday: params[:user][:thursday],
+            friday: params[:user][:friday],
+            saturday: params[:user][:saturday],
+            sunday: params[:user][:sunday],
+        )
+        user.account_type = "chefhero"
+        if user.valid? && user.save
+            redirect_to manager_path(:option => "Manager")
+        else 
+            render "new_chef"
+        end
     end
 
 

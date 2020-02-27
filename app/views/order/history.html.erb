@@ -1,6 +1,6 @@
 <div class="container details-container">
 
-    <div>
+    <div class="order-history-display">
         <h1> Account > <span>Order History<span> </h1>
 
         <% if @orders.length > 0 %>
@@ -11,7 +11,7 @@
                             <td> <h3> Order # </h3> </td>
                             <td> <h3> Item </h3> </td>
                             <td> <h3> ChefHero </h3> </td>
-                            <td> <h3> Price </h3> </td>
+                            <td> <h3> Date </h3> </td>
                             <td> <h3> Quantity </h3> </td>
                             <td> <h3> Total </h3> </td>
                             <td> <h3> Status </h3> </td>
@@ -22,14 +22,16 @@
                     <% for order in @orders %>
                         <tr>
                             <td> <p> <%= order.id %> </p> </td> 
-                            <td> <p> <%= order.get_dish.name %> </p> </td> 
+                            <td id="order-name"> <p> <%= order.get_dish.name %> </p> </td> 
                             <td> <p> <%= order.get_dish.get_chef.name %> </p> </td> 
-                            <td> <p> <%= number_to_currency order.get_dish.price %> </p> </td> 
+                            <td id="order-date"> <p> <%= DateFormat.change_to(order.created_at, "MEDIUM_DATE") %> </p> </td> 
                             <td> <p> <%= order.quantity.to_i%> </p> </td> 
                             <td> <p> <%= number_to_currency order.get_total %> </p> </td> 
                             <td> <p> <%= order.status %> </p> </td> 
                             <% case order.status %>
-                                <% when "placed" || "ready" %>
+                                <% when "placed"%>
+                                    <td> <p> <%= link_to "Directions", order_summary_path(order.id) %> </p> </td> 
+                                <% when "ready" %>
                                     <td> <p> <%= link_to "Directions", order_summary_path(order.id) %> </p> </td> 
                                 <% when "collected" %>
                                     <td> <p> <%= link_to "Summary", order_summary_path(order.id) %> </p> </td> 

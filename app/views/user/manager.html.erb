@@ -165,7 +165,7 @@
                     <td id="image-td"> <%= image_tag dish.get_image, id:"small-dish-image" %> </td>
                     <td id="name-td"> <%= dish.name %> </td>
                     <td> <%= number_to_currency dish.price %> </td>
-                    <td> <%= dish.total_orders.to_i %> Orders </td>
+                    <td> <%= dish.total_quantity.to_i %> Orders </td>
                     <% if dish.available %>
                         <td id="status-td"> 
                             <%= link_to "Listed", unlist_dish_path(dish.id), class:"btn btn-success", method: :patch %>

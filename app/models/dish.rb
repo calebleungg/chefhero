@@ -11,13 +11,17 @@ class Dish < ApplicationRecord
 		return User.find(self.user_id)
 	end
 	
-	def total_orders
+	def total_quantity
 		orders = Order.where(dish_id: self.id)
 		total_quantity = 0
 		for order in orders
 			total_quantity += order.quantity
 		end
 		return total_quantity
+	end
+
+	def total_orders
+		return Order.where(dish_id: self.id).order("created_at DESC") 
 	end
 	
 end

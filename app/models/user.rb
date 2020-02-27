@@ -15,6 +15,14 @@ class User < ApplicationRecord
         return "#{first_name} #{last_name}"
     end
 
+    def get_dish_ids
+        ids = []
+        for dish in self.dishes
+            ids.push(dish.id)
+        end
+        return ids
+    end
+
     def get_display_picture
         return self.avatar.attached? ? self.avatar : "default-profile.png"
     end

@@ -1,0 +1,68 @@
+<p> Manager and track your pending orders here </p>
+<div class="order-tracking-container">
+    <div class="order-column">
+        <h2> Incoming </h2>
+        <% if @orders_placed.length == 0 %> <p id="order-column-hint"> Incoming orders will be displayed here </p> <% end %>
+        <% for order in @orders_placed %>
+            <div class="order-card">
+                <div class="order-card-details">
+                    <h5><%= order.get_dish.name %></h5>
+                    <p>
+                        <%= order.get_user.name %><br/>
+                        <span>order #: <%= order.id%> </span>
+                    </p>
+                </div>
+                <div class="quantity-details">
+                    <div class="quantity-circle">
+                        <%= order.quantity.to_i %>
+                    </div>
+                </div>
+                <div class="progress-button">
+                    <%= link_to order_ready_path(order.id), method: :patch do %>
+                        <i class="fas fa-chevron-circle-right"></i>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+
+    <div class="order-column">
+        <h2> Ready </h2>
+        <% if @orders_ready.length == 0 %> <p id="order-column-hint" > Orders ready for collection will be displed here </p> <% end %>
+        <% for order in @orders_ready %>
+            <div class="order-card">
+                <div class="order-card-details">
+                    <h5><%= order.get_dish.name %></h5>
+                    <p>
+                        <%= order.get_user.name %><br/>
+                        <span>order #: <%= order.id%> </span>
+                    </p>
+                </div>
+                <div class="quantity-details">
+                    <div class="quantity-circle">
+                        <%= order.quantity.to_i %>
+                    </div>
+                </div>
+                <div class="progress-button order-ready">
+                    <%= link_to order_collected_path(order.id), method: :patch do %>
+                        <i class="fas fa-shopping-bag"></i>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+    <div class="order-figures">
+        <h3> Orders Today: <%= @orders_today %> </h3>
+        <p> 
+            Total Sales: <br/>
+            <span id="daily-sales"> <%= number_to_currency @daily_total %> </span>
+        </p>
+        <h4> Order History </h4>
+        <% for order in @orders_collected %>
+            <div class="small-history-list-item">
+                <span><%= "##{order.id}"%></span> <span><%= order.get_user.name %></span> <span><%= order.get_dish.name %></span>
+            </div>
+        <% end %>
+        <%= link_to "Full history", dashboard_order_history_path(:option => "Orders", :ids => @dish_ids), id:"show-history" %>
+    </div>
+</div>

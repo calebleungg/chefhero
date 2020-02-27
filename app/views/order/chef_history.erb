@@ -1,0 +1,40 @@
+<p> <%= link_to "Back to Orders Tracking", orders_manager_path(:option => "Orders"), id:"order-tracking-back" %> </p>
+
+<div class="full-order-history-table">
+
+
+    <table>
+    
+        <tr>
+            <td> </td>
+            <td> Date </td>
+            <td> Customer </td>
+            <td> Dish </td>
+            <td> Order Qty </td>
+            <td> Total Revenue </td>
+            <td> </td>
+            <td> Placed at </td>
+            <td> Collected at</td>
+            <td> Duration </td>
+        </tr>
+        
+        <% for order in @orders %>
+            <tr>
+                <td> <%= "##{order.id}"%> </td>
+                <td> <%= DateFormat.change_to(order.created_at, "") %> </td>
+                <td> <%= order.get_user.name %> </td>
+                <td> <%= order.get_dish.name %> </td>
+                <td> <%= order.quantity.to_i %> </td>
+                <td> <%= number_to_currency order.get_total %> </td>
+                <td> </td>
+                <td> <%= DateFormat.change_to(order.created_at.in_time_zone('Australia/Brisbane'), "MEDIUM_TIME") %> </td>
+                <td> <%= DateFormat.change_to(order.updated_at.in_time_zone('Australia/Brisbane'), "MEDIUM_TIME") %> </td>
+                <td> <%= DateFormat.time_difference(order.created_at, order.updated_at, "MINUTE_ONLY") %> </td>
+            </tr>
+            <tr id="row-gap">
+            </tr>
+        <% end %>
+    </table>
+
+
+</div>

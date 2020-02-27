@@ -51,8 +51,17 @@ Rails.application.routes.draw do
 
   # become-chefhero form view
   get "/become-chefhero", to: "user#new_chef", as: "new_chef"
-
   # update member to chefhero account_type
   post "/become-chefhero", to: "user#create_chef", as: "create_chef"
+
+  # ordres manager for chefhero
+  get "/dashboard/orders", to: "order#manager", as: "orders_manager"
+  # mark orders as ready
+  patch "/order/:id/ready", to: "order#ready", as: "order_ready"
+  # mark orders as collected
+  patch "/order/:id/collected", to: "order#collected", as: "order_collected"
+
+  # get chefhero order history
+  get "/dashboard/orders/history", to: "order#chef_history", as: "dashboard_order_history"
 
 end

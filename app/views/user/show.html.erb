@@ -6,17 +6,17 @@
             <div class="display-picture">
                 <%= image_tag @user.get_display_picture %><br/>
                 <%= link_to "Update photo", user_path(current_user.id), "data-toggle" => "modal", 'data-target' => '#uploadPhotoModal' if current_user.name == @user.name %>
-                <%= link_to "Manage your business", manager_path(:option => "Manager") if current_user.account_type == "chefhero" %>
+                <%= link_to "Manage your business", manager_path(:option => "Manager") if current_user.account_type == "chefhero" && current_user.name == @user.name %>
             </div>
             <div class="profile-badges">
                 <hr>
-                <p> <i class="fas fa-comments" id="review-badge" ></i> <%= "#{@user.reviews.length} Reviews"%> </p>
+                <p> <i class="fas fa-comments"></i> <%= "#{@user.reviews.length} Reviews"%> </p>
                 <% if @user.account_type == "foodie" %>
                     <p> <i class="fas fa-utensils"></i>Foodie</p>
                 <% end %>
                 <% if @user.account_type == "chefhero" %>
                     <p> <i class="fas fa-store"></i> ChefHero</p>
-                    <p> <i class="fas fa-concierge-bell"></i> <%= @total_orders%> Total Orders</p>
+                    <p> <i class="fas fa-drumstick-bite"></i> <%= @total_orders%> Total Orders</p>
                 <% end %>
                 <hr>
                 <p> <%= "#{@user.first_name} Provided"%> </p>
@@ -75,22 +75,23 @@
         <% end %>
         <hr>
         <%if @user.account_type == "chefhero"%>
+            <h5 class="dishes-title"> Dishes </h5>
             <% if @dishes.length > 0 %>
-                <h5 class="dishes-title"> Dishes </h5>
-                <p> (Scroll <strong>right</strong>!)</p>
+                <p id="dish-hint"> (Click to view, scroll right to discover more) </p>
                 <div class="dish-list">
                     <% @dishes.each do |dish| %>
                         <% if dish.available %>
-                            <div class="card" id="dish-card">
-                                <%= image_tag dish.image.attached? ? dish.image : "default-dish.png", class:"card-img-top", alt:"default dish image" %>
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= dish.name %></h5>
-                                    <p class="card-text"><%= dish.category %> </p>
-                                    <p id="price" data-price="5" > <%= number_to_currency dish.price %></p>
-                                    <p class="card-text" id="dish-description"><%= dish.about %></p>
-                                    <%= link_to "View", dish_path(dish.id), "data-toggle" => "modal", 'data-target' => "#order-modal-#{dish.id}"  %>
+                            <%= link_to dish_path(dish.id), "data-toggle" => "modal", 'data-target' => "#order-modal-#{dish.id}" do %>
+                                <div class="card" id="dish-card">
+                                    <%= image_tag dish.image.attached? ? dish.image : "default-dish.png", class:"card-img-top", alt:"default dish image" %>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= dish.name %></h5>
+                                        <p class="card-text"><%= dish.category %> </p>
+                                        <p id="price" data-price="5" > <%= number_to_currency dish.price %></p>
+                                        <p class="card-text" id="dish-description"><%= dish.about %></p>
+                                    </div>
                                 </div>
-                            </div>
+                            <% end %>
 
                             <!-- Order Modal -->
                             <div class="modal fade" id="order-modal-<%=dish.id%>" tabindex="-1" role="dialog" aria-labelledby="order-modal-<%=dish.id%>Label" aria-hidden="true">
@@ -126,6 +127,12 @@
 
                     <% end %>
                 </div>
+            <% else %>
+                <% if current_user.name == @user.name %>
+                    <p> Go <%= link_to "create", new_dish_path %> a dish now!</p>
+                <% else%>
+                    <p> <%= @user.first_name %> has no dishes up for selling currently :( </p>
+                <% end %>
             <% end %>
         <hr>
         <% end %>
