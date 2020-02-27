@@ -21,7 +21,7 @@ class OrderController < ApplicationController
         begin
             @address_coordinates = Geocoder.search(@chef.address.display_full).first.coordinates.reverse
         rescue
-            @address_coordinates = nil
+            @address_coordinates = Geocoder.search('Brisbane Queensland Australia')
         end
     end
 
