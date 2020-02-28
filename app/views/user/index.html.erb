@@ -9,7 +9,7 @@
                 <% top = true %>
                 <% for dish, orders in @top_dishes %>
                     <% record = Dish.find(dish)%>
-                    <%= link_to user_path(1) do %>
+                    <%= link_to user_path(record.get_chef.id) do %>
                         <div class="chef-card">
                             <%= image_tag record.get_image %>
                             <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= record.name %></p>
