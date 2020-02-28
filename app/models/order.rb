@@ -19,7 +19,7 @@ class Order < ApplicationRecord
 	end
 
 	def get_total
-		return self.get_dish.price * self.quantity	 
+		return self.revenue * self.quantity	 
 	end
 
 end

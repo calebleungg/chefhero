@@ -43,6 +43,10 @@ Rails.application.routes.draw do
   patch "/dish/:id/list", to: "dish#list", as: "list_dish"
   # unlisting a dish
   patch "/dish/:id/unlist", to: "dish#unlist", as: "unlist_dish"
+  # edit dish details view
+  get "/dish/:id/edit", to: "dish#edit", as:"edit_dish"
+  # updating dish details
+  patch "/dish/:id/update", to: "dish#update", as: "update_dish"
 
   # update availability
   patch "/availability/update", to: "availability#update", as: "update_availability"

@@ -104,21 +104,56 @@
      display: flex;
      flex-direction: column;
      justify-content: flex-start;
-     min-width: 90vw;
+     min-width: 100vw;
     h2 {
         font-size: 1.5em;
         font-weight: 700;
     }
     h4 {
         margin-top: 50px;
-
+        margin-left: 50px;
     }
     span {
         color: $secondary-color;
     }
+    .index-info-graph {
+        height: 300px;
+        width: 100vw;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span {
+            color: $secondary-color;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-weight: 600;
+        }
+        p {
+            margin: 0 5vw;
+            text-align: center;
+            font-size: 0.9em;
+            i {
+                font-size: 5em;
+            }
+        }
+        .attributes-row {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
 
     .top-chefhero-container { 
-        margin: 80px 0 ;
+       
+        margin: 50px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
         .chef-list {
             display: flex;
             flex-direction: row;
@@ -127,18 +162,16 @@
                 text-decoration: none;
             }
             .chef-card {
-                margin-right: 20px;
+                margin-right: 10px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                border: 1px blur lightgrey;
-                border-radius: 30px;
                 width: 300px;
-                height: 400px;
+                // height: 300px;
                 padding: 20px;
                 img {
-                    width: 270px;
-                    height: 270px;
+                    width: 200px;
+                    height: 200px;
                     border-radius: 100%;
                     
                 }
@@ -154,18 +187,37 @@
                 i {
                     color: #b69e19;
                 }
+                p {
+                    text-align: center;
+                }
+
     
             }
 
         }
+        #hint {
+            font-size: 0.8em;
+            opacity: 80%;
+            margin-bottom: 20px;
+        }
 
+    }
+
+    .index-footer {
+        height: 300px;
+        border-top: 1px solid lightgrey;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        a {
+            color: $secondary-color;
+        }
     }
 
  }
  
  .signup-form, .default-form {
-     // background-color: lightgrey;
-    //  height: 94vh;
     padding-bottom: 80px;
      display: flex;
      justify-content: flex-start;
@@ -1089,7 +1141,13 @@
 .full-order-history-table {
     display: flex;
     flex-direction: row;
+    // width: 60vw;
     table {
+        thead, tbody tr {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+        }
         tr {
             &:first-child {
                 background-color: white;
@@ -1129,13 +1187,17 @@
         }
 
     }
-    .order-focus-display {
-        display: flex;
-        flex-direction: column;
 
+    tbody {
+        display: block;
+        height: 70vh;
+        overflow: auto;
     }
+
 }
+
 #row-gap {
+    background-color: white;
     height: 5px;
 }
 #order-tracking-back {
@@ -1203,6 +1265,10 @@
 
 .withdrawal-history {
     width: 60vw;
+    .notice {
+        color: green;
+        font-size: 0.8em;
+    }
     .alert {
         color: red;
         font-size: 0.8em;
@@ -1274,4 +1340,52 @@
         }
         
     }
+}
+
+.edit-dish-container {
+    width: 60vw;
+   
+    .image-save-section {
+        display: flex;
+        flex-direction: column;
+        margin-left: 50px;
+        #img_prev {
+            width: 500px;
+            height: 500px;
+            border-radius: 0px;
+        }
+        align-items: flex-start;
+    }
+    .edit-dish-form {
+        display: flex;
+        flex-direction: row;
+        input, textarea {
+            width: 300px;
+            padding: 5px;
+            border: none;
+            background-color: #f0f0f0;
+            color: black;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        textarea {
+            height: 200px;
+        }
+        label {
+            font-size: 0.9em;
+            opacity: 80%;
+            font-weight: 600;
+        }
+    }
+    #dish-save {
+        background-color: $secondary-color;
+        color: white;
+        &:hover {
+            background-color: green;
+        }
+        height: 40px;
+    }
+}
+#manager-back-link {
+    color: $secondary-color;
 }

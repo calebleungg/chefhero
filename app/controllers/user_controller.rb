@@ -3,7 +3,8 @@ require "date_format"
 class UserController < ApplicationController
 
     def index
-        @most_ordered = User.top_five_ordered
+        @top_chefs = User.top_five_chefs
+        @top_dishes = Dish.top_five_dishes
     end
 
     def show

@@ -40,6 +40,22 @@ class DishController < ApplicationController
         redirect_to manager_path(:option => "Manager")
     end
 
+    def edit
+        @dish = Dish.find(params[:id])
+        render layout: "dashboard"
+    end
+
+    def update
+        dish = Dish.find(params[:id])
+        dish.update(dish_params)
+        if dish.valid? && dish.save
+            redirect_to manager_path(:option => "Manager")
+        else
+            flash[:alert] = "Sorry something went wrong, could not update your dish at this time."
+            render "edit"
+        end
+    end
+
 
     private
     def dish_params

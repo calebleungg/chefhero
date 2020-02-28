@@ -177,7 +177,7 @@
                     <% end %>
                     <td> <%= DateFormat.change_to(dish.created_at, "ONLY_DATE") %> </td>
                     <td> 
-                        <i class="far fa-edit"></i>
+                        <%= link_to '<i class="far fa-edit"></i>'.html_safe, edit_dish_path(dish.id, :option => "Manager > Edit Dish") %>
                         <%= link_to '<i class="far fa-trash-alt"> </i>'.html_safe, delete_dish_path(dish.id), method: :delete, data: { confirm: "Are you sure you want to delete #{dish.name} from your menu? There is no going back."} %>
                     </td>
                 </tr>

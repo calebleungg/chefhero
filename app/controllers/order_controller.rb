@@ -7,6 +7,7 @@ class OrderController < ApplicationController
         dish = Dish.find(params[:dish])
         user = current_user
         order = user.orders.create(quantity: params[:quantity], dish_id: dish.id)
+        order.revenue = dish.price
         order.status = "placed"
         if order.valid? && order.save
             redirect_to order_summary_path(order.id)

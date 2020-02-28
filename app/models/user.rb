@@ -51,13 +51,13 @@ class User < ApplicationRecord
         return orders.length
     end
 
-    def self.top_five_ordered
+    def self.top_five_chefs
         chefs = User.where(account_type: "chefhero")
         chef_to_orders = {}
         for chef in chefs
             chef_to_orders[chef.id] = chef.get_total_orders
         end
-        sorted = chef_to_orders.sort_by(&:last).reverse
+        sorted = chef_to_orders.sort_by(&:last).reverse[0..3]
         return sorted
 
     end

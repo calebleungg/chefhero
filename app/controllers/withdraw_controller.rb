@@ -6,6 +6,7 @@ class WithdrawController < ApplicationController
         if request >= 0 
             user.withdrawals.create(amount: params[:amount])
             if user.valid? && user.save
+                flash[:notice] = "Withdrawal successful."
                 redirect_back(fallback_location: earnings_manager_path(:option => "Earnings"))
             end
         else

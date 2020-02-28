@@ -38,7 +38,7 @@
                     <h5><%= order.get_dish.name %></h5>
                     <p>
                         <%= order.get_user.name %><br/>
-                        <span>order#: <%= order.id%> | placed <%= DateFormat.change_to(order.created_at, "SHORT_TIME")%> </span>
+                        <span>order#: <%= order.id%> | placed <%= DateFormat.change_to(order.created_at.in_time_zone('Australia/Brisbane'), "SHORT_TIME")%> </span>
                     </p>
                 </div>
                 <div class="quantity-details">

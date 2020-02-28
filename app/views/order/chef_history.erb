@@ -3,50 +3,56 @@
 <div class="full-order-history-table">
 
     <table>
-    
-        <tr>
-            <td> </td>
-            <td> Date </td>
-            <td> Customer </td>
-            <td> Dish </td>
-            <td> Order Qty </td>
-            <td> Total Revenue </td>
-            <td> </td>
-            <td> Placed at </td>
-            <td> Collected at</td>
-            <td> Duration </td>
-        </tr>
-        <% index = 0 %>
-        <% for order in @orders %>
-            <% if order.created_at.day != @orders[index-1].created_at.day %>
-                <tr id="row-gap">
-                </tr>
-                <tr id="row-gap">
-                </tr>
-                <tr id="row-gap">
-                </tr>
-                <tr id="row-gap">
-                </tr>
-                <tr id="row-gap">
-                </tr>
-            <% end %>
+
+        <thead>
             <tr>
-                <td> <%= "##{order.id}"%> </td>
-                <td> <%= DateFormat.change_to(order.created_at, "") %> </td>
-                <td> <%= order.get_user.name %> </td>
-                <td> <%= order.get_dish.name %> </td>
-                <td> <%= order.quantity.to_i %> </td>
-                <td> <%= number_to_currency order.get_total %> </td>
                 <td> </td>
-                <td> <%= DateFormat.change_to(order.created_at.in_time_zone('Australia/Brisbane'), "MEDIUM_TIME") %> </td>
-                <td> <%= DateFormat.change_to(order.updated_at.in_time_zone('Australia/Brisbane'), "MEDIUM_TIME") %> </td>
-                <td> <%= DateFormat.time_difference(order.created_at, order.updated_at, "MINUTE_ONLY") %> </td>
+                <td> Date </td>
+                <td> Customer </td>
+                <td> Dish </td>
+                <td> Order Qty </td>
+                <td> Total Revenue </td>
+                <td> </td>
+                <td> Placed at </td>
+                <td> Collected at</td>
+                <td> Duration </td>
             </tr>
-            <tr id="row-gap">
-            </tr>
-            <% index += 1 %>
-        <% end %>
-    </div>
+        </thead>
+
+        <tbody class="history-body">
+            <% index = 0 %>
+            <% for order in @orders %>
+                <% if order.created_at.day != @orders[index-1].created_at.day %>
+                    <tr id="row-gap">
+                    </tr>
+                    <tr id="row-gap">
+                    </tr>
+                    <tr id="row-gap">
+                    </tr>
+                    <tr id="row-gap">
+                    </tr>
+                    <tr id="row-gap">
+                    </tr>
+                <% end %>
+                <tr>
+                    <td> <%= "##{order.id}"%> </td>
+                    <td> <%= DateFormat.change_to(order.created_at, "") %> </td>
+                    <td> <%= order.get_user.name %> </td>
+                    <td> <%= order.get_dish.name %> </td>
+                    <td> <%= order.quantity.to_i %> </td>
+                    <td> <%= number_to_currency order.get_total %> </td>
+                    <td> </td>
+                    <td> <%= DateFormat.change_to(order.created_at.in_time_zone('Australia/Brisbane'), "MEDIUM_TIME") %> </td>
+                    <td> <%= DateFormat.change_to(order.updated_at.in_time_zone('Australia/Brisbane'), "MEDIUM_TIME") %> </td>
+                    <td> <%= DateFormat.time_difference(order.created_at, order.updated_at, "MINUTE_ONLY") %> </td>
+                </tr>
+                <tr id="row-gap">
+                </tr>
+                <% index += 1 %>
+            <% end %>
+        </tbody>
+
+    </table>
 
 
 </div>
