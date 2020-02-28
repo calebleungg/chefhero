@@ -4,6 +4,18 @@ class DishController < ApplicationController
         @dish = Dish.new
     end
 
+    def index
+        filter = Dish.search(params[:search])
+        @dishes = filter.where(available: true)
+        if params[:sort] == "ordered"
+            @dishes = @dishes.sort_by_orders
+        end
+        if params[:sort] == "newest"
+            @dishes = @dishes.sort_by_newest
+        end
+
+    end
+
     def create
         @dish = current_user.dishes.create(dish_params)
         @dish.image.attach(params[:dish][:image])

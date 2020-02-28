@@ -15,7 +15,7 @@
                     <p> <i class="fas fa-utensils"></i>Foodie</p>
                 <% end %>
                 <% if @user.account_type == "chefhero" %>
-                    <p> <i class="fas fa-store"></i> ChefHero</p>
+                    <p> <%= image_tag "hat-icon.png" %> ChefHero</p>
                     <p> <i class="fas fa-drumstick-bite"></i> <%= @total_orders%> Total Orders</p>
                 <% end %>
                 <hr>

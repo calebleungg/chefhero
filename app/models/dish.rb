@@ -3,6 +3,17 @@ class Dish < ApplicationRecord
 	has_one_attached :image
 	has_many :order
 
+	def self.search(search)
+		if search
+			if search == "" || search == " "
+				return Dish.all
+			end
+			self.where(category: search.capitalize)
+		else
+			Dish.all
+		end
+	end
+
 	def get_image
         return self.image.attached? ? self.image : "default-dish.png"
 	end
@@ -32,6 +43,32 @@ class Dish < ApplicationRecord
 		end
 		sorted = dish_to_orders.sort_by(&:last).reverse[0..3]
 		return sorted
+	end
+
+	def self.sort_by_orders
+		dish_to_orders = {}
+		for dish in self.all
+            dish_to_orders[dish.id] = dish.total_quantity
+		end
+		sorted = dish_to_orders.sort_by(&:last).reverse
+		list = []
+		for key,value in sorted
+			list.push(Dish.find(key))
+		end
+		return list
+	end
+
+	def self.sort_by_newest
+		dish_to_created = {}
+		for dish in self.all
+			dish_to_created[dish.id] = dish.created_at
+		end
+		sorted = dish_to_created.sort_by(&:last).reverse
+		list = []
+		for key,value in sorted
+			list.push(Dish.find(key))
+		end
+		return list
 	end
 	
 end

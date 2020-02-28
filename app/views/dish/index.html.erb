@@ -1,0 +1,79 @@
+<div class="dish-index-display">
+
+    <div class="dish-search-banner">
+
+        <div class="search-bar">
+            <p> Enter Category/Tag: </p>
+            <%= form_tag(dishes_path, method: :get) do %>
+                <%= text_field_tag(:search, params[:search], placeholder: "Eg. Japanese") %>
+                <%= submit_tag("Search", id:"search-button")%>
+            <% end %>
+        </div>
+
+    </div>
+    <div class="toggle-sort-options">
+        <p> Sort by: </p>
+        <% if params[:search] %>
+            <%= link_to "Most Ordered", dishes_path(:sort => "ordered",:search => params[:search]), class:"btn btn-success" %>
+            <%= link_to "Newest", dishes_path(:sort => "newest",:search => params[:search]), class:"btn btn-success" %>
+        <% else %>
+            <%= link_to "Most Ordered", dishes_path(:sort => "ordered"), class:"btn btn-success" %>
+            <%= link_to "Newest", dishes_path(:sort => "newest"), class:"btn btn-success" %>
+        <% end %>
+    </div>
+
+    <div class="dish-results">
+        
+        <% for dish in @dishes %>
+            <%= link_to dish_path(dish.id), "data-toggle" => "modal", 'data-target' => "#order-modal-#{dish.id}" do %>
+
+                <div class="card" id="dish-card">
+                    <%= image_tag dish.image.attached? ? dish.image : "default-dish.png", class:"card-img-top", alt:"default dish image" %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= dish.name %></h5>
+                        <p class="card-text"><%= dish.category %> <i class="fas fa-drumstick-bite"></i> <span><%= dish.total_quantity.to_i %></span> total orders </p>
+                        <p id="price" data-price="5" > <%= number_to_currency dish.price %></p>
+                        <p class="card-text" id="dish-description"><%= dish.about %></p>
+                    </div>
+                </div>
+                
+                <!-- Order Modal -->
+                <div class="modal fade" id="order-modal-<%=dish.id%>" tabindex="-1" role="dialog" aria-labelledby="order-modal-<%=dish.id%>Label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <%= link_to user_path(dish.get_chef), id:"chef-label" do %>
+                                <div class="small-chef-tag">
+                                        <%= dish.get_chef.name %>
+                                        <%= image_tag dish.get_chef.get_display_picture %>
+                                </div>
+                            <% end %>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <%= image_tag dish.get_image %>
+                            <div class="modal-body">
+                                <h5> <%= dish.name %> </h5>
+                                <p> <%= dish.about %> </p>
+                                <p> <strong>Ingredients:</strong> <%= dish.ingredients.to_s.capitalize %> </p>
+                            </div>
+                            <div class="modal-footer" id="order-submission">
+                                <% if user_signed_in? %>
+                                    <p> <%= number_to_currency dish.price %> &times; </p>
+                                    <%= form_with model: @order, url: create_order_path do |form| %>
+                                        <%= form.hidden_field :dish, value: dish.id %>
+                                        <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
+                                        <%= form.submit "Order", id:"order-button" %>
+                                    <% end %>
+                                <% else %>
+                                    <p> <%= number_to_currency dish.price %> | <%= link_to "Login", new_user_session_path%> to order now! </p>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <% end %>
+        <% end %>
+
+    </div>
+</div>

@@ -47,6 +47,7 @@
         border-radius: 100%;
         margin-right: 5px;
     }
+   
 
     .dropdown-item {
         font-size: 80%;
@@ -105,6 +106,9 @@
      flex-direction: column;
      justify-content: flex-start;
      min-width: 100vw;
+     #index-links {
+         color: $secondary-color;
+     }
     h2 {
         font-size: 1.5em;
         font-weight: 700;
@@ -173,6 +177,7 @@
                     width: 200px;
                     height: 200px;
                     border-radius: 100%;
+                    border: 1px solid lightgrey;
                     
                 }
                 #chef-name {
@@ -189,6 +194,11 @@
                 }
                 p {
                     text-align: center;
+                    img {
+                        width: 21px;
+                        height: 21px;
+                        margin-bottom: 2px;
+                    }
                 }
 
     
@@ -212,6 +222,10 @@
         align-items: center;
         a {
             color: $secondary-color;
+        }
+        #copy-text {
+            font-size: 0.8em;
+            opacity: 80%;
         }
     }
 
@@ -290,6 +304,14 @@
      .profile-badges {
          align-items: flex-start;
          width: 250px;
+         img {
+             width: 21px;
+             height: 21px;
+             margin-right: 5px;
+         }
+         span {
+             width: 50px;
+         }
  
          #tick {
              color: green;
@@ -629,7 +651,6 @@
     height: 30px;
     font-size: 70%;
     font-weight: 600;
-    border-radius: 20px;
     box-shadow: 1px 1px 3px grey;
     img {
         margin-left: 5px;
@@ -1388,4 +1409,99 @@
 }
 #manager-back-link {
     color: $secondary-color;
+}
+
+.dish-index-display {
+    width: 100vw;
+    justify-content: center;
+    align-self: center;
+    .dish-search-banner {
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 90vw;
+        margin: 0 5vw;
+        border-left: 1px solid lightgrey;
+        border-right: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+        box-shadow: 0 0 2px lightgrey;
+        .search-bar {
+            display: flex;
+            flex-direction: row;
+            input {
+                width: 300px;
+                padding: 5px;
+                border: none;
+                background-color: #f0f0f0;
+                color: black;
+            }
+            #search-button {
+                width: 80px;
+                background-color: $secondary-color;
+                color: white;
+            }
+            p {
+                margin-right: 10px;
+                font-weight: 600;
+                font-size: 1.2em;
+            }
+        }
+    }
+    .toggle-sort-options {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 20px;
+        margin-left: 5vw;
+        p {
+            margin: 5px;
+        }
+        .btn {
+            margin: 0 10px;
+        }
+    }
+    .dish-results {
+        display: flex;
+        flex-wrap: wrap;
+        width: 90vw;
+        margin: 20px 5vw;
+        h5 {
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        #dish-card {
+            margin: 10px;
+            i {
+                color: #b69e19;
+                margin-left: 10px;
+            }
+        }
+        .modal-content {
+            img {
+                max-height: 400px;
+             }
+        }
+        .modal-body {
+            p {
+                max-height: 150px;
+                overflow: scroll;
+                img {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+        .modal-footer {
+            a {
+                color: $secondary-color;
+            }
+        }
+    }
 }

@@ -73,4 +73,7 @@ Rails.application.routes.draw do
   # post new withdrawal
   post "/user/:id/withdraw", to: "withdraw#create", as: "withdraw"
 
+  # get index view for dishes
+  get "/dishes", to: "dish#index", as: "dishes"
+
 end
