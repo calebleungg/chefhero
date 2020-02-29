@@ -286,6 +286,10 @@
      align-items: center;
      width: 300px;
      border: 1px lightgrey solid;
+     i {
+        color: $secondary-color;
+     }
+     
      img {
          width: 150px;
          height: 150px;
@@ -315,9 +319,6 @@
  
          #tick {
              color: green;
-         }
-         #review-badge {
-             color: #c4c440;
          }
      }
  
@@ -404,6 +405,11 @@
  
  .profile-content {
      width: 30vw;
+     #color-icon {
+         i {
+            color: $secondary-color;            
+         }
+     }
  }
  
  .review-title {
@@ -1431,8 +1437,8 @@
             display: flex;
             flex-direction: row;
             input {
-                width: 300px;
-                padding: 5px;
+                width: 400px;
+                padding: 10px;
                 border: none;
                 background-color: #f0f0f0;
                 color: black;
@@ -1441,11 +1447,15 @@
                 width: 80px;
                 background-color: $secondary-color;
                 color: white;
+                font-weight: 600;
             }
             p {
                 margin-right: 10px;
                 font-weight: 600;
                 font-size: 1.2em;
+            }
+            #location-search {
+                width: 150px;
             }
         }
     }
@@ -1502,6 +1512,57 @@
             a {
                 color: $secondary-color;
             }
+        }
+        .chef-card {
+            margin-right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            // height: 300px;
+            padding: 20px;
+            img {
+                width: 200px;
+                height: 200px;
+                border-radius: 100%;
+                border: 1px solid lightgrey;
+                
+            }
+            #chef-name {
+                font-size: 1.2em; 
+                font-weight: 600;
+                margin-top: 10px;
+            }
+            span {
+                font-weight: 600;
+                font-size: 1em;
+            }
+            i {
+                color: #b69e19;
+            }
+            p {
+                text-align: center;
+                img {
+                    width: 21px;
+                    height: 21px;
+                    margin-bottom: 2px;
+                }
+            }
+
+
+        }
+    }
+    .chef-details {
+       
+        p {
+            margin: 0;
+        }
+        #chef-since {
+            font-size: 0.7em;
+            opacity: 80%;
+        }
+        #specialties {
+            font-size: 0.9em;
         }
     }
 }

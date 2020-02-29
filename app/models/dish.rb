@@ -8,7 +8,12 @@ class Dish < ApplicationRecord
 			if search == "" || search == " "
 				return Dish.all
 			end
-			self.where(category: search.capitalize)
+			result = self.where("LOWER(name) LIKE ?", "%#{search.downcase}%")
+			if result.length > 0
+				return result
+			else
+				return self.where("LOWER(category) LIKE ?", "%#{search.downcase}%")
+			end
 		else
 			Dish.all
 		end

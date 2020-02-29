@@ -15,6 +15,23 @@ class User < ApplicationRecord
     def name
         return "#{first_name} #{last_name}"
     end
+    
+    def self.search(search)
+		if search
+			if search == "" || search == " "
+				return User.where(account_type: "chefhero")
+			end
+			result = self.where("LOWER(first_name) LIKE ?", "%#{search.downcase}%")
+			if result.length > 0
+				return result
+			else
+				return self.where("LOWER(last_name) LIKE ?", "%#{search.downcase}%")
+			end
+		else
+			User.where(account_type: "chefhero")
+        end
+        
+	end
 
     def get_dish_ids
         ids = []
@@ -59,7 +76,56 @@ class User < ApplicationRecord
         end
         sorted = chef_to_orders.sort_by(&:last).reverse[0..3]
         return sorted
+    end
 
+    def dish_types
+        dishes = Dish.find(self.get_dish_ids)
+        types = []
+        dishes.each do |dish|
+            types.push(dish.category) if types.include?(dish.category) == false
+        end
+        string = ""
+        types.each_with_index do |type, index|
+            if types.length == (index + 1)
+                string += "#{type}"
+            else
+                string += "#{type}, "
+            end
+        end
+        if string == ""
+            string = "No dishes yet"
+        end
+        return string
+    end
+
+    def self.sort_by_orders
+		chef_to_orders = {}
+		for chef in self.where(account_type: "chefhero")
+            chef_to_orders[chef.id] = chef.get_total_orders
+		end
+		sorted = chef_to_orders.sort_by(&:last).reverse
+		list = []
+		for key,value in sorted
+			list.push(User.find(key))
+		end
+		return list
+    end
+    
+    def self.sort_by_rating
+        chef_to_rating = {}
+		for chef in self.where(account_type: "chefhero")
+            chef_to_rating[chef.id] = chef.reviews.length > 0 ? chef.reviews.average(:rating) : 0
+		end
+		sorted = chef_to_rating.sort_by(&:last).reverse
+		list = []
+		for key,value in sorted
+			list.push(User.find(key))
+		end
+		return list
+    end
+
+    def self.sort_by_location(search)
+        return self.where("LOWER(location) LIKE ?", "%#{search.downcase}%" )
     end
 
 end

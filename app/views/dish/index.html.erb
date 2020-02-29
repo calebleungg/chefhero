@@ -1,16 +1,17 @@
-<div class="dish-index-display">
 
+<div class="dish-index-display">
+ 
     <div class="dish-search-banner">
 
-        <div class="search-bar">
-            <p> Enter Category/Tag: </p>
+<div class="search-bar">
             <%= form_tag(dishes_path, method: :get) do %>
-                <%= text_field_tag(:search, params[:search], placeholder: "Eg. Japanese") %>
+                <%= text_field_tag(:search, params[:search], placeholder: "I'm looking for...") %>
                 <%= submit_tag("Search", id:"search-button")%>
             <% end %>
         </div>
 
     </div>
+    
     <div class="toggle-sort-options">
         <p> Sort by: </p>
         <% if params[:search] %>
@@ -76,4 +77,5 @@
         <% end %>
 
     </div>
+
 </div>

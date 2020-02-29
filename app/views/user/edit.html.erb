@@ -9,7 +9,11 @@
             <p> <%= form.text_field :first_name, value: current_user.first_name, class:"name-input" %> <%= form.text_field :last_name, value: current_user.last_name, class:"name-input" %> </p>
             <h5> <%= form.label :about, "Bio"%> </h5>
             <%= tinymce %>
-            <p> <%= form.text_area :about, value: current_user.about.html_safe, :class => "tinymce", :rows => 20 %> </p>
+            <% if current_user.about %>
+                <p> <%= form.text_area :about, value: current_user.about.html_safe, :class => "tinymce", :rows => 20 %> </p>
+            <% else %>
+                <p> <%= form.text_area :about, placeholder: "Say something about yourself!", :class => "tinymce", :rows => 20 %> </p>
+            <% end %>
             <h5> <%= form.label :email, "Email"%> </h5>
             <p> <%= form.text_field :email, value: current_user.email %> </p>
             <h5> <%= form.label :phone, "Phone"%> </h5>

@@ -75,5 +75,7 @@ Rails.application.routes.draw do
 
   # get index view for dishes
   get "/dishes", to: "dish#index", as: "dishes"
+  # get index view for chefs
+  get "/chefheroes", to: "user#chefs", as: "chefs" 
 
 end

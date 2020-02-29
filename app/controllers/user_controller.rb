@@ -7,6 +7,19 @@ class UserController < ApplicationController
         @top_dishes = Dish.top_five_dishes
     end
 
+    def chefs
+        @chefs = User.search(params[:search])
+        if params[:location]
+            @chefs = @chefs.sort_by_location(params[:location])
+        end
+        if params[:sort] == "ordered"
+            @chefs = @chefs.sort_by_orders
+        end
+        if params[:sort] == "top"
+            @chefs = @chefs.sort_by_rating
+        end
+    end
+
     def show
 
         @user = User.find(params[:id])

@@ -1,0 +1,57 @@
+
+<div class="dish-index-display">
+ 
+    <div class="dish-search-banner">
+
+        <div class="search-bar">
+            <%= form_tag(chefs_path, method: :get) do %>
+                <%= text_field_tag(:search, params[:search], placeholder: "I'm looking for...") %>
+                <%= text_field_tag(:location, params[:location], placeholder: "Location", id:"location-search") %>
+                <%= submit_tag("Search", id:"search-button")%>
+            <% end %>
+        </div>
+
+    </div>
+    
+    <div class="toggle-sort-options">
+        <p> Sort by: </p>
+        <% if params[:search] %>
+            <% if params[:location] %>
+                <%= link_to "Most Orders", chefs_path(:sort => "ordered",:search => params[:search], :location => params[:location]), class:"btn btn-success" %>
+                <%= link_to "Top Rated", chefs_path(:sort => "top",:search => params[:search], :location => params[:location]), class:"btn btn-success" %>
+            <% else %>
+                <%= link_to "Most Orders", chefs_path(:sort => "ordered",:search => params[:search]), class:"btn btn-success" %>
+                <%= link_to "Top Rated", chefs_path(:sort => "top",:search => params[:search]), class:"btn btn-success" %>
+            <% end%>
+        <% else %>
+            <%= link_to "Most Orders", chefs_path(:sort => "ordered"), class:"btn btn-success" %>
+            <%= link_to "Top Rated", chefs_path(:sort => "top"), class:"btn btn-success" %>
+        <% end %>
+
+    </div>
+
+    <div class="dish-results">
+        
+        <% for chef in @chefs %>
+
+            <%= link_to user_path(chef) do %>
+                <div>
+                    <div class="chef-card">
+                        <%= image_tag chef.get_display_picture%>
+                        <div class="chef-details">
+                            <p id="chef-name"> <%= chef.name %></p>
+                            <p id="chef-since"> Member since <%= chef.created_at.year %> </p>
+                            <p> 
+                                <i class="fas fa-star"></i> <%= chef.reviews.average(:rating) %>(<%= chef.reviews.length %>)<br/>
+                                <span><%= chef.get_total_orders %></span> total orders
+                            </p>
+                            <p id="specialties"> <i class="fas fa-utensils"></i> <%= chef.dish_types %> </p>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+
+        <% end %>
+    </div>
+
+</div>
