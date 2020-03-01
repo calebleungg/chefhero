@@ -74,3 +74,5 @@ gem "aws-sdk-s3", "~> 1.60"
 gem "date_format", "~> 0.3.3"
 
 gem "geocoder", "~> 1.6"
+
+gem "stripe", "~> 5.17"

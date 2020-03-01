@@ -20,6 +20,7 @@
  $headings: 'Montserrat', sans-serif;
  $text: 'Source Sans Pro', sans-serif;
  $secondary-color: #236e05;
+ $gold: #b69e19;
  
  body {
      font-family: $headings;
@@ -190,7 +191,7 @@
                     font-size: 1em;
                 }
                 i {
-                    color: #b69e19;
+                    color: $gold;
                 }
                 p {
                     text-align: center;
@@ -213,23 +214,23 @@
 
     }
 
-    .index-footer {
-        height: 300px;
-        border-top: 1px solid lightgrey;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        a {
-            color: $secondary-color;
-        }
-        #copy-text {
-            font-size: 0.8em;
-            opacity: 80%;
-        }
+    
+}
+.index-footer {
+    height: 300px;
+    border-top: 1px solid lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    a {
+        color: $secondary-color;
     }
-
- }
+    #copy-text {
+        font-size: 0.8em;
+        opacity: 80%;
+    }
+}
  
  .signup-form, .default-form {
     padding-bottom: 80px;
@@ -785,7 +786,10 @@
      justify-content: center;
      min-width: 90vw;
      
-     
+     #breadcrum {
+         color: black;
+         text-decoration: none;
+     }
      h1 {
         font-weight: 700;
         text-align: left;
@@ -1489,9 +1493,10 @@
         #dish-card {
             margin: 10px;
             i {
-                color: #b69e19;
+                color: $gold;
                 margin-left: 10px;
             }
+            border-radius: 0px;
         }
         .modal-content {
             img {
@@ -1508,37 +1513,40 @@
                 }
             }
         }
-        .modal-footer {
-            a {
-                color: $secondary-color;
-            }
-        }
         .chef-card {
-            margin-right: 10px;
+            margin: 10px 20px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            width: 300px;
-            // height: 300px;
-            padding: 20px;
+            // border-radius: 13px;
             img {
+                // border: 1px solid lightgrey;
+                box-shadow: 0 0 3px grey;
                 width: 200px;
                 height: 200px;
-                border-radius: 100%;
-                border: 1px solid lightgrey;
-                
+                border-radius: 100%;                
             }
             #chef-name {
                 font-size: 1.2em; 
                 font-weight: 600;
                 margin-top: 10px;
             }
+            .chef-details {
+                width: 170px;
+            }
             span {
                 font-weight: 600;
                 font-size: 1em;
+                color: $secondary-color;
             }
             i {
-                color: #b69e19;
+                color: $gold;
+            }
+            #specialties {
+                i {
+                    color: grey;
+                }
+                font-size: 0.8em;
             }
             p {
                 text-align: center;
@@ -1548,8 +1556,48 @@
                     margin-bottom: 2px;
                 }
             }
-
-
+        }
+        .single-dish-display {
+            margin: 10px;
+            img {
+                width: 300px;
+                height: 200px;
+                border-radius: 13px;
+            }
+            .small-details-row {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 2px;
+                h2 {
+                    img {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 100%;
+                    }
+                    font-size: 0.8em;
+                    font-weight: 600;
+                }
+                p {
+                    font-weight: 600;
+                    color: grey;
+                    justify-content: flex-end;
+                    i {
+                        color: grey;
+                    }
+                    font-size: 0.8em;
+                }
+            }
+        }
+        .modal-body {
+            h5 {
+                font-size: 1.5em;
+            }
+        }
+        .modal-footer {
+            #order-button {
+                color: $secondary-color;
+            }
         }
     }
     .chef-details {
@@ -1564,5 +1612,52 @@
         #specialties {
             font-size: 0.9em;
         }
+    }
+}
+
+.dashboard-options-container {
+    width: 80vw;
+    // height: 60vh;
+    margin: 80px 10vw;
+    display: flex;
+    flex-wrap: wrap;
+    span {
+        color: $secondary-color;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    h2 {
+        font-weight: 700;
+        align-self: flex-start;
+    }
+    .option-card {
+        margin: 20px;
+        border-radius: 20px;
+
+        i {
+            font-size: 3em;
+            color: $secondary-color
+        }
+        h3 {
+            font-weight: 600;
+            font-size: 1.5em;
+            margin: 10px 0 ;
+        }
+        width: 300px;
+        height: 200px;
+        box-shadow: 0 0 5px lightgrey;
+        .option-card-content {
+            padding: 30px 0 0 30px;
+        }
+        p {
+            font-size: 0.85em;
+            max-width: 80%;
+        }
+    }
+    .option-section {
+        display: flex;
+        flex-wrap: wrap;
     }
 }

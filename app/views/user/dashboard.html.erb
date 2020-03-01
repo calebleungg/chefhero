@@ -1,0 +1,43 @@
+<div class="dashboard-options-container">
+    <h2> Chef<span>Hero</span> Dashboard </h2>
+    <div class="option-section">
+        <%= link_to manager_path(:option => "Manager") do %>
+            <div class="option-card">
+                <div class="option-card-content">
+                    <i class="fas fa-cog"></i>
+                    <h3> Manager </h3>
+                    <p> Manage your dishes, schedule, and address details here.</p>
+                </div>
+            </div>
+        <% end %>
+        <%= link_to orders_manager_path(:option => "Orders") do %>
+            <div class="option-card">
+                <div class="option-card-content">
+                    <i class="fas fa-receipt"></i>
+                    <h3> Orders </h3>
+                    <p> Track and manage your orders here.</p>
+                </div>
+            </div>
+        <% end %>
+        <%= link_to earnings_manager_path(:option => "Earnings") do %>
+            <div class="option-card">
+                <div class="option-card-content">
+                    <i class="fas fa-money-check-alt"></i>
+                    <h3> Earnings </h3>
+                    <p> Track and manage your earnings here.</p>
+                </div>
+            </div>
+        <% end %>
+        <%= link_to resources_path(:option => "Resources") do %>
+            <div class="option-card">
+                <div class="option-card-content">
+                    <i class="fas fa-people-carry"></i>
+                    <h3> Resources </h3>
+                    <p> Access resources to ingredients.</p>
+                </div>
+            </div>
+        <% end %>
+    </div>
+
+</div>
+<%= render "shared/footer"%>

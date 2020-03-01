@@ -18,11 +18,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <%= link_to "Profile", user_path(current_user.id), class:"dropdown-item" %>
+                        <% if current_user.account_type == "chefhero" %>
+                            <%= link_to "Dashboard", dashboard_path, class:"dropdown-item" %>
+                        <% end %>
                         <%= link_to "Account", details_path(current_user), class:"dropdown-item" %>
                         <%= link_to "Order History", order_history_path(current_user), class:"dropdown-item" %>
-                        <% if current_user.account_type == "chefhero" %>
-                            <%= link_to "Dashboard", manager_path(:option => "Manager"), class:"dropdown-item" %>
-                        <% end %>
                         <%= link_to "Log Out", destroy_user_session_path, method: :delete, class:"dropdown-item" %>
                     </div>
                 </li>

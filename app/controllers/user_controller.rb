@@ -79,6 +79,9 @@ class UserController < ApplicationController
         end
     end
 
+    def dashboard
+    end
+
     def manager
         @user = current_user
         @dishes = @user.dishes.order("created_at DESC")
@@ -117,6 +120,10 @@ class UserController < ApplicationController
         else 
             render "new_chef"
         end
+    end
+
+    def resources
+        render layout: "dashboard"
     end
 
     private

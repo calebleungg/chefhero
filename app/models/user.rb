@@ -20,8 +20,9 @@ class User < ApplicationRecord
 		if search
 			if search == "" || search == " "
 				return User.where(account_type: "chefhero")
-			end
-			result = self.where("LOWER(first_name) LIKE ?", "%#{search.downcase}%")
+            end
+            chefs = User.where(account_type: "chefhero")
+			result = chefs.where("LOWER(first_name) LIKE ?", "%#{search.downcase}%")
 			if result.length > 0
 				return result
 			else

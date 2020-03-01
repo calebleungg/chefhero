@@ -35,6 +35,9 @@ Rails.application.routes.draw do
   # order history view
   get "/order/history/:id", to: "order#history", as: "order_history"
 
+  # main dashboard page
+  get "/dashboard", to: "user#dashboard", as: "dashboard"
+  
   # chefhero dashboard view
   get "/dashboard/manager", to: "user#manager", as: "manager"
   # delete a dish
@@ -77,5 +80,8 @@ Rails.application.routes.draw do
   get "/dishes", to: "dish#index", as: "dishes"
   # get index view for chefs
   get "/chefheroes", to: "user#chefs", as: "chefs" 
+
+  # manager resources view
+  get "/dashboard/resources", to: "user#resources", as: "resources"
 
 end
