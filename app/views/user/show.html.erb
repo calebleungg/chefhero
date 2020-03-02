@@ -118,11 +118,15 @@
                                         </div>
                                         <div class="modal-footer" id="order-submission">
                                             <% if user_signed_in? %>
+                                                <%= link_to "Order-Test", new_order_path(dish.id)%>
+                                                    
+                                                <%= button_to 'buy now', checkout_create_path, method: :post, params: {id: dish.id}, remote:true %>
+
                                                 <p> <%= number_to_currency dish.price %> &times; </p>
-                                                <%= form_with model: @order, url: create_order_path do |form| %>
+                                                <%= form_with model: @order, url: checkout_create_path, method: :post do |form| %>
                                                     <%= form.hidden_field :dish, value: dish.id %>
                                                     <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
-                                                    <%= form.submit "Order", id:"order-button" %>
+                                                    <%= form.submit "Order", id:"create-button" %>
                                                 <% end %>
                                             <% else %>
                                                 <p> <%= number_to_currency dish.price %> | <%= link_to "Login", new_user_session_path%> to order now! </p>
@@ -185,23 +189,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-        $('#img_prev')
-            .attr('src', e.target.result)
-            .width(200)
-            .height(200);
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
-    }
-</script>
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsZWJsZXVuZ2ciLCJhIjoiY2s2YmZpdzhyMDB5czNvbXcxd2Rqd2kybSJ9.W8uq-6F01vXhBq1Bkr8eKQ';

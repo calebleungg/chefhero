@@ -7,6 +7,8 @@ ruby '2.6.5'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
 # bootstrap gem
 gem 'bootstrap', '~> 4.4.1'
+# stripe rails
+gem 'stripe-rails'
 #jquery
 gem 'jquery-rails'
 # tiny mce rich-text editor

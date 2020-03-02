@@ -28,6 +28,9 @@ Rails.application.routes.draw do
 
   # order dish modal view
   get "/dish/show/:id", to: "dish#show", as: "dish"
+  # checkout strip session
+  get "/order/new/:id", to: "order#new", as: "new_order"
+
   # create order 
   post "/order/create", to: "order#create", as: "create_order"
   # order summary view
@@ -83,5 +86,16 @@ Rails.application.routes.draw do
 
   # manager resources view
   get "/dashboard/resources", to: "user#resources", as: "resources"
+
+  # new billing card view
+  get "/card/new", to: "user#new_card", as: "add_payment_method"
+  # creating enw billing card
+  post "/card", to: "user#create_card", as: "create_payment_method"
+
+  scope "/checkout" do
+    post "create", to: "checkout#create", as: "checkout_create"
+    get "cancel", to: "checkout#cancel", as: "checkout_cancel"
+    get "success", to: "checkout#success", as: "checkout_success"
+  end
 
 end
