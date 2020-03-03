@@ -15,7 +15,7 @@
                             <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= record.name %></p>
                             <p> 
                                 <%= image_tag "hat-icon.png"%> <%= User.find(record.get_chef.id).name %><br/>
-                                <i class="fas fa-star"></i> <%= User.find(record.get_chef.id).reviews.average(:rating) %>(<%= User.find(record.get_chef.id).reviews.length %>)<br/>
+                                <i class="fas fa-star"></i> <%= User.find(record.get_chef.id).reviews.length > 0 ? "%.2f" % User.find(record.get_chef.id).reviews.average(:rating) : 0 %>(<%= User.find(record.get_chef.id).reviews.length %>)<br/>
                                 <span><%= orders.to_i %></span> total orders
                             </p>
                         </div>
@@ -55,7 +55,7 @@
                             <%= image_tag User.find(chef).get_display_picture%>
                             <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= User.find(chef).name %></p>
                             <p> 
-                                <i class="fas fa-star"></i> <%= User.find(chef).reviews.average(:rating) %>(<%= User.find(chef).reviews.length %>)<br/>
+                                <i class="fas fa-star"></i> <%= User.find(chef).reviews.length > 0 ? "%.2f" % User.find(chef).reviews.average(:rating) : 0 %>(<%= User.find(chef).reviews.length %>)<br/>
                                 <span><%= orders %></span> total orders
                             </p>
                         </div>

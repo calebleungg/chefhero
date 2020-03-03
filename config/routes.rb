@@ -92,6 +92,9 @@ Rails.application.routes.draw do
   # creating enw billing card
   post "/card", to: "user#create_card", as: "create_payment_method"
 
+  # create review request
+  post "/review/create", to: "review#create", as: "create_review"
+
   scope "/checkout" do
     post "create", to: "checkout#create", as: "checkout_create"
     get "cancel", to: "checkout#cancel", as: "checkout_cancel"

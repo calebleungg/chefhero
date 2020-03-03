@@ -731,9 +731,18 @@
      align-items: center;
      flex-direction: column;
      padding-top: 80px;
+     #review-prompt {
+         border: 1px solid lightgrey;
+         padding: 20px;
+         font-size: 1.2em;
+     }
 
      h2 {
          font-weight: 700;
+     }
+     .order-sec-1 {
+         display: flex;
+         flex-direction: row;
      }
      img {
          width: 70px;
@@ -744,6 +753,12 @@
      .order-details {
          margin-top: 30px;
          justify-content: flex-start;
+         #order-details-img {
+            width: 170px;
+            height: 170px;
+            border-radius: 13px;
+            margin-left: 20px;
+         }
      }
 
      span, a {
@@ -767,12 +782,17 @@
          div {
              width: 300px;
          }
+         
          display: flex;
          flex-direction: row;
          padding-bottom: 200px;
          #helper {
              font-size: 70%;
          }
+        a {
+            color: black;
+            text-decoration: none;
+        }
 
      }
 
@@ -1695,4 +1715,23 @@
   
   .StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
+  }
+
+  #review-modal {
+      input {
+        width: 100px;
+        padding: 5px;
+        border: none;
+        background-color: #f0f0f0;
+        color: black;
+      }
+      textarea {
+        width: 80%;
+        height: 200px;
+        padding: 5px;
+        border: none;
+        background-color: #f0f0f0;
+        color: black;
+        margin: 20px 0;
+      }
   }

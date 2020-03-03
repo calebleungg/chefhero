@@ -2,8 +2,19 @@ class CheckoutController < ApplicationController
 
     def create
 
+        # if check here to determine env by going Rails.env.development? then set true if so then pass true to run appropriate key call in create.js
+
+        if Rails.env.development?
+            @api = Rails.application.credentials.dig(:stripe, :public_key)
+        end
+
+        if Rails.env.production?
+            @api = ENV['STRIPE_PUBLIC_KEY']
+        end
+
         dish = Dish.find(params[:dish])
         quantity = params[:quantity]
+
 
         user = current_user
         last_order = user.orders.order("created_at DESC")[0].id.to_i

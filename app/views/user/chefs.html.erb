@@ -42,7 +42,7 @@
                             <p id="chef-name"> <%= chef.name %></p>
                             <p id="chef-since"> Member since <%= chef.created_at.year %> </p>
                             <p> 
-                                <i class="fas fa-star"></i> <%= chef.reviews.average(:rating) %>(<%= chef.reviews.length %>)<br/>
+                                <i class="fas fa-star"></i> <%= chef.reviews.length > 0 ? "%.2f" % chef.reviews.average(:rating) : 0 %>(<%= chef.reviews.length %>)<br/>
                                 <span><%= chef.get_total_orders %></span> total orders
                             </p>
                             <p id="specialties"> <i class="fas fa-utensils"></i> <%= chef.dish_types %> </p>

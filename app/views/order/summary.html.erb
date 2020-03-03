@@ -2,39 +2,72 @@
     <h2> Food is ordered! </h2>
     <p> Hi <%= User.find(@order.user_id).first_name %>- Thank you for your order.  </p>
     <p> And thank you for supporting one of your local ChefHeroes <%= link_to @chef.first_name, user_path(@chef) %> </p>
-    <p> Be sure to leave them a  <%= link_to "review!", user_path(@chef) %> </p>
-
+    <% if @order.reviewed == false && @order.status == "collected" %> <p id="review-prompt"> Be sure to leave them a  <a type="button" data-toggle="modal" data-target="#reviewModal"> review! </a> <% end %>
+    <% if @order.reviewed == true %> <p id="review-thanks"> Thank you for leaving <%=@chef.first_name%> a review, the community appreciates it greatly! </p> <% end %>
     <div class="order-details">
         <h4> Order details below: </h4>
         <hr>
-        <table>
-            <tr>
-                <td> <p> Order Number:</p> </td>
-                <td>  <p> <%= @order.id %> </p> </td>
-            </tr>
-            <tr>
-                <td> <p> Item:</p> </td>
-                <td> <p> <%= @dish.name %> </p> </td>
-            </tr>
-            <tr>
-                <td> <p> Quantity: </p> </td>
-                <td> <p> <%= @order.quantity.to_i %> </p> </td>
-            </tr>
-            <tr>
-                <td> <p> Total: </p> </td>
-                <td> <p> <%= number_to_currency @total %> </p> </td>
-            </tr>
-        </table>
+        <div class="order-sec-1">
+            <table>
+                <tr>
+                    <td> <p> Order Number:</p> </td>
+                    <td>  <p> <%= @order.id %> </p> </td>
+                </tr>
+                <tr>
+                    <td> <p> Item:</p> </td>
+                    <td> <p> <%= @dish.name %> </p> </td>
+                </tr>
+                <tr>
+                    <td> <p> Quantity: </p> </td>
+                    <td> <p> <%= @order.quantity.to_i %> </p> </td>
+                </tr>
+                <tr>
+                    <td> <p> Total: </p> </td>
+                    <td> <p> <%= number_to_currency @total %> </p> </td>
+                </tr>
+            </table>
+            <p> <%= image_tag @dish.get_image, id:"order-details-img" %> </p>
+        </div>
+
         <hr>
-        <h4> Go get your food now! </h4>
+        <% if @order.status == "placed" || @order.status == "ready" %>
+            <h4> Go get your food now! </h4>
+        <% else %>
+            <h4> We hope you enjoyed your food! </h4>
+        <% end %>
         <br/>
         <div class="summary-directions">
             <div>
-                <p> <strong>Your ChefHero: </strong> <div> <%= @chef.name %> <%= image_tag @chef.get_display_picture %> </div> </p>
+                <p> <strong>Your ChefHero: </strong> <div> <%= link_to user_path(@chef) do %>  <%= @chef.name %> <%= image_tag @chef.get_display_picture %> </div> <% end %> </p>
                 <p> <strong>Address: </strong> <%= @chef.address.display_full %> </p>
-                <p id="helper"> You can use the directions helper on the map to find the best route! <br/> Either click on the map to choose your locations or type it in the address bar. </p>
+                <% if @order.status != "collected" %>  <p id="helper"> You can use the directions helper on the map to find the best route! <br/> Either click on the map to choose your locations or type it in the address bar. </p> <% end %>
             </div>
-            <div id="map"></div>
+            <% if @order.status == "placed" || @order.status == "ready" %>
+                <div id="map"></div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Leave a review for <%= @chef.first_name %>! </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="review-modal">
+                <%= form_with model:@review, url: create_review_path, method: :post do |form| %>
+                    <%= form.hidden_field :chef_id, value: @chef.id %>
+                    <%= form.hidden_field :order, value: @order.id %>
+                    <%= form.label :rating, "Rating /5: " %>
+                    <%= form.number_field :rating, step: 0.01, min: 1, max: 5 %><br/>
+                    <%= form.text_area :comments, placeholder: "How was #{@chef.first_name}'s #{@dish.name}?"%><br/>
+                    <%= form.submit "Submit"%>
+                <% end %>
+            </div>
         </div>
     </div>
 </div>

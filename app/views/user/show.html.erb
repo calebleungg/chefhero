@@ -75,7 +75,7 @@
         <p> <i class="fas fa-grip-lines"></i> </p>
         <p id="color-icon"> <i class="fas fa-home"></i> Lives in  <%= @user.location %></p>
         <% if @user.account_type == "chefhero" %>
-            <p id="color-icon"> <i class="fas fa-star"></i> <%= @average_rating %>(<%= @user.reviews.length %>) Rating </p>
+            <p id="color-icon"> <i class="fas fa-star"></i> <%= "%.2f" % @average_rating %>(<%= @user.reviews.length %>) Rating </p>
         <% end %>
         <hr>
         <%if @user.account_type == "chefhero"%>
