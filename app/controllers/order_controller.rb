@@ -32,7 +32,6 @@ class OrderController < ApplicationController
     end
 
     def history
-        # @orders = Order.where(user_id: params[:id]).order("created_at DESC")
         @orders = current_user.orders.order("created_at DESC")
     end
 
