@@ -1,5 +1,10 @@
 
-const stripe = Stripe('<%= Rails.application.credentials.stripe[:public_key] %>');
+const stripe = Stripe('<%= Rails.application.credentials.dig(:stripe, :public_key) %>');
+
+if(Rails.env == "production") { 
+    const stripe = Stripe('process.env.STRIPE_PUBLIC_KEY'); 
+}
+
 
 stripe.redirectToCheckout ({
     sessionId: '<%= @session.id %>'

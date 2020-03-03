@@ -21,6 +21,7 @@ class CheckoutController < ApplicationController
             line_items: [{
                 name: dish.name,
                 description: dish.about,
+                images: ["#{dish.get_image.service_url}"],
                 amount: (dish.price * 100).to_i,
                 currency: 'aud',
                 quantity: quantity
