@@ -4,7 +4,7 @@ require "date_format"
 class OrderController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:create]
 
-    def create
+    def create        
         payment_id = params[:data][:object][:payment_intent]
         payment = Stripe::PaymentIntent.retrieve(payment_id)
 
@@ -32,10 +32,11 @@ class OrderController < ApplicationController
     end
 
     def history
-        @orders = Order.where(user_id: params[:id]).reverse
+        # @orders = Order.where(user_id: params[:id]).order("created_at DESC")
+        @orders = current_user.orders.order("created_at DESC")
     end
 
-    def ready
+    def ready 
         order = Order.find(params[:id])
         order.status = "ready"
         if order.save

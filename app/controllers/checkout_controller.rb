@@ -6,12 +6,13 @@ class CheckoutController < ApplicationController
         quantity = params[:quantity]
 
         user = current_user
-        last_order = user.orders[-1]
+        last_order = user.orders.order("created_at DESC")[0].id.to_i
 
         if dish.nil?
             redirect_to root_path
             return
         end
+
         Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
 
         #setting up stripe session for payment
@@ -26,12 +27,12 @@ class CheckoutController < ApplicationController
             }],
             payment_intent_data: {
                 metadata: {
-                    user_id: current_user.id,
+                    user_id: user.id,
                     dish_id: dish.id,
                     quantity: quantity
                 }
             },
-            success_url: "#{root_url}order/summary/#{(last_order.id+1)}",
+            success_url: "#{root_url}order/summary/#{(last_order+1)}",
             cancel_url: "#{root_url}"
         )
 

@@ -1,6 +1,6 @@
 <div class="container order-summary-container">
     <h2> Food is ordered! </h2>
-    <p> Hi <%= current_user.first_name %>- Thank you for your order.  </p>
+    <p> Hi <%= User.find(@order.user_id).first_name %>- Thank you for your order.  </p>
     <p> And thank you for supporting one of your local ChefHeroes <%= link_to @chef.first_name, user_path(@chef) %> </p>
     <p> Be sure to leave them a  <%= link_to "review!", user_path(@chef) %> </p>
 
