@@ -13,7 +13,7 @@ class CheckoutController < ApplicationController
             return
         end
 
-        Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
+        Stripe.api_key = Rails.application.credentials.stripe[:secret_key]
 
         #setting up stripe session for payment
         @session = Stripe::Checkout::Session.create(
