@@ -2,15 +2,15 @@ require 'geocoder'
 require "date_format"
 
 class OrderController < ApplicationController
-
-    def new
-        @dish = Dish.find(params[:id])
-    end
+    skip_before_action :verify_authenticity_token, only: [:create]
 
     def create
-        dish = Dish.find(params[:dish])
-        user = current_user
-        order = user.orders.create(quantity: params[:quantity], dish_id: dish.id)
+        payment_id = params[:data][:object][:payment_intent]
+        payment = Stripe::PaymentIntent.retrieve(payment_id)
+
+        dish = Dish.find(payment.metadata.dish_id)
+        user = User.find(payment.metadata.user_id)
+        order = user.orders.create(quantity: payment.metadata.quantity, dish_id: dish.id)
         order.revenue = dish.price
         order.status = "placed"
         if order.valid? && order.save

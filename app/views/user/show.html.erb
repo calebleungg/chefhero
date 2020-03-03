@@ -118,15 +118,11 @@
                                         </div>
                                         <div class="modal-footer" id="order-submission">
                                             <% if user_signed_in? %>
-                                                <%= link_to "Order-Test", new_order_path(dish.id)%>
-                                                    
-                                                <%= button_to 'buy now', checkout_create_path, method: :post, params: {id: dish.id}, remote:true %>
-
                                                 <p> <%= number_to_currency dish.price %> &times; </p>
                                                 <%= form_with model: @order, url: checkout_create_path, method: :post do |form| %>
                                                     <%= form.hidden_field :dish, value: dish.id %>
                                                     <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
-                                                    <%= form.submit "Order", id:"create-button" %>
+                                                    <%= form.submit "Order", id:"order-button" %>
                                                 <% end %>
                                             <% else %>
                                                 <p> <%= number_to_currency dish.price %> | <%= link_to "Login", new_user_session_path%> to order now! </p>

@@ -58,7 +58,7 @@
                         <div class="modal-footer" id="order-submission">
                             <% if user_signed_in? %>
                                 <p> <%= number_to_currency dish.price %> &times; </p>
-                                <%= form_with model: @order, url: create_order_path do |form| %>
+                                <%= form_with model: @order, url: checkout_create_path do |form| %>
                                     <%= form.hidden_field :dish, value: dish.id %>
                                     <%= form.number_field :quantity, value: 1, min: 1, step: 1, id:"quantity" %>
                                     <%= form.submit "Order", id:"order-button" %>
