@@ -22,4 +22,8 @@ class Order < ApplicationRecord
 		return self.revenue * self.quantity	 
 	end
 
+	def self.last_order
+		return Order.all.order("created_at DESC").first 
+	end
+
 end

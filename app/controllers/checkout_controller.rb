@@ -2,8 +2,6 @@ class CheckoutController < ApplicationController
 
     def create
 
-        # if check here to determine env by going Rails.env.development? then set true if so then pass true to run appropriate key call in create.js
-
         if Rails.env.development?
             @api = Rails.application.credentials.dig(:stripe, :public_key)
         end
@@ -14,17 +12,12 @@ class CheckoutController < ApplicationController
 
         dish = Dish.find(params[:dish])
         quantity = params[:quantity]
-
-
         user = current_user
-        last_order = user.orders.order("created_at DESC")[0].id.to_i
 
         if dish.nil?
             redirect_to root_path
             return
         end
-
-        # Stripe.api_key = Rails.application.credentials.stripe[:secret_key]
 
         #setting up stripe session for payment
         @session = Stripe::Checkout::Session.create(
@@ -44,7 +37,7 @@ class CheckoutController < ApplicationController
                     quantity: quantity
                 }
             },
-            success_url: "#{root_url}order/summary/#{(last_order+1)}",
+            success_url: "#{root_url}order/summary/#{Order.last_order.id + 1}",
             cancel_url: "#{root_url}"
         )
 

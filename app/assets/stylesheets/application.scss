@@ -107,6 +107,33 @@
      flex-direction: column;
      justify-content: flex-start;
      min-width: 100vw;
+     .splash-suggestions {
+         display: flex;
+         flex-direction: row;
+         padding: 20px 50px;
+         a {
+             color: black;
+             text-decoration: none;
+         }
+         .suggest-label {
+             display: flex;
+             flex-direction: row;
+             align-items: center;
+             text-align: center;
+             width: 250px;
+             border-radius: 13px;
+             margin: 0 30px;
+             box-shadow: 0 0 5px grey;
+             font-size: 1em;
+             font-weight: 600;
+             img {
+                 margin-right: 30px;
+                width: 80px;
+                border-radius: 13px;
+                height: 70px;
+             }
+         }
+     }
      #index-links {
          color: $secondary-color;
      }

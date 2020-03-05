@@ -2,6 +2,32 @@
 
     <div class="splash-page"> 
         <h4> Hi, explore great food! </h4>
+        <div class="splash-suggestions">
+            <%= link_to dishes_path(:search => "japanese") do %>
+                <div class="suggest-label">
+                    <%= image_tag "sushi.jpg" %>
+                    Japanese
+                </div>
+            <% end %>
+            <%= link_to dishes_path(:search => "western") do %>
+                <div class="suggest-label">
+                    <%= image_tag "burgerrr.jpg" %>
+                    Western
+                </div>
+            <% end %>
+            <%= link_to dishes_path(:search => "italian") do %>
+                <div class="suggest-label">
+                    <%= image_tag "Pasta1.jpg" %>
+                    Italian
+                </div>
+            <% end %>
+            <%= link_to dishes_path(:search => "chinese") do %>
+                <div class="suggest-label">
+                    <%= image_tag "fri-ri.jpg" %>
+                    Chinese
+                </div>
+            <% end %>
+        </div>
         <div class="top-chefhero-container">
             <h2> Top Dishes</h2>
             <p id="hint"> (click to visit the ChefHeroe's profile to order) </p>
