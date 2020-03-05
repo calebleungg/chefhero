@@ -1,7 +1,10 @@
 class WithdrawController < ApplicationController
     
+    # method for creating user withdrawal 
     def create
         user = current_user
+        
+        # validating enough funds to withdraw
         request = user.get_total_sales - user.get_withdrawn_total - params[:amount].to_i
         if request >= 0 
             user.withdrawals.create(amount: params[:amount])

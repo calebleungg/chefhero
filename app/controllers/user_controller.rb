@@ -2,11 +2,13 @@ require "date_format"
 
 class UserController < ApplicationController
 
+    # splash page instance method
     def index
         @top_chefs = User.top_five_chefs
         @top_dishes = Dish.top_five_dishes
     end
 
+    # method for chef index page with sort options
     def chefs
         @chefs = User.search(params[:search])
         if params[:location]
@@ -20,16 +22,21 @@ class UserController < ApplicationController
         end
     end
 
+    # method for displaying user profile
     def show
-
         @user = User.find(params[:id])
+
+        # instancing user revies if chef
         @reviews = @user.reviews.order("created_at DESC")
+
+        # instancing user about with error handling
         if @user.about == nil
             @about = ""
         else
             @about = @user.about
         end
         
+        # instancing info in user profile is a chef
         if @user.account_type == "chefhero"
             @dishes = @user.dishes.where(available: true).order("created_at DESC").limit(5)
             @total_orders = Order.total_for_chef(@user)
@@ -37,6 +44,7 @@ class UserController < ApplicationController
             begin
                 @address_coordinates = Geocoder.search(@user.address.display_full).first.coordinates.reverse if @user.address
             rescue
+                # rescue method for catching error thrown by incorrect coordinates by user inputted address
                 @address_coordinates = nil
             end
             @average_rating = @user.reviews.average(:rating)
@@ -44,6 +52,7 @@ class UserController < ApplicationController
 
     end
     
+    # method for attaching a profile photo 
     def upload_photo
         @user = current_user
         @user.avatar.attach(params[:user][:avatar])
@@ -52,6 +61,7 @@ class UserController < ApplicationController
         end
     end
 
+    # method for saving about edit
     def update_about
         @user = current_user
         @user.update(user_params)
@@ -60,13 +70,16 @@ class UserController < ApplicationController
         end
     end
 
+    # method for account details display (empty as used current_user for most instance calls in view)
     def details
     end
 
+    # view method for edit 
     def edit
         @user = current_user
     end
 
+    # method for saving edits as above
     def update
         @user = current_user
         @user.update!(user_params)
@@ -80,9 +93,11 @@ class UserController < ApplicationController
         end
     end
 
+    # empty dashboard method to link dashboard direction view
     def dashboard
     end
 
+    # method for chef dish/availability/location manager
     def manager
         @user = current_user
         @dishes = @user.dishes.order("created_at DESC")
@@ -92,12 +107,15 @@ class UserController < ApplicationController
         render layout: "dashboard"
     end
 
+    # view method for new chef registration
     def new_chef
         @user = current_user
     end
 
+    # create method for new chef as about (updating default user type to "chefhero")
     def create_chef
         user = current_user
+        # saving new created address
         user.create_address(
             street: params[:user][:street],
             suburb: params[:user][:suburb],
@@ -106,6 +124,7 @@ class UserController < ApplicationController
             postcode: params[:user][:postcode],
             country: params[:user][:country]
         )
+        # saving new created availability
         user.create_availability(
             monday: params[:user][:monday],
             tuesday: params[:user][:tuesday],
@@ -125,37 +144,6 @@ class UserController < ApplicationController
 
     def resources
         render layout: "dashboard"
-    end
-
-    def new_card
-        respond_to do |format|
-            format.js
-        end      
-    end
-
-    def create_card 
-        respond_to do |format|
-          if current_user.stripe_id.nil?
-            customer = Stripe::Customer.create({"email": current_user.email}) 
-            #here we are creating a stripe customer with the help of the Stripe library and pass as parameter email. 
-            current_user.update(:stripe_id => customer.id)
-            #we are updating current_user and giving to it stripe_id which is equal to id of customer on Stripe
-          end
-    
-          card_token = params[:stripeToken]
-          #it's the stripeToken that we added in the hidden input
-          if card_token.nil?
-            format.html { redirect_to billing_path, error: "Oops"}
-          end
-          #checking if a card was giving.
-    
-          customer = Stripe::Customer.new current_user.stripe_id
-          customer.source = card_token
-          #we're attaching the card to the stripe customer
-          customer.save
-    
-          format.html { redirect_to success_path }
-        end
     end
 
     private

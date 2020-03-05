@@ -5,7 +5,9 @@ class DishController < ApplicationController
         @dish = Dish.new
     end
 
+    # index method for dishes
     def index
+        # filter/sort depending on search paramaters passed (or not)
         filter = Dish.search(params[:search])
         @dishes = filter.where(available: true)
         if params[:sort] == "ordered"
@@ -27,10 +29,12 @@ class DishController < ApplicationController
         end
     end
 
+    # instance method for displaying dish on show route
     def show
         @dish = Dish.find(params[:id])
     end
 
+    # method for deleting a dish
     def destroy
         dish = Dish.find(params[:id])
         dish.delete
@@ -38,6 +42,7 @@ class DishController < ApplicationController
         redirect_to manager_path(:option => "Manager")
     end
     
+    # method for listing a dish - through changing availability attribute boolean
     def list
         dish = Dish.find(params[:id])
         dish.available = true
@@ -46,6 +51,7 @@ class DishController < ApplicationController
         redirect_to manager_path(:option => "Manager")
     end
 
+    # as above but for delisting
     def unlist
         dish = Dish.find(params[:id])
         dish.available = false
@@ -54,11 +60,13 @@ class DishController < ApplicationController
         redirect_to manager_path(:option => "Manager")
     end
 
+    # instance call to display dish details for editing
     def edit
         @dish = Dish.find(params[:id])
         render layout: "dashboard"
     end
 
+    # update method for any changes to dish details as above
     def update
         dish = Dish.find(params[:id])
         dish.update(dish_params)

@@ -3,6 +3,7 @@ class Dish < ApplicationRecord
 	has_one_attached :image
 	has_many :order
 
+	# search method to filter according to params parsed (fuzzy)
 	def self.search(search)
 		if search
 			if search == "" || search == " "
@@ -19,14 +20,17 @@ class Dish < ApplicationRecord
 		end
 	end
 
+	# method to return attached image- or default if nil
 	def get_image
         return self.image.attached? ? self.image : "default-dish.png"
 	end
 
+	# method to return the chef of a dish
 	def get_chef
 		return User.find(self.user_id)
 	end
 	
+	# method to return total quantity ordered for a dish (unique)
 	def total_quantity
 		orders = Order.where(dish_id: self.id)
 		total_quantity = 0
@@ -36,10 +40,12 @@ class Dish < ApplicationRecord
 		return total_quantity
 	end
 
+	# method to return total orders made for dish (order level)
 	def total_orders
 		return Order.where(dish_id: self.id).order("created_at DESC") 
 	end
 
+	# method to return top 5 dishes sorted by total quantity
 	def self.top_five_dishes
 		dishes = Dish.where(available: true)
 		dish_to_orders = {}
@@ -50,6 +56,7 @@ class Dish < ApplicationRecord
 		return sorted
 	end
 
+	# method to sort search filter by orders desc
 	def self.sort_by_orders
 		dish_to_orders = {}
 		for dish in self.all
@@ -63,6 +70,7 @@ class Dish < ApplicationRecord
 		return list
 	end
 
+	# method to sort search filter by created_at desc
 	def self.sort_by_newest
 		dish_to_created = {}
 		for dish in self.all

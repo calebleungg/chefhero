@@ -1,6 +1,7 @@
 class Availability < ApplicationRecord
     belongs_to :user
 
+    # method to retreive days open as a hash for display in view
     def days_open
         days = {}
         days[:monday] = self.monday if self.monday != nil && self.monday != ""

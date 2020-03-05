@@ -13,10 +13,12 @@ class User < ApplicationRecord
     has_many :withdrawals
     has_many :notifications
 
+    # method for returning full name in string
     def name
         return "#{first_name} #{last_name}"
     end
     
+	# search method to filter according to params parsed (fuzzy)
     def self.search(search)
 		if search
 			if search == "" || search == " "
@@ -35,6 +37,7 @@ class User < ApplicationRecord
         
 	end
 
+    # method for returning all dish ids associated with chef in array
     def get_dish_ids
         ids = []
         for dish in self.dishes
@@ -43,10 +46,12 @@ class User < ApplicationRecord
         return ids
     end
 
+    # method for getting user avatar- if not attached then default picture
     def get_display_picture
         return self.avatar.attached? ? self.avatar : "default-profile.png"
     end
 
+    # method for returning withdrawn total of a user
     def get_withdrawn_total
         sum = 0
         records = self.withdrawals
@@ -56,7 +61,9 @@ class User < ApplicationRecord
         return sum
     end
 
+    # method to calculate total sales of a chef/user
     def get_total_sales
+        # sql query parsing dishes array to retrieve all associated orders
         orders = Order.where(dish_id: self.get_dish_ids)
         net = 0
         for order in orders
@@ -65,11 +72,13 @@ class User < ApplicationRecord
         return net
     end
 
+    # method to return total orders for a user (integer)
     def get_total_orders
         orders = Order.where(dish_id: self.get_dish_ids)
         return orders.length
     end
 
+    # method to return top 5 chefs ordered by total orders
     def self.top_five_chefs
         chefs = User.where(account_type: "chefhero")
         chef_to_orders = {}
@@ -80,6 +89,7 @@ class User < ApplicationRecord
         return sorted
     end
 
+    # method return types of dishes to be displayed in chef bio on chef#index page
     def dish_types
         dishes = Dish.find(self.get_dish_ids)
         types = []
@@ -100,6 +110,7 @@ class User < ApplicationRecord
         return string
     end
 
+    # sort method to sort chefs by orders
     def self.sort_by_orders
 		chef_to_orders = {}
 		for chef in self.where(account_type: "chefhero")
@@ -113,6 +124,7 @@ class User < ApplicationRecord
 		return list
     end
     
+    # sort method to sort chefs by averating review rating
     def self.sort_by_rating
         chef_to_rating = {}
 		for chef in self.where(account_type: "chefhero")
@@ -126,6 +138,7 @@ class User < ApplicationRecord
 		return list
     end
 
+    # sort method by location
     def self.sort_by_location(search)
         return self.where("LOWER(location) LIKE ?", "%#{search.downcase}%" )
     end
