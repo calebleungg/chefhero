@@ -2,6 +2,14 @@
 
     <div class="order-history-display">
         <h1> Account > <span>Order History<span> </h1>
+        <div class="date-filter">
+            <%= form_tag(order_history_path(current_user), method: :get) do %>
+                <%= date_field_tag(:from_date, params[:from_date]) %>
+                <%= date_field_tag(:to_date, params[:to_date]) %>
+                <%= submit_tag("Search", id:"search-button")%>
+                <%= link_to "all time", order_history_path(current_user)%>
+            <% end %>
+        </div>
 
         <% if @orders.length > 0 %>
             <table>

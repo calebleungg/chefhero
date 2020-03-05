@@ -1,5 +1,14 @@
 <p> <%= link_to "Back to Orders Tracking", orders_manager_path(:option => "Orders"), id:"order-tracking-back" %> </p>
 
+<div class="date-filter">
+    <%= form_tag(dashboard_order_history_path, method: :get) do %>
+        <%= date_field_tag(:from_date, params[:from_date]) %>
+        <%= date_field_tag(:to_date, params[:to_date]) %>
+        <%= submit_tag("Search", id:"search-button")%>
+        <%= link_to "all time", dashboard_order_history_path%>
+    <% end %>
+</div>
+
 <div class="full-order-history-table">
 
     <table>

@@ -496,6 +496,17 @@
      flex-direction: row;
      justify-content: center;
      align-items: flex-start;
+     .date-filter {
+         #search-button {
+             width: 80px;
+             background-color: $secondary-color;
+             color: white;
+         }
+         input {
+             width: 200px;
+         }
+         margin-bottom: 30px;
+     }
      .details, input, textarea {
          width: 500px;
      }
@@ -832,6 +843,26 @@
      align-items: flex-start;
      justify-content: center;
      min-width: 90vw;
+     .date-filter {
+         a {
+             color: $secondary-color;
+             text-decoration: none;
+         }
+        #search-button {
+            width: 80px;
+            background-color: $secondary-color;
+            color: white;
+        }
+        input {
+            background-color: #f0f0f0;
+            padding: 5px;
+            border: none;
+            background-color: #f0f0f0;
+            color: black; 
+            width: 200px;
+        }
+        margin-bottom: 30px;
+     }
      
      #breadcrum {
          color: black;

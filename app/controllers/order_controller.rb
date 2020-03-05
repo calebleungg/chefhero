@@ -37,7 +37,7 @@ class OrderController < ApplicationController
     end
 
     def history
-        @orders = current_user.orders.order("created_at DESC")
+        @orders = Order.filter_by_date(current_user, params[:from_date], params[:to_date], nil).order("created_at DESC")
     end
 
     def ready 
@@ -75,8 +75,10 @@ class OrderController < ApplicationController
     end
 
     def chef_history
-        @orders = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC")
+        # @orders = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC")
 
+        @orders = Order.filter_by_date(current_user, params[:from_date], params[:to_date], current_user.get_dish_ids).order("updated_at DESC")
+       
         render layout: "dashboard"
     end
 

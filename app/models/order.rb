@@ -1,6 +1,19 @@
 class Order < ApplicationRecord
 	belongs_to :dish
 
+	def self.filter_by_date(user, from_date, to_date, dishes)
+		orders = user.orders
+		if dishes
+			orders = Order.where(dish_id: dishes, status: "collected")
+		end
+			
+		if from_date && to_date
+			return orders.where(:created_at => from_date.to_date.beginning_of_day..to_date.to_date.end_of_day)
+		else
+			return orders
+		end
+	end
+
 	def self.total_for_chef(chef)
 		total = 0
 		dishes = Dish.where(user_id: chef.id)
