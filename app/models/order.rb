@@ -1,6 +1,5 @@
 class Order < ApplicationRecord
-	belongs_to :dish
-
+	belongs_to :dish	
 	def self.filter_by_date(user, from_date, to_date, dishes)
 		orders = user.orders
 		if dishes
@@ -25,6 +24,10 @@ class Order < ApplicationRecord
 
 	def get_user
 		return User.find(self.user_id)
+	end
+
+	def get_chef
+		return User.find(self.get_dish.get_chef.id)
 	end
 
 	def get_dish

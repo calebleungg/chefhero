@@ -95,6 +95,9 @@ Rails.application.routes.draw do
   # create review request
   post "/review/create", to: "review#create", as: "create_review"
 
+  # mark all notifications read
+  patch "/notifications/clear", to: "notification#clear", as: "clear_notifications"
+
   scope "/checkout" do
     post "create", to: "checkout#create", as: "checkout_create"
     get "cancel", to: "checkout#cancel", as: "checkout_cancel"

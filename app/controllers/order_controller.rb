@@ -18,22 +18,38 @@ class OrderController < ApplicationController
             reviewed: false
         )
 
+        chef = dish.get_chef
+
         if order.valid? && order.save
+            chef.notifications.create(
+                purpose: "order-placed",
+                message: "A new order has been placed by #{user.name}. For #{order.quantity.to_i} x #{order.get_dish.name}. Go manage now!",
+                read: false
+            )
             redirect_to order_summary_path(order.id)
         end
     end
 
     def summary
-        @order = Order.find(params[:id])
-        @dish = Dish.find(@order.dish_id)
-        @chef = @dish.get_chef
-        @total = @order.quantity * @dish.price
-        begin
-            @address_coordinates = Geocoder.search(@chef.address.display_full).first.coordinates.reverse
-        rescue
-            @address_coordinates = Geocoder.search("Brisbane Australia").first.coordinates.reverse
-        rescue
+
+        if params[:notification_id]
+            notification = Notification.find(params[:notification_id])
+            notification.read = true
+            notification.save
+            redirect_to order_summary_path(params[:id])
+        else
+            @order = Order.find(params[:id])
+            @dish = Dish.find(@order.dish_id)
+            @chef = @dish.get_chef
+            @total = @order.quantity * @dish.price
+            begin
+                @address_coordinates = Geocoder.search(@chef.address.display_full).first.coordinates.reverse
+            rescue
+                @address_coordinates = Geocoder.search("Brisbane Australia").first.coordinates.reverse
+            rescue
+            end
         end
+
     end
 
     def history
@@ -43,7 +59,14 @@ class OrderController < ApplicationController
     def ready 
         order = Order.find(params[:id])
         order.status = "ready"
+        user = User.find(order.user_id)
         if order.save
+            user.notifications.create(
+                purpose: "order-ready",
+                message: "Your order ##{order.id} (#{order.get_dish.name}) is ready to be picked up. Go see directions now!",
+                read: false,
+                data: order.id
+            )
             redirect_to orders_manager_path(:option => "Orders")
         end
     end
@@ -51,27 +74,42 @@ class OrderController < ApplicationController
     def collected
         order = Order.find(params[:id])
         order.status = "collected"
+        user = User.find(order.user_id)
         if order.save
+            user.notifications.create(
+                purpose: "review-request",
+                message: "We hope you enjoyed your food! Make sure to give #{order.get_chef.first_name} a review now!",
+                read: false,
+                data: order.id
+            )
             redirect_to orders_manager_path(:option => "Orders")
         end
     end
 
     def manager
 
-        @orders_placed = Order.where(dish_id: current_user.get_dish_ids, status:"placed").order("created_at DESC")
-        @orders_ready = Order.where(dish_id: current_user.get_dish_ids, status:"ready").order("created_at DESC")
-        @orders_collected = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC").limit(10)
-        @orders_today = 0
-        @daily_total = 0
-
-        for order in Order.where(dish_id: current_user.get_dish_ids).order("created_at DESC")
-            if order.created_at.in_time_zone('Australia/Brisbane').day == Time.now.in_time_zone('Australia/Brisbane').day
-                @daily_total += order.get_total
-                @orders_today += 1
+        if params[:notification_id]
+            notification = Notification.find(params[:notification_id])
+            notification.read = true
+            notification.save
+            redirect_to orders_manager_path(:option => "Manager")
+        else
+            @orders_placed = Order.where(dish_id: current_user.get_dish_ids, status:"placed").order("created_at DESC")
+            @orders_ready = Order.where(dish_id: current_user.get_dish_ids, status:"ready").order("created_at DESC")
+            @orders_collected = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC").limit(10)
+            @orders_today = 0
+            @daily_total = 0
+    
+            for order in Order.where(dish_id: current_user.get_dish_ids).order("created_at DESC")
+                if order.created_at.in_time_zone('Australia/Brisbane').day == Time.now.in_time_zone('Australia/Brisbane').day
+                    @daily_total += order.get_total
+                    @orders_today += 1
+                end
             end
+    
+            render layout: "dashboard"
         end
 
-        render layout: "dashboard"
     end
 
     def chef_history

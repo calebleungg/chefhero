@@ -11,6 +11,7 @@ class User < ApplicationRecord
     has_one :address
     has_one :availability
     has_many :withdrawals
+    has_many :notifications
 
     def name
         return "#{first_name} #{last_name}"

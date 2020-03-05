@@ -1793,3 +1793,56 @@
         margin: 20px 0;
       }
   }
+
+  #messages {
+      &:hover {
+          color: $secondary-color;
+      }
+      #notif-circle {
+        //   color: $secondary-color;
+          font-weight: 600;
+          background-color: red;
+          border-color: red;
+          color: white;
+          border-radius: 100%;
+          font-size: 0.7em;
+          width: 18px;
+          height: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 3px;
+          right: 3px;
+      }
+    a {
+        &:first-child {
+            padding-right: 20px;
+        }
+        color: black;
+        text-decoration: none;
+    }
+    #zero-notif {
+        padding: 10px;
+        font-size: 0.8em;
+    }
+    .notif-single {
+        h6 {
+            font-weight: 600;
+        }
+        width: 300px;
+        padding: 10px 10px 0 10px;;
+        p {
+            font-size: 0.7em;
+        }
+        border-top: 1px solid lightgrey;
+        &:first-child {
+            margin-top: 8px;
+        }
+
+    }
+    #clear-notifs {
+        color: $secondary-color;
+        margin-left: 10px;
+    }
+  }

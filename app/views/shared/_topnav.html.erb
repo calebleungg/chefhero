@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg" id="main-nav">
     <a class="navbar-brand" href="/"> <strong>Chef<span>Hero</span></strong> </a>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <% if user_signed_in? %>
@@ -12,6 +11,41 @@
                 <% elsif current_user.account_type == "foodie" %>
                     <%= link_to "Become a ChefHero", new_chef_path, class:"nav-link"%>
                 <% end %>
+                <li class="nav-item dropdown" id="messages">
+                    <a class="nav-link dropdown" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Notifications <% if @notifications.length > 0 %> <p id="notif-circle"><%= "#{@notifications.length}"%></p> <% end %>
+                    </a> 
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="notif-message">
+                    <% if @notifications.length > 0 %>
+                        <%= link_to "clear", clear_notifications_path, method: :patch, id:"clear-notifs" %>
+                        <% for notification in @notifications %>
+                            <% case notification.purpose %>
+                            <% when "order-placed" %>
+                                <%= link_to orders_manager_path(:option => "Orders", :notification_id => notification.id) do %>
+                                    <div class="notif-single">
+                                        <h6>New Order</h6>
+                                        <p><%= notification.message %> </p>
+                                    </div>
+                                <% end %>
+                            <% when "order-ready" %>
+                                <%= link_to order_summary_path(Order.find(notification.data), :notification_id => notification.id) do %>
+                                    <div class="notif-single">
+                                        <h6>Order Ready</h6>
+                                        <p><%= notification.message %> </p>
+                                    </div>
+                                <% end %>
+                            <% when "review-request" %>
+                                <%= link_to order_summary_path(Order.find(notification.data), :notification_id => notification.id) do %>
+                                    <div class="notif-single">
+                                        <h6>Thank you!</h6>
+                                        <p><%= notification.message %> </p>
+                                    </div>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                    </div>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <%= image_tag current_user.get_display_picture %> <%= current_user.name %>
@@ -27,6 +61,7 @@
                     </div>
                 </li>
             <% else %>
+                <% if user_signed_in? %> <%= link_to "Messages (#{@notifications.length})", root_path, class:"nav-link"%> <% end %>    
                 <%= link_to "Explore", root_path, class:"nav-link"%>           
                 <%= link_to "Log In", new_user_session_path, class:"nav-link" %>   
                 <%= link_to "Sign Up", new_user_registration_path, class:"nav-link" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_03_061837) do
+ActiveRecord::Schema.define(version: 2020_03_05_085529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(version: 2020_03_03_061837) do
     t.index ["user_id"], name: "index_dishes_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "purpose"
+    t.string "message"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "read"
+    t.decimal "data"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.decimal "quantity", null: false
     t.bigint "dish_id"
@@ -130,6 +141,7 @@ ActiveRecord::Schema.define(version: 2020_03_03_061837) do
   add_foreign_key "addresses", "users"
   add_foreign_key "availabilities", "users"
   add_foreign_key "dishes", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "orders", "dishes"
   add_foreign_key "orders", "users"
   add_foreign_key "reviews", "users"
