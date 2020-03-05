@@ -7,7 +7,7 @@ class Order < ApplicationRecord
 			orders = Order.where(dish_id: dishes, status: "collected")
 		end
 			
-		if from_date && to_date
+		if from_date
 			return orders.where(:created_at => from_date.to_date.beginning_of_day..to_date.to_date.end_of_day)
 		else
 			return orders

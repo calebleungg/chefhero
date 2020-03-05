@@ -2,8 +2,8 @@
 
 <div class="date-filter">
     <%= form_tag(dashboard_order_history_path, method: :get) do %>
-        <%= date_field_tag(:from_date, params[:from_date]) %>
-        <%= date_field_tag(:to_date, params[:to_date]) %>
+        <%= date_field_tag(:from_date, params[:from_date], required:true) %>
+        <%= date_field_tag(:to_date, params[:to_date], required:true) %>
         <%= submit_tag("Search", id:"search-button")%>
         <%= link_to "all time", dashboard_order_history_path%>
     <% end %>
