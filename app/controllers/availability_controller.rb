@@ -1,5 +1,6 @@
 class AvailabilityController < ApplicationController
 
+    # method for updating availability for chefs
     def update
         user = current_user
         user.availability.update(

@@ -2,18 +2,18 @@ class CheckoutController < ApplicationController
 
     def create
 
+        # assigning correct api_key path for different developments
         if Rails.env.development?
             @api = Rails.application.credentials.dig(:stripe, :public_key)
         end
-
         if Rails.env.production?
             @api = ENV['STRIPE_PUBLIC_KEY']
         end
 
+        # instancing variables for stripe session
         dish = Dish.find(params[:dish])
         quantity = params[:quantity]
         user = current_user
-
         if dish.nil?
             redirect_to root_path
             return

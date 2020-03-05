@@ -10,7 +10,7 @@
             </div>
             <div class="profile-badges">
                 <hr>
-                <p> <i class="fas fa-comments"></i> <%= "#{@user.reviews.length} Reviews"%> </p>
+                <p> <a href="#review-section"> <i class="fas fa-comments"></i> <%= "#{@user.reviews.length} Reviews"%> </p> </a>
                 <% if @user.account_type == "foodie" %>
                     <p> <i class="fas fa-utensils"></i>Foodie</p>
                 <% end %>
@@ -144,7 +144,7 @@
             <% end %>
         <hr>
         <% end %>
-        <h5 class="review-title"> <%= "#{@user.reviews.length} Reviews" %> </h5>
+        <h5 class="review-title" id="review-section"> <%= "#{@user.reviews.length} Reviews" %> </h5>
         <div class="review-item">
             <% @reviews.each do |review| %>
                 <h6 class="review-date"> <%= DateFormat.change_to(review.created_at, "ONLY_DATE") %> </h6>

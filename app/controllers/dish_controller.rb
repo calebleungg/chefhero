@@ -1,5 +1,6 @@
 class DishController < ApplicationController
 
+    # simple instance of dish model for use in create method
     def new
         @dish = Dish.new
     end
@@ -16,6 +17,7 @@ class DishController < ApplicationController
 
     end
 
+    # post method for creating a dish
     def create
         @dish = current_user.dishes.create(dish_params)
         @dish.image.attach(params[:dish][:image])

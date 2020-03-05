@@ -1,5 +1,6 @@
 class AddressController < ApplicationController
 
+    # method for creating an address for user
     def update
         user = current_user
         user.address.update(

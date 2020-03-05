@@ -21,6 +21,10 @@
  $text: 'Source Sans Pro', sans-serif;
  $secondary-color: #236e05;
  $gold: #b69e19;
+
+ html {
+     scroll-behavior: smooth;
+ }
  
  body {
      font-family: $headings;
@@ -74,7 +78,7 @@
  .nav-link, .navbar-brand {
      color: black;
      &:hover {
-         color: $secondary-color;
+         color: black;
      }
  }
  
