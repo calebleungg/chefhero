@@ -37,7 +37,7 @@ class CheckoutController < ApplicationController
                     quantity: quantity
                 }
             },
-            success_url: "#{root_url}order/summary/#{Order.last_order.id + 1}",
+            success_url: "#{root_url}payment/success",
             cancel_url: "#{root_url}"
         )
 
@@ -45,6 +45,12 @@ class CheckoutController < ApplicationController
             format.js # render create.js.erb
         end
 
+    end
+
+    # method for instancing last user order after payment successful for auto redirect url
+    def success
+        user = current_user
+        @order_id = user.last_order.id
     end
 
 end

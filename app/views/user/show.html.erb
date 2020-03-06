@@ -178,7 +178,7 @@
                 <p> A display picture is a great way to show who you are! </p>
                 <%= image_tag @user.avatar.attached? ? @user.avatar : "", id: "img_prev" %> 
                 <%= form_with model: @user, url: upload_photo_path, method: :patch do |form| %>
-                    <%= form.file_field :avatar, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %>
+                    <%= form.file_field :avatar, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %><br/>
                     <%= form.submit "Upload" %>
                 <% end %>
             </div>

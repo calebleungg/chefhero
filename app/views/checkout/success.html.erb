@@ -1,0 +1,16 @@
+
+<script>
+    setTimeout(function(){
+    window.location.href = '<%=root_url%>order/summary/<%=@order_id%>';
+    }, 3000);
+</script>
+
+
+<div class="payment-succeess-container">
+
+    <p> Thank you for placing your order, <%= current_user.first_name %> ! </p>
+    
+    <p> You will be redirected to your order summary shortly...
+    (click <%= link_to "here", order_summary_path(@order_id) %> to be redirected straight away) </p>
+    
+</div>

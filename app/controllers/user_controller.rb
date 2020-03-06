@@ -6,6 +6,9 @@ class UserController < ApplicationController
     def index
         @top_chefs = User.top_five_chefs
         @top_dishes = Dish.top_five_dishes
+        if user_signed_in? && current_user.account_type == "admin"
+            render layout: "admin"
+        end
     end
 
     # method for chef index page with sort options

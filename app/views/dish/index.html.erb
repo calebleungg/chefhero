@@ -49,7 +49,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <%= image_tag dish.get_image %>
+                        <%= image_tag dish.get_image, id:"modal-image-dish" %>
                         <div class="modal-body">
                             <h5> <%= dish.name %> </h5>
                             <p> <%= dish.about %> </p>

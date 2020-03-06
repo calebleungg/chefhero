@@ -87,16 +87,17 @@ Rails.application.routes.draw do
   # manager resources view
   get "/dashboard/resources", to: "user#resources", as: "resources"
 
-  # new billing card view
-  get "/card/new", to: "user#new_card", as: "add_payment_method"
-  # creating enw billing card
-  post "/card", to: "user#create_card", as: "create_payment_method"
-
   # create review request
   post "/review/create", to: "review#create", as: "create_review"
 
   # mark all notifications read
   patch "/notifications/clear", to: "notification#clear", as: "clear_notifications"
+
+  # get success payment page view for auto redirect
+  get "/payment/success", to: "checkout#success", as: "payment_success"
+
+  # view dashboard for admin managing
+  get "/admin/manage", to: "admin#manage", as: "admin_manage"
 
   scope "/checkout" do
     post "create", to: "checkout#create", as: "checkout_create"

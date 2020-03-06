@@ -143,4 +143,9 @@ class User < ApplicationRecord
         return self.where("LOWER(location) LIKE ?", "%#{search.downcase}%" )
     end
 
+    # method for returning last order
+    def last_order
+        return self.orders.order("created_at DESC").first
+    end
+
 end

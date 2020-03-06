@@ -1,13 +1,13 @@
 
 <%= link_to "Back to Manager", manager_path(:option => "Manager"), id:"manager-back-link"%>
+
 <% if flash[:alert] %>
     <div class="alert"><%= flash[:alert] %></div>
 <% end %>
-<div class="edit-dish-container">
 
+<div class="edit-dish-container">
     <%= form_with model: @dish, url: update_dish_path(@dish.id), method: :patch do |form| %>
         <div class="edit-dish-form">
-
             <div>
                 <%= form.label :name, "Name:"%><br/>
                 <%= form.text_field :name, value: @dish.name %><br/>
@@ -19,31 +19,27 @@
                 <%= form.text_area :about, value: @dish.about %><br/>
                 <%= form.label :ingredients, "Ingredients:"%><br/>
                 <%= form.text_area :ingredients, value: @dish.ingredients %><br/>
-            </div>
-         
+            </div>  
             <div class="image-save-section">
                 <%= image_tag @dish.get_image, id: "img_prev" %> 
                 <%= form.file_field :image, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %>
                 <%= form.submit "Save", id:"dish-save" %>
             </div>
-
         </div>
-
     <% end %>
-
 </div>
 
 <script>
     function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-        reader.onload = function (e) {
-        $('#img_prev')
-            .attr('src', e.target.result)
-        };
+            reader.onload = function (e) {
+                $('#img_prev')
+                .attr('src', e.target.result)
+            };
 
-        reader.readAsDataURL(input.files[0]);
-    }
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
