@@ -16,6 +16,7 @@
  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
  @import url('https://fonts.googleapis.com/css?family=Montserrat:600,700&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap');
  
  $headings: 'Montserrat', sans-serif;
  $text: 'Source Sans Pro', sans-serif;
@@ -334,6 +335,13 @@
          flex-direction: column;
          margin-top: 30px;
          margin-bottom: 10px;
+         i {
+             color: #c40808;
+         }
+         #fav-btn {
+             font-size: 1.5em;
+            margin-top: 10px;
+         }
      }
      margin-right: 100px;
  
@@ -500,6 +508,33 @@
      flex-direction: row;
      justify-content: center;
      align-items: flex-start;
+     .favourites-list-container {
+         margin: 50px 0 0 50px;
+         a {
+            color: black;
+            text-decoration: none;
+        }
+         i {
+             color: #c40808;
+         }
+         h5 {
+             font-weight: 600;
+             font-size: 1em;
+         }
+         .fav-item {
+             margin: 5px 0;
+             padding: 5px;
+             border: 1px solid lightgrey;
+             background-color: #f0f0f0;
+             img {
+                 width: 30px;
+                 height: 30px;
+                 border-radius: 100%;
+                 margin-right: 5px;
+             }
+             font-size: 0.8em;
+         }
+     }
      .date-filter {
          #search-button {
              width: 80px;

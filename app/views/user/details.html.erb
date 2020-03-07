@@ -21,13 +21,27 @@
         <p> <%= current_user.account_type.capitalize %> </p>
         <hr>
         <%= link_to "Edit", edit_details_path, class: "btn"%>
-        <p class="save-notice"> <%= notice if notice%> </p>
 
     </section>
 
-    <div class="profile-control-panel">
-        <%= link_to "Personal Info", details_path(current_user)%>
-        <%= link_to "Order History", order_history_path(current_user) %>
-    </div>
+    <div>
 
+        <div class="profile-control-panel">
+            <%= link_to "Personal Info", details_path(current_user)%>
+            <%= link_to "Order History", order_history_path(current_user) %>
+        </div>
+        <% if current_user.favourites_list %>
+            <div class="favourites-list-container">
+                <h5> Favourites <i class='fas fa-heart'></i> </h5>
+                <% for item in @list %>
+                    <%= link_to user_path(User.find(item.user_id)) do %>
+                        <div class="fav-item">
+                            <%= image_tag User.find(item.user_id).get_display_picture %> <%= User.find(item.user_id).name %>
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+        <% end %>
+
+    </div>
 </div>

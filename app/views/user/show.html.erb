@@ -7,6 +7,13 @@
                 <%= image_tag @user.get_display_picture %><br/>
                 <%= link_to "Update photo", user_path(current_user.id), "data-toggle" => "modal", 'data-target' => '#uploadPhotoModal' if user_signed_in? && current_user.name == @user.name %>
                 <%= link_to "Manage your business", dashboard_path if user_signed_in? && current_user.account_type == "chefhero" && current_user.name == @user.name %>
+                <% if user_signed_in? && current_user.name != @user.name %>
+                    <% if current_user.check_if_faved(@user.id) %>
+                        <%= link_to "<i class='fas fa-heart'></i>".html_safe, remove_from_favourites_path(:id => @user.id), method: :delete, id:"fav-btn" %> 
+                    <% else %>
+                        <%= link_to "<i class='far fa-heart'></i>".html_safe, add_to_favourites_path(:id => @user.id), method: :post, id:"fav-btn" %>
+                    <% end %>
+                <% end %>
             </div>
             <div class="profile-badges">
                 <hr>

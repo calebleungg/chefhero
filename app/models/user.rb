@@ -12,6 +12,7 @@ class User < ApplicationRecord
     has_one :availability
     has_many :withdrawals
     has_many :notifications
+    has_one :favourites_list
 
     # method for returning full name in string
     def name
@@ -147,5 +148,13 @@ class User < ApplicationRecord
     def last_order
         return self.orders.order("created_at DESC").first
     end
+
+    # method for checking favourites
+    def check_if_faved(chef)
+		if self.favourites_list
+			return self.favourites_list.favourites_list_items.exists?(user_id: chef)
+		end
+		return false
+	end
 
 end

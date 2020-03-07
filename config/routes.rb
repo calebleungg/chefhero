@@ -99,6 +99,12 @@ Rails.application.routes.draw do
   # view dashboard for admin managing
   get "/admin/manage", to: "admin#manage", as: "admin_manage"
 
+  # add to favourites
+  post "/add/favourite", to: "favourites#add", as: "add_to_favourites"
+
+  # remove from favourites list
+  delete "/delete/favourite", to: "favourites#remove", as: "remove_from_favourites"
+
   scope "/checkout" do
     post "create", to: "checkout#create", as: "checkout_create"
     get "cancel", to: "checkout#cancel", as: "checkout_cancel"
