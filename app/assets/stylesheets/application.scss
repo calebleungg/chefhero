@@ -510,6 +510,11 @@
      align-items: flex-start;
      .favourites-list-container {
          margin: 50px 0 0 50px;
+         #find-prompt {
+             font-size: 0.7em;
+             opacity: 80%;
+             width: 150px;
+         }
          a {
             color: black;
             text-decoration: none;

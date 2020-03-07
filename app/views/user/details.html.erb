@@ -30,9 +30,9 @@
             <%= link_to "Personal Info", details_path(current_user)%>
             <%= link_to "Order History", order_history_path(current_user) %>
         </div>
-        <% if current_user.favourites_list %>
-            <div class="favourites-list-container">
-                <h5> Favourites <i class='fas fa-heart'></i> </h5>
+        <div class="favourites-list-container">
+            <h5> Favourites <i class='fas fa-heart'></i> </h5>
+            <% if current_user.favourites_list %>
                 <% for item in @list %>
                     <%= link_to user_path(User.find(item.user_id)) do %>
                         <div class="fav-item">
@@ -40,8 +40,13 @@
                         </div>
                     <% end %>
                 <% end %>
-            </div>
-        <% end %>
+                <% if @list.length <= 0 %>
+                    <p id="find-prompt"> Find chefs to favourite now! (press the heart under their picture) </p>
+                <% end %>
+            <% else %>
+                <p id="find-prompt"> Find chefs to favourite now! (press the heart under their picture) </p>
+            <% end %>
+        </div>
 
     </div>
 </div>

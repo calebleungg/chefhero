@@ -3,7 +3,7 @@ class FavouritesController < ApplicationController
     def add
         user = current_user
         if user.favourites_list == nil
-            favourites = user.favourites_list.new
+            favourites = user.create_favourites_list
         else
             favourites = user.favourites_list
         end
