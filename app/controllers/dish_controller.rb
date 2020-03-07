@@ -25,6 +25,16 @@ class DishController < ApplicationController
         @dish.image.attach(params[:dish][:image])
         @dish.available = true
         if @dish.valid? && @dish.save
+            # creating notifications for all users who have favourited this chef
+            to_notify = FavouritesList.return_notif_list(current_user.id)
+            to_notify.each do |user|
+                User.find(user).notifications.create(
+                    purpose: "new-dish",
+                    message: "#{current_user.name} has posted a new dish! Go check it out now!",
+                    read: false,
+                    data: current_user.id
+                )
+            end
             redirect_to manager_path(:option => "Manager")
         end
     end

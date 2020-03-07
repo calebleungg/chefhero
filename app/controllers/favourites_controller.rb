@@ -1,5 +1,6 @@
 class FavouritesController < ApplicationController
 
+    # method for adding a chef to a user's favourites list
     def add
         user = current_user
         if user.favourites_list == nil
@@ -13,6 +14,7 @@ class FavouritesController < ApplicationController
         end
     end
 
+    # method for removing a chef froma  user's favourites list
     def remove
         current_user.favourites_list.favourites_list_items.where(user_id: params[:id]).first.destroy
         redirect_back(fallback_location: user_path(params[:id]))

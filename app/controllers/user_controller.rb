@@ -27,30 +27,39 @@ class UserController < ApplicationController
 
     # method for displaying user profile
     def show
-        @user = User.find(params[:id])
-
-        # instancing user revies if chef
-        @reviews = @user.reviews.order("created_at DESC")
-
-        # instancing user about with error handling
-        if @user.about == nil
-            @about = ""
+        if params[:notification_id]
+            notification = Notification.find(params[:notification_id])
+            notification.read = true
+            notification.save
+            redirect_to user_path(params[:id])
         else
-            @about = @user.about
-        end
-        
-        # instancing info in user profile is a chef
-        if @user.account_type == "chefhero"
-            @dishes = @user.dishes.where(available: true).order("created_at DESC").limit(5)
-            @total_orders = Order.total_for_chef(@user)
-            @days_open = @user.availability.days_open if @user.availability
-            begin
-                @address_coordinates = Geocoder.search(@user.address.display_full).first.coordinates.reverse if @user.address
-            rescue
-                # rescue method for catching error thrown by incorrect coordinates by user inputted address
-                @address_coordinates = nil
+
+            @user = User.find(params[:id])
+
+            # instancing user revies if chef
+            @reviews = @user.reviews.order("created_at DESC")
+
+            # instancing user about with error handling
+            if @user.about == nil
+                @about = ""
+            else
+                @about = @user.about
             end
-            @average_rating = @user.reviews.average(:rating)
+            
+            # instancing info in user profile is a chef
+            if @user.account_type == "chefhero"
+                @dishes = @user.dishes.where(available: true).order("created_at DESC").limit(5)
+                @total_orders = Order.total_for_chef(@user)
+                @days_open = @user.availability.days_open if @user.availability
+                begin
+                    @address_coordinates = Geocoder.search(@user.address.display_full).first.coordinates.reverse if @user.address
+                rescue
+                    # rescue method for catching error thrown by incorrect coordinates by user inputted address
+                    @address_coordinates = nil
+                end
+                @average_rating = @user.reviews.average(:rating)
+            end
+            
         end
 
     end
