@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
     # instancing notifications for current_user
     def set_variables
-        @notifications = current_user.notifications.where(read: false).order("created_at DESC") if user_signed_in?
+        @notifications = current_user.notifications.order("created_at DESC") if user_signed_in?
     end
 
     # configurations to add attributes to devise user

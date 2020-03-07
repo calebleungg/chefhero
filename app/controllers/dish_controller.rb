@@ -47,6 +47,7 @@ class DishController < ApplicationController
     # method for deleting a dish
     def destroy
         dish = Dish.find(params[:id])
+        Order.where(dish_id: params[:id]).destroy_all
         dish.delete
         flash[:alert] = "#{dish.name} has been deleted successfully."
         redirect_to manager_path(:option => "Manager")

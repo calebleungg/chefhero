@@ -6,6 +6,7 @@ class AdminController < ApplicationController
         @chef_database = User.where(account_type: "chefhero").order("last_name")
         @dish_database = Dish.all.order("created_at DESC")
         @order_database = Order.all.order("created_at DESC")
+        @review_database = Review.all.order("created_at DESC")
 
         @total_users = User.all.length
         

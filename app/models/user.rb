@@ -4,15 +4,15 @@ class User < ApplicationRecord
     devise :database_authenticatable, :registerable,
             :recoverable, :rememberable, :validatable
 
-    has_many :reviews
-    has_many :dishes
+    has_many :reviews, dependent: :destroy
+    has_many :dishes, dependent: :destroy
     has_one_attached :avatar
-    has_many :orders
-    has_one :address
-    has_one :availability
-    has_many :withdrawals
-    has_many :notifications
-    has_one :favourites_list
+    has_many :orders, dependent: :destroy
+    has_one :address, dependent: :destroy
+    has_one :availability, dependent: :destroy
+    has_many :withdrawals, dependent: :destroy
+    has_many :notifications, dependent: :destroy
+    has_one :favourites_list, dependent: :destroy
 
     # method for returning full name in string
     def name

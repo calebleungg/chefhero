@@ -105,6 +105,9 @@ Rails.application.routes.draw do
   # remove from favourites list
   delete "/delete/favourite", to: "favourites#remove", as: "remove_from_favourites"
 
+  # delete a user and associated info route
+  delete "/delete/user/:id", to: "user#delete", as: "delete_user"
+
   scope "/checkout" do
     post "create", to: "checkout#create", as: "checkout_create"
     get "cancel", to: "checkout#cancel", as: "checkout_cancel"

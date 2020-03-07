@@ -1950,6 +1950,12 @@
   }
   .admin-manage-container {
       width: 100vw;
+      a {
+          color: white;
+          &:hover {
+              color: rgb(177, 177, 177);
+          }
+      }
       h1 {
           text-align: center;
           font-weight: 600;
@@ -1965,11 +1971,15 @@
         flex-direction: row;
         justify-content: space-evenly;
         width: 100vw;
+        font-size: 0.8em;
         hr {
             color: white;
         }
         &:last-child {
             padding-bottom: 100px;
+        }
+        .review-list-manager {
+            max-width: 70vw;
         }
     }
       #user-details-table {
@@ -1987,6 +1997,18 @@
                 display: block;
                 max-height: 300px;
                 overflow: auto;
+            }
+            #name-col-admin {
+                width: 100px;
+            }
+            #joined-on-col {
+                width: 100px;
+            }
+            #review-message {
+                width: 200px;
+            }
+            #rating-col {
+                width: 40px;
             }
           td {
               padding: 0 5px;

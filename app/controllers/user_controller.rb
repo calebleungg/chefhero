@@ -28,9 +28,7 @@ class UserController < ApplicationController
     # method for displaying user profile
     def show
         if params[:notification_id]
-            notification = Notification.find(params[:notification_id])
-            notification.read = true
-            notification.save
+            Notification.find(params[:notification_id]).destroy
             redirect_to user_path(params[:id])
         else
 
@@ -59,7 +57,7 @@ class UserController < ApplicationController
                 end
                 @average_rating = @user.reviews.average(:rating)
             end
-            
+
         end
 
     end
@@ -155,6 +153,25 @@ class UserController < ApplicationController
         else 
             render "new_chef"
         end
+    end
+
+    # method for deleting a user and all relevant info
+    def delete
+        user = User.find(params[:id])
+        dishes = user.get_dish_ids
+        orders = Order.where(dish_id: dishes)
+        order_ids = []
+        orders.each do |order|
+            order_ids.push(order.id)
+        end
+        Notification.where(data: order_ids).destroy_all
+        orders.destroy_all
+        Notification.where(data: user.id).destroy_all
+        FavouritesListItem.where(user_id: user.id).destroy_all
+        user.dishes.destroy_all
+        user.destroy
+        Review.where(left_by: params[:id]).destroy_all
+        redirect_back(fallback_location: root_path)
     end
 
     def resources

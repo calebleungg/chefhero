@@ -42,9 +42,7 @@ class OrderController < ApplicationController
 
         # checking if path received from notification click- if so then changing to read = true
         if params[:notification_id]
-            notification = Notification.find(params[:notification_id])
-            notification.read = true
-            notification.save
+            Notification.find(params[:notification_id]).destroy
             redirect_to order_summary_path(params[:id])
         else
             # instancing order details for view display
@@ -106,9 +104,7 @@ class OrderController < ApplicationController
     def manager
         # checking if path received from notification click- if so then changing to read = true
         if params[:notification_id]
-            notification = Notification.find(params[:notification_id])
-            notification.read = true
-            notification.save
+            Notification.find(params[:notification_id]).destroy
             redirect_to orders_manager_path(:option => "Manager")
         else
             # instancing orders in correct progression column to be managed

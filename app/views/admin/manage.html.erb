@@ -16,8 +16,9 @@
                 <thead>
                     <tr>
                         <td> id </td>
-                        <td> name </td>
-                        <td> joined on </td>
+                        <td id="name-col-admin"> name </td>
+                        <td> email </td>
+                        <td id="joined-on-col"> joined on </td>
                         <td> orders </td>
                         <td>  </td>
                     </tr>
@@ -26,10 +27,12 @@
                 <% for user in @foodie_database %>
                     <tr>
                         <td> <%= user.id %> </td>
-                        <td> <%= user.name %> </td>
-                        <td> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
+                        <td id="name-col-admin"> <%= user.name %> </td>
+                        <td id="email"> <%= user.email %> </td>
+                        <td id="joined-on-col"> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
                         <td> <%= user.orders.length > 0 ? user.orders.length.to_i : 0 %> </td>
-                        <td> <i class="far fa-trash-alt"> </i> </td>
+                        <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
+                        data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
                     </tr>
                 <% end %>
                 </tbody>
@@ -42,8 +45,8 @@
                 <thead>
                     <tr>
                         <td> id </td>
-                        <td> name </td>
-                        <td> joined on </td>
+                        <td id="name-col-admin"> name </td>
+                        <td> email </td>
                         <td> ords </td>
                         <td> earnings </td>
                         <td>  </td>
@@ -53,11 +56,12 @@
                 <% for user in @chef_database %>
                     <tr>
                         <td> <%= user.id %> </td>
-                        <td> <%= user.name %> </td>
-                        <td> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
+                        <td id="name-col-admin"> <%= user.name %> </td>
+                        <td id="email"> <%= user.email %> </td>
                         <td> <%= user.get_total_orders > 0 ? user.get_total_orders : 0 %> </td>
                         <td> <%= number_to_currency user.get_total_sales > 0 ? user.get_total_sales : 0 %> </td>
-                        <td> <i class="far fa-trash-alt"> </i> </td>
+                        <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
+                        data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
                     </tr>
                 <% end %>
                 </tbody>
@@ -72,7 +76,7 @@
                 <thead>
                     <tr>
                         <td> id </td>
-                        <td> chef </td>
+                        <td id="name-col-admin"> chef </td>
                         <td> dish </td>
                         <td> orders </td>
                         <td>  </td>
@@ -82,7 +86,7 @@
                 <% for dish in @dish_database %>
                     <tr>
                         <td> <%= dish.id %> </td>
-                        <td> <%= dish.get_chef.name %> </td>
+                        <td id="name-col-admin"> <%= dish.get_chef.name %> </td>
                         <td> <%= dish.name %> </td>
                         <td> <%= dish.total_quantity > 0 ? dish.total_quantity.to_i : 0 %> </td>
                         <td> <i class="far fa-trash-alt"> </i> </td>
@@ -98,7 +102,7 @@
                 <thead>
                     <tr>
                         <td> id </td>
-                        <td> customer </td>
+                        <td id="name-col-admin"> customer </td>
                         <td> dish </td>
                         <td> qty </td>
                         <td> revenue </td>
@@ -109,7 +113,7 @@
                     <% for order in @order_database %>
                         <tr>
                             <td> <%= order.id %> </td>
-                            <td> <%= order.get_user.name %> </td>
+                            <td id="name-col-admin"> <%= order.get_user.name %> </td>
                             <td> <%= order.get_dish.name %> </td>
                             <td> <%= order.quantity.to_i %> </td>
                             <td> <%= number_to_currency order.get_total %> </td>
@@ -119,6 +123,40 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <br/><br/>
+
+    <div class="user-management-section">
+
+        <div class="review-list-manager">
+            <p> Reviews </p>
+            <table id="user-details-table">
+                <thead>
+                    <tr>
+                        <td> id </td>
+                        <td id="rating-col"> rating </td>
+                        <td id="name-col-admin"> left by </td>
+                        <td id="name-col-admin"> for </td>
+                        <td id="review-message"> message </td>
+                        <td>  </td>
+                    </tr>
+                </thead>
+                <tbody>
+                <% for review in @review_database %>
+                    <tr>
+                        <td> <%= review.id %> </td>
+                        <td id="rating-col"> <%= "%.2f" % review.rating %> </td>
+                        <td id="name-col-admin"> <%= User.find(review.left_by).name %> </td>
+                        <td id="name-col-admin"> <%= User.find(review.user_id).name %> </td>
+                        <td id="review-message"> <%= review.comments %> </td>
+                        <td> <i class="far fa-trash-alt"> </i> </td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+
+        
     </div>
 
 </div>
