@@ -81,6 +81,7 @@
                             <%= image_tag User.find(chef).get_display_picture%>
                             <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= User.find(chef).name %></p>
                             <p> 
+                                <i class='fas fa-heart' id="fav-count"></i> <%= User.find(chef).total_favourites %><br/>
                                 <i class="fas fa-star"></i> <%= User.find(chef).reviews.length > 0 ? "%.2f" % User.find(chef).reviews.average(:rating) : 0 %>(<%= User.find(chef).reviews.length %>)<br/>
                                 <span><%= orders %></span> total orders
                             </p>

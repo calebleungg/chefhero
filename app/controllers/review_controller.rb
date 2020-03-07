@@ -17,4 +17,9 @@ class ReviewController < ApplicationController
         end
     end
 
+    def delete
+        Review.find(params[:id]).destroy
+        redirect_back(fallback_location: admin_manage_path)
+    end
+
 end

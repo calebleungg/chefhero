@@ -45,4 +45,13 @@ class Order < ApplicationRecord
 		return self.revenue * self.quantity	 
 	end
 
+	# method for returning an array of all orders associated with parsed dish(id)
+	def self.get_orders_of_dish(dish)
+		orders = []
+		Order.where(dish_id: dish).each do | order |
+			orders.push(order.id)
+		end
+		return orders
+	end
+
 end

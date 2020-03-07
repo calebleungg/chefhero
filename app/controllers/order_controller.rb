@@ -30,7 +30,8 @@ class OrderController < ApplicationController
             chef.notifications.create(
                 purpose: "order-placed",
                 message: "A new order has been placed by #{user.name}. For #{order.quantity.to_i} x #{order.get_dish.name}. Go manage now!",
-                read: false
+                read: false,
+                data: order.id
             )
             redirect_to order_summary_path(order.id)
         end
@@ -138,6 +139,12 @@ class OrderController < ApplicationController
         @withdrawals = current_user.withdrawals.reverse
         @available_to_withdraw = @net_sales - current_user.get_withdrawn_total
         render layout: "dashboard"
+    end
+
+    def delete
+        Notification.where(data: params[:id]).destroy_all
+        Order.find(params[:id]).destroy
+        redirect_back(fallback_location: admin_manage_path)
     end
 
 end

@@ -1,162 +1,167 @@
 <div class="admin-manage-container">
 
-    <div class="admin-statistics">
-        <p> Website Users:<br/> <span> <%= @total_users %> </span> </p>
-        <p> Dishes Made:<br/> <span> <%= @total_dishes %> </span> </p>
-        <p> Generated Revenue:<br/> <span> <%= number_to_currency @total_sales %> </span> </p>
-        <p> Orders Placed:<br/> <span> <%= @total_orders %> </span> </p>
-        <p> Reviews Made:<br/> <span> <%= @total_reviews %> </span> </p>
-    </div>
-    <h1> Control Panel </h1>
-
-    <div class="user-management-section">
-        <div class="foodie-list-manager">
-            <p> Foodies </p>
-            <table id="user-details-table">
-                <thead>
-                    <tr>
-                        <td> id </td>
-                        <td id="name-col-admin"> name </td>
-                        <td> email </td>
-                        <td id="joined-on-col"> joined on </td>
-                        <td> orders </td>
-                        <td>  </td>
-                    </tr>
-                </thead>
-                <tbody id="user-table-body">
-                <% for user in @foodie_database %>
-                    <tr>
-                        <td> <%= user.id %> </td>
-                        <td id="name-col-admin"> <%= user.name %> </td>
-                        <td id="email"> <%= user.email %> </td>
-                        <td id="joined-on-col"> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
-                        <td> <%= user.orders.length > 0 ? user.orders.length.to_i : 0 %> </td>
-                        <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
-                        data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
-                    </tr>
-                <% end %>
-                </tbody>
-            </table>
+    <% if user_signed_in? %>
+        <div class="admin-statistics">
+            <p> Website Users:<br/> <span> <%= @total_users %> </span> </p>
+            <p> Dishes Made:<br/> <span> <%= @total_dishes %> </span> </p>
+            <p> Generated Revenue:<br/> <span> <%= number_to_currency @total_sales %> </span> </p>
+            <p> Orders Placed:<br/> <span> <%= @total_orders %> </span> </p>
+            <p> Reviews Made:<br/> <span> <%= @total_reviews %> </span> </p>
         </div>
+        <h1> Control Panel </h1>
 
-        <div class="chef-list-manager">
-            <p> ChefHeroes </p>
-            <table id="user-details-table">
-                <thead>
-                    <tr>
-                        <td> id </td>
-                        <td id="name-col-admin"> name </td>
-                        <td> email </td>
-                        <td> ords </td>
-                        <td> earnings </td>
-                        <td>  </td>
-                    </tr>
-                </thead>
-                <tbody>
-                <% for user in @chef_database %>
-                    <tr>
-                        <td> <%= user.id %> </td>
-                        <td id="name-col-admin"> <%= user.name %> </td>
-                        <td id="email"> <%= user.email %> </td>
-                        <td> <%= user.get_total_orders > 0 ? user.get_total_orders : 0 %> </td>
-                        <td> <%= number_to_currency user.get_total_sales > 0 ? user.get_total_sales : 0 %> </td>
-                        <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
-                        data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
-                    </tr>
-                <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <br/><br/>
-    <div class="user-management-section">
-        <div class="dish-list-manager">
-            <p> Dishes </p>
-            <table id="user-details-table">
-                <thead>
-                    <tr>
-                        <td> id </td>
-                        <td id="name-col-admin"> chef </td>
-                        <td> dish </td>
-                        <td> orders </td>
-                        <td>  </td>
-                    </tr>
-                </thead>
-                <tbody>
-                <% for dish in @dish_database %>
-                    <tr>
-                        <td> <%= dish.id %> </td>
-                        <td id="name-col-admin"> <%= dish.get_chef.name %> </td>
-                        <td> <%= dish.name %> </td>
-                        <td> <%= dish.total_quantity > 0 ? dish.total_quantity.to_i : 0 %> </td>
-                        <td> <i class="far fa-trash-alt"> </i> </td>
-                    </tr>
-                <% end %>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="dish-list-manager">
-            <p> Orders </p>
-            <table id="user-details-table">
-                <thead>
-                    <tr>
-                        <td> id </td>
-                        <td id="name-col-admin"> customer </td>
-                        <td> dish </td>
-                        <td> qty </td>
-                        <td> revenue </td>
-                        <td>  </td>
-                    </tr>
-                <thead>
-                <tbody>
-                    <% for order in @order_database %>
+        <div class="user-management-section">
+            <div class="foodie-list-manager">
+                <p> Foodies </p>
+                <table id="user-details-table">
+                    <thead>
                         <tr>
-                            <td> <%= order.id %> </td>
-                            <td id="name-col-admin"> <%= order.get_user.name %> </td>
-                            <td> <%= order.get_dish.name %> </td>
-                            <td> <%= order.quantity.to_i %> </td>
-                            <td> <%= number_to_currency order.get_total %> </td>
-                            <td> <i class="far fa-trash-alt"> </i> </td>
+                            <td> id </td>
+                            <td id="name-col-admin"> name </td>
+                            <td> email </td>
+                            <td id="joined-on-col"> joined on </td>
+                            <td> orders </td>
+                            <td>  </td>
+                        </tr>
+                    </thead>
+                    <tbody id="user-table-body">
+                    <% for user in @foodie_database %>
+                        <tr>
+                            <td> <%= user.id %> </td>
+                            <td id="name-col-admin"> <%= user.name %> </td>
+                            <td id="email"> <%= user.email %> </td>
+                            <td id="joined-on-col"> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
+                            <td> <%= user.orders.length > 0 ? user.orders.length.to_i : 0 %> </td>
+                            <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
+                            data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
                         </tr>
                     <% end %>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chef-list-manager">
+                <p> ChefHeroes </p>
+                <table id="user-details-table">
+                    <thead>
+                        <tr>
+                            <td> id </td>
+                            <td id="name-col-admin"> name </td>
+                            <td> email </td>
+                            <td> ords </td>
+                            <td> earnings </td>
+                            <td>  </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% for user in @chef_database %>
+                        <tr>
+                            <td> <%= user.id %> </td>
+                            <td id="name-col-admin"> <%= user.name %> </td>
+                            <td id="email"> <%= user.email %> </td>
+                            <td> <%= user.get_total_orders > 0 ? user.get_total_orders : 0 %> </td>
+                            <td> <%= number_to_currency user.get_total_sales > 0 ? user.get_total_sales : 0 %> </td>
+                            <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
+                            data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <br/><br/>
+        <br/><br/>
+        <div class="user-management-section">
+            <div class="dish-list-manager">
+                <p> Dishes </p>
+                <table id="user-details-table">
+                    <thead>
+                        <tr>
+                            <td> id </td>
+                            <td id="name-col-admin"> chef </td>
+                            <td> dish </td>
+                            <td> orders </td>
+                            <td>  </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% for dish in @dish_database %>
+                        <tr>
+                            <td> <%= dish.id %> </td>
+                            <td id="name-col-admin"> <%= dish.get_chef.name %> </td>
+                            <td> <%= dish.name %> </td>
+                            <td> <%= dish.total_quantity > 0 ? dish.total_quantity.to_i : 0 %> </td>
+                            <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_dish_path(dish.id), method: :delete, 
+                            data: { confirm: "Are you sure you want to delete #{dish.name}? This will delete all associated data (eg. orders placed, revenue earned) for the dish also."} %> </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="user-management-section">
-
-        <div class="review-list-manager">
-            <p> Reviews </p>
-            <table id="user-details-table">
-                <thead>
-                    <tr>
-                        <td> id </td>
-                        <td id="rating-col"> rating </td>
-                        <td id="name-col-admin"> left by </td>
-                        <td id="name-col-admin"> for </td>
-                        <td id="review-message"> message </td>
-                        <td>  </td>
-                    </tr>
-                </thead>
-                <tbody>
-                <% for review in @review_database %>
-                    <tr>
-                        <td> <%= review.id %> </td>
-                        <td id="rating-col"> <%= "%.2f" % review.rating %> </td>
-                        <td id="name-col-admin"> <%= User.find(review.left_by).name %> </td>
-                        <td id="name-col-admin"> <%= User.find(review.user_id).name %> </td>
-                        <td id="review-message"> <%= review.comments %> </td>
-                        <td> <i class="far fa-trash-alt"> </i> </td>
-                    </tr>
-                <% end %>
-                </tbody>
-            </table>
+            <div class="dish-list-manager">
+                <p> Orders </p>
+                <table id="user-details-table">
+                    <thead>
+                        <tr>
+                            <td> id </td>
+                            <td id="name-col-admin"> customer </td>
+                            <td> dish </td>
+                            <td> qty </td>
+                            <td> revenue </td>
+                            <td>  </td>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        <% for order in @order_database %>
+                            <tr>
+                                <td> <%= order.id %> </td>
+                                <td id="name-col-admin"> <%= order.get_user.name %> </td>
+                                <td> <%= order.get_dish.name %> </td>
+                                <td> <%= order.quantity.to_i %> </td>
+                                <td> <%= number_to_currency order.get_total %> </td>
+                                <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_order_path(order.id), method: :delete, 
+                            data: { confirm: "Are you sure you want to delete Order ##{order.id}? This will delete all associated data (eg. notifications, revenue earned) for the order also."} %> </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <br/><br/>
 
-        
-    </div>
+        <div class="user-management-section">
+
+            <div class="review-list-manager">
+                <p> Reviews </p>
+                <table id="user-details-table">
+                    <thead>
+                        <tr>
+                            <td> id </td>
+                            <td id="rating-col"> rating </td>
+                            <td id="name-col-admin"> left by </td>
+                            <td id="name-col-admin"> for </td>
+                            <td id="review-message"> message </td>
+                            <td>  </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% for review in @review_database %>
+                        <tr>
+                            <td> <%= review.id %> </td>
+                            <td id="rating-col"> <%= "%.2f" % review.rating %> </td>
+                            <td id="name-col-admin"> <%= User.find(review.left_by).name %> </td>
+                            <td id="name-col-admin"> <%= User.find(review.user_id).name %> </td>
+                            <td id="review-message"> <%= review.comments %> </td>
+                            <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_review_path(review.id), method: :delete, 
+                            data: { confirm: "Are you sure you want to delete review left by #{User.find(review.left_by).name}? This cannot be undone."} %> </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
+
+            
+        </div>
+    <% end %>
 
 </div>

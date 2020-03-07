@@ -23,6 +23,9 @@ class UserController < ApplicationController
         if params[:sort] == "top"
             @chefs = @chefs.sort_by_rating
         end
+        if user_signed_in? && current_user.account_type == "admin"
+            render layout: "admin"
+        end
     end
 
     # method for displaying user profile
@@ -57,7 +60,9 @@ class UserController < ApplicationController
                 end
                 @average_rating = @user.reviews.average(:rating)
             end
-
+        end
+        if user_signed_in? && current_user.account_type == "admin"
+            render layout: "admin"
         end
 
     end
@@ -159,13 +164,8 @@ class UserController < ApplicationController
     def delete
         user = User.find(params[:id])
         dishes = user.get_dish_ids
-        orders = Order.where(dish_id: dishes)
-        order_ids = []
-        orders.each do |order|
-            order_ids.push(order.id)
-        end
-        Notification.where(data: order_ids).destroy_all
-        orders.destroy_all
+        Notification.where(data: Order.get_orders_of_dish(dishes)).destroy_all
+        Order.where(dish_id: dishes).destroy_all
         Notification.where(data: user.id).destroy_all
         FavouritesListItem.where(user_id: user.id).destroy_all
         user.dishes.destroy_all

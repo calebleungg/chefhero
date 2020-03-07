@@ -155,6 +155,11 @@ class User < ApplicationRecord
 			return self.favourites_list.favourites_list_items.exists?(user_id: chef)
 		end
 		return false
-	end
+    end
+    
+    # method for checking total favourites
+    def total_favourites
+        return FavouritesListItem.where(user_id: self.id).length
+    end
 
 end

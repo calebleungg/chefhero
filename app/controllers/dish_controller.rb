@@ -17,6 +17,10 @@ class DishController < ApplicationController
             @dishes = @dishes.sort_by_newest
         end
 
+        if user_signed_in? && current_user.account_type == "admin"
+            render layout: "admin"
+        end
+
     end
 
     # post method for creating a dish
@@ -47,10 +51,15 @@ class DishController < ApplicationController
     # method for deleting a dish
     def destroy
         dish = Dish.find(params[:id])
+        Notification.where(data: Order.get_orders_of_dish(params[:id])).destroy_all
         Order.where(dish_id: params[:id]).destroy_all
         dish.delete
-        flash[:alert] = "#{dish.name} has been deleted successfully."
-        redirect_to manager_path(:option => "Manager")
+        if current_user.account_type == "admin"
+            redirect_back(fallback_location: admin_manage_path)
+        else
+            flash[:alert] = "#{dish.name} has been deleted successfully."
+            redirect_to manager_path(:option => "Manager")
+        end
     end
     
     # method for listing a dish - through changing availability attribute boolean

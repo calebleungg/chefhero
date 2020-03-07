@@ -232,6 +232,10 @@
                         height: 21px;
                         margin-bottom: 2px;
                     }
+                    
+                    #fav-count {
+                        color: #c40808;
+                    }
                 }
 
     
@@ -1545,6 +1549,7 @@
 
 .dish-index-display {
     width: 100vw;
+    padding-bottom: 50vh;
     justify-content: center;
     align-self: center;
     .dish-search-banner {
@@ -1945,6 +1950,24 @@
             color: white;
             border-top: 1px solid white;
             border-bottom: 1px solid white;
+      }
+      .modal-content {
+          color: black;
+      }
+      .small-details-row {
+          color: white;
+          p, i {
+              color: white !important;
+          }
+      }
+      .reviewer-item {
+          a {
+              color: white;
+          }
+      }
+      .card-body {
+          background-color: #474646;
+          color: white;
       }
       
   }
