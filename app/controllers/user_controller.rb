@@ -88,7 +88,7 @@ class UserController < ApplicationController
     # method for account details display (empty as used current_user for most instance calls in view)
     def details
         if current_user.favourites_list
-            @list = current_user.favourites_list.favourites_list_items
+            @list = current_user.favourites_list_items
         end
     end
 

@@ -29,6 +29,7 @@
         <div class="profile-control-panel">
             <%= link_to "Personal Info", details_path(current_user)%>
             <%= link_to "Order History", order_history_path(current_user) %>
+            <%= link_to "Change Password", edit_user_registration_path%>
         </div>
         <div class="favourites-list-container">
             <h5> Favourites <i class='fas fa-heart'></i> </h5>

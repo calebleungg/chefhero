@@ -13,6 +13,8 @@ class User < ApplicationRecord
     has_many :withdrawals, dependent: :destroy
     has_many :notifications, dependent: :destroy
     has_one :favourites_list, dependent: :destroy
+    has_many :favourites_list_items, through: :favourites_list
+
 
     # method for returning full name in string
     def name

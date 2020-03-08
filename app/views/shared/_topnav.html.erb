@@ -18,6 +18,7 @@
                     <%= link_to "Explore", root_path, class:"nav-link"%>
                     <% if current_user.account_type == "chefhero" %>
                         <%= link_to "Create Dish", new_dish_path, class:"nav-link"%>
+                        <%= link_to "Dashboard", dashboard_path, class:"nav-link", id:"dashboard-link"%>
                     <% elsif current_user.account_type == "foodie" %>
                         <%= link_to "Become a ChefHero", new_chef_path, class:"nav-link"%>
                     <% end %>
@@ -70,7 +71,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <%= link_to "Profile", user_path(current_user.id), class:"dropdown-item" %>
                             <% if current_user.account_type == "chefhero" %>
-                                <%= link_to "Dashboard", dashboard_path, class:"dropdown-item" %>
+                                <%= link_to "Dashboard", dashboard_path, class:"dropdown-item", id:"dashboard-link" %>
                             <% end %>
                             <%= link_to "Account", details_path(current_user), class:"dropdown-item" %>
                             <%= link_to "Order History", order_history_path(current_user), class:"dropdown-item" %>

@@ -45,7 +45,7 @@ class AdminController < ApplicationController
         end
 
         if params[:order_search] && params[:order_search] != "" && params[:order_search] != " "
-            if Order.where(id: params[:order_search]) == 1
+            if Order.where(id: params[:order_search]).length == 1
                 @order_database = Order.where(id: params[:order_search])
             else
                 tmp = User.where("LOWER(first_name) LIKE :search OR LOWER(last_name) LIKE :search OR LOWER(email) LIKE :search",  search: "%#{params[:order_search].downcase}%")

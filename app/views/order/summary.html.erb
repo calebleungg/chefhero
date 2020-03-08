@@ -40,7 +40,7 @@
             <div>
                 <p> <strong>Your ChefHero: </strong> <div> <%= link_to user_path(@chef) do %>  <%= @chef.name %> <%= image_tag @chef.get_display_picture %> </div> <% end %> </p>
                 <p> <strong>Address: </strong> <%= @chef.address.display_full %> </p>
-                <% if @order.status != "collected" %>  <p id="helper"> You can use the directions helper on the map to find the best route! <br/> Either click on the map to choose your locations or type it in the address bar. </p> <% end %>
+                <% if @order.status != "collected" %>  <p id="helper"> You can use the directions helper on the map to find the best route! <br/> Enter your address in the origin field to start. </p> <% end %>
             </div>
             <% if @order.status == "placed" || @order.status == "ready" %>
                 <div id="map"></div>
@@ -81,11 +81,13 @@
     zoom: 12 // starting zoom
     });
 
-    map.addControl(
-    new MapboxDirections({
-    accessToken: mapboxgl.accessToken
-    }),
-    'top-left'
-    );
+    map.on('load', function() {
+        var directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken
+        });
+        map.addControl(directions, 'top-left');
+
+        directions.setDestination('<%= @chef.address.display_full %>');
+    });
 
 </script>

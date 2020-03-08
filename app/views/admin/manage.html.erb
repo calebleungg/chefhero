@@ -90,14 +90,14 @@
             <div class="dish-list-manager">
                 <div class="title-search">
                     <p> Dishes 
-                        <%= form_tag(admin_manage_path, method: :get) do %>
+                        <%= form_tag(admin_manage_path+"#dish-table-admin", method: :get) do %>
                             <%= text_field_tag(:dish_search, params[:dish_search], placeholder: "Search Dishes") %>
                             <%= submit_tag("Search", id:"search-button")%>
                         <% end %>
                     </p>
                 </div>
                 <table id="user-details-table">
-                    <thead>
+                    <thead id="dish-table-admin">
                         <tr>
                             <td> id </td>
                             <td id="name-col-admin"> chef </td>
@@ -128,14 +128,14 @@
             <div class="dish-list-manager">
                 <div class="title-search">
                     <p> Orders 
-                        <%= form_tag(admin_manage_path, method: :get) do %>
+                        <%= form_tag(admin_manage_path+"#order-table-admin", method: :get) do %>
                             <%= text_field_tag(:order_search, params[:order_search], placeholder: "Search Orders") %>
                             <%= submit_tag("Search", id:"search-button")%>
                         <% end %>
                     </p>
                 </div>
                 <table id="user-details-table">
-                    <thead>
+                    <thead id="order-table-admin">
                         <tr>
                             <td> id </td>
                             <td id="name-col-admin"> customer </td>
@@ -168,14 +168,14 @@
             <div class="review-list-manager">
                 <div class="title-search">
                     <p> Reviews 
-                        <%= form_tag(admin_manage_path, method: :get) do %>
+                        <%= form_tag(admin_manage_path+'#review-table', method: :get) do %>
                             <%= text_field_tag(:review_search, params[:review_search], placeholder: "Search Reviews") %>
                             <%= submit_tag("Search", id:"search-button")%>
                         <% end %>
                     </p>
                 </div>
                 <table id="user-details-table">
-                    <thead>
+                    <thead id="review-table">
                         <tr>
                             <td> id </td>
                             <td id="rating-col"> rating </td>
