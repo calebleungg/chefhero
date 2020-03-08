@@ -2004,6 +2004,15 @@
         .review-list-manager {
             max-width: 70vw;
         }
+        .title-search {
+            display: flex;
+            flex-direction: row;
+            input {
+                margin-left: 10px;
+                border: none;
+                padding: 5px;
+            }
+        }
     }
       #user-details-table {
           display: table;
@@ -2022,6 +2031,12 @@
                 overflow: auto;
             }
             #name-col-admin {
+                width: 150px;
+            }
+            #info-col {
+                width: 80px;
+            }
+            #category-col {
                 width: 100px;
             }
             #joined-on-col {

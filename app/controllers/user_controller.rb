@@ -40,7 +40,7 @@ class UserController < ApplicationController
             # instancing user revies if chef
             @reviews = @user.reviews.order("created_at DESC")
 
-            # instancing user about with error handling
+            # instancing user about with error handling when editing with Tiny  MCE
             if @user.about == nil
                 @about = ""
             else

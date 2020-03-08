@@ -4,7 +4,7 @@
         <div class="admin-statistics">
             <p> Website Users:<br/> <span> <%= @total_users %> </span> </p>
             <p> Dishes Made:<br/> <span> <%= @total_dishes %> </span> </p>
-            <p> Generated Revenue:<br/> <span> <%= number_to_currency @total_sales %> </span> </p>
+            <p> Generated Revenue:<br/> <span> AUD <%= number_to_currency @total_sales %> </span> </p>
             <p> Orders Placed:<br/> <span> <%= @total_orders %> </span> </p>
             <p> Reviews Made:<br/> <span> <%= @total_reviews %> </span> </p>
         </div>
@@ -12,7 +12,14 @@
 
         <div class="user-management-section">
             <div class="foodie-list-manager">
-                <p> Foodies </p>
+                <div class="title-search">
+                    <p> Foodies 
+                        <%= form_tag(admin_manage_path, method: :get) do %>
+                            <%= text_field_tag(:foodie_search, params[:foodie_search], placeholder: "Search Foodie") %>
+                            <%= submit_tag("Search", id:"search-button")%>
+                        <% end %>
+                    </p>
+                </div>
                 <table id="user-details-table">
                     <thead>
                         <tr>
@@ -20,7 +27,8 @@
                             <td id="name-col-admin"> name </td>
                             <td> email </td>
                             <td id="joined-on-col"> joined on </td>
-                            <td> orders </td>
+                            <td id="info-col"> orders </td>
+                            <td id="info-col"> spent </td>
                             <td>  </td>
                         </tr>
                     </thead>
@@ -31,7 +39,8 @@
                             <td id="name-col-admin"> <%= user.name %> </td>
                             <td id="email"> <%= user.email %> </td>
                             <td id="joined-on-col"> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
-                            <td> <%= user.orders.length > 0 ? user.orders.length.to_i : 0 %> </td>
+                            <td id="info-col"> <%= user.orders.length > 0 ? user.orders.length.to_i : 0 %> </td>
+                            <td id="info-col"> <%= number_to_currency user.total_spent %> </td>
                             <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_user_path(user.id), method: :delete, 
                             data: { confirm: "Are you sure you want to delete #{user.name}? This will delete all associated data (eg. orders placed, reviews left) of the user also."} %> </td>
                         </tr>
@@ -41,7 +50,14 @@
             </div>
 
             <div class="chef-list-manager">
-                <p> ChefHeroes </p>
+                <div class="title-search">
+                    <p> ChefHeroes 
+                        <%= form_tag(admin_manage_path, method: :get) do %>
+                            <%= text_field_tag(:chef_search, params[:chef_search], placeholder: "Search ChefHero") %>
+                            <%= submit_tag("Search", id:"search-button")%>
+                        <% end %>
+                    </p>
+                </div>
                 <table id="user-details-table">
                     <thead>
                         <tr>
@@ -72,14 +88,23 @@
         <br/><br/>
         <div class="user-management-section">
             <div class="dish-list-manager">
-                <p> Dishes </p>
+                <div class="title-search">
+                    <p> Dishes 
+                        <%= form_tag(admin_manage_path, method: :get) do %>
+                            <%= text_field_tag(:dish_search, params[:dish_search], placeholder: "Search Dishes") %>
+                            <%= submit_tag("Search", id:"search-button")%>
+                        <% end %>
+                    </p>
+                </div>
                 <table id="user-details-table">
                     <thead>
                         <tr>
                             <td> id </td>
                             <td id="name-col-admin"> chef </td>
                             <td> dish </td>
-                            <td> orders </td>
+                            <td id="category-col"> category </td>
+                            <td id="info-col"> price </td>
+                            <td id="info-col"> orders </td>
                             <td>  </td>
                         </tr>
                     </thead>
@@ -89,7 +114,9 @@
                             <td> <%= dish.id %> </td>
                             <td id="name-col-admin"> <%= dish.get_chef.name %> </td>
                             <td> <%= dish.name %> </td>
-                            <td> <%= dish.total_quantity > 0 ? dish.total_quantity.to_i : 0 %> </td>
+                            <td id="category-col"> <%= dish.category %> </td>
+                            <td id="info-col"> <%= number_to_currency dish.price %> </td>
+                            <td id="info-col"> <%= dish.total_quantity > 0 ? dish.total_quantity.to_i : 0 %> </td>
                             <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_dish_path(dish.id), method: :delete, 
                             data: { confirm: "Are you sure you want to delete #{dish.name}? This will delete all associated data (eg. orders placed, revenue earned) for the dish also."} %> </td>
                         </tr>
@@ -99,7 +126,14 @@
             </div>
 
             <div class="dish-list-manager">
-                <p> Orders </p>
+                <div class="title-search">
+                    <p> Orders 
+                        <%= form_tag(admin_manage_path, method: :get) do %>
+                            <%= text_field_tag(:order_search, params[:order_search], placeholder: "Search Orders") %>
+                            <%= submit_tag("Search", id:"search-button")%>
+                        <% end %>
+                    </p>
+                </div>
                 <table id="user-details-table">
                     <thead>
                         <tr>
@@ -132,7 +166,14 @@
         <div class="user-management-section">
 
             <div class="review-list-manager">
-                <p> Reviews </p>
+                <div class="title-search">
+                    <p> Reviews 
+                        <%= form_tag(admin_manage_path, method: :get) do %>
+                            <%= text_field_tag(:review_search, params[:review_search], placeholder: "Search Reviews") %>
+                            <%= submit_tag("Search", id:"search-button")%>
+                        <% end %>
+                    </p>
+                </div>
                 <table id="user-details-table">
                     <thead>
                         <tr>

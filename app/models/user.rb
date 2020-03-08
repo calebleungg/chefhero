@@ -162,4 +162,14 @@ class User < ApplicationRecord
         return FavouritesListItem.where(user_id: self.id).length
     end
 
+    # method for returning a general user total spent
+    def total_spent
+        orders = self.orders
+        total = 0
+        orders.each do |order|
+            total += order.get_total
+        end
+        return total
+    end
+
 end
