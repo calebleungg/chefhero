@@ -1,0 +1,83 @@
+
+
+<div class="analytics-container">
+
+    <h3> Weekly Results </h3>
+    <div class="weekly-chart">
+        <%= column_chart @weekly_sales, prefix: "$" %><br/>
+    </div>
+
+    <h3> Monthly Report </h3>
+    <div class="monthly-section">
+        <div>
+            <div class="analytics-card">
+                <h4> Top Selling Dish </h4>
+                <p> <%= @sales_by_dish[0][0]%> </p>
+                <p> <%= image_tag Dish.where(name: @sales_by_dish[0][0]).first.get_image %> 
+                </p>
+            </div>
+        </div>
+        
+        <div class="analytics-card">
+            <h4> Total Sales (last 30 days) </h4>
+
+            <p> <%= number_to_currency @total_sales %> </p>
+            <% for dish, sales in @sales_by_dish %>  
+                <table> 
+                    <tr>
+                        <td id="analytics-dish-name"> <%= dish %> </td>
+                        <td> <%= number_to_currency sales %> </td>
+                    </tr>
+                </table>
+            <% end %>
+            <br>
+            <h4> sales over time </h4>
+            <%= line_chart @sales_by_day, format: "%a", height: "150px", points: false, prefix: "$" %>
+        
+        </div>
+
+        <div class="analytics-card">
+            <h4> Total Orders (last 30 days) </h4>
+
+            <p> <%= @orders.length %> </p>
+            <% for dish, orders in @orders_by_dish %>  
+                <table> 
+                    <tr>
+                        <td id="analytics-dish-name"> <%= dish %> </td>
+                        <td> <%= orders %> </td>
+                    </tr>
+                </table>
+            <% end %>
+            <br>
+            <h4> orders over time </h4>
+            <%= line_chart @orders.group_by_day(:created_at, format: "%a").count, height: "150px", points: false %>
+
+        </div>
+
+        <div>
+            <div class="analytics-card" id="small-details">
+                <h4> Average Order Value </h4>
+                <p> <%= number_to_currency @aov %> </p>
+            </div>
+
+            <div class="analytics-card">
+                <h4> Sales by Suburb </h4>
+                <% for suburb, sales in @sales_by_suburb %>  
+                    <table> 
+                        <tr>
+                            <td id="analytics-dish-name"> <%= suburb %> </td>
+                            <td> <%= number_to_currency sales %> </td>
+                        </tr>
+                    </table>
+                <% end %>
+            </div>
+
+            <div class="analytics-card" id="small-details">
+                <h4> Unique Customers </h4>
+                <p> <%= @customers.length %> </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>

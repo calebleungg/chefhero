@@ -2098,3 +2098,46 @@
           }
       }
   }
+  .analytics-container {
+    //   width: 70vw;
+      .monthly-section{
+          width: 70vw;
+          display: flex;
+          flex-wrap: wrap
+      }
+    .weekly-chart {
+        max-width: 60vw;
+    }
+
+      .analytics-card {
+          box-shadow: 0 0 3px lightgrey;
+          padding: 20px;
+          width: 250px;
+          margin: 20px;
+          h4 {
+              font-size: 0.7em;
+              font-weight: 600;
+          }
+          p {
+              font-size: 2em;
+          }
+          img {
+              width: 200px;
+              height: 200px;
+              border-radius: 100%;
+          }
+      }
+      table {
+          font-size: 0.7em;
+          #analytics-dish-name {
+              width: 170px;
+          }
+          td {
+              width: 50px;
+          }
+      }
+      #small-details {
+          height: 100px;
+      }
+   
+  }

@@ -18,4 +18,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require tinymce
-
+//= require chartkick
+//= require Chart.bundle

@@ -13,6 +13,10 @@ gem 'stripe-rails'
 gem 'jquery-rails'
 # tiny mce rich-text editor
 gem 'tinymce-rails'
+# chartkick for chart displays
+gem "chartkick"
+# group by day gem for charts
+gem 'groupdate'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server

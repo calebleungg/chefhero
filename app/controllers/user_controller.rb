@@ -174,7 +174,34 @@ class UserController < ApplicationController
         redirect_back(fallback_location: root_path)
     end
 
-    def resources
+    def analytics
+        user = current_user
+        dish_ids = user.get_dish_ids
+        @orders = Order.where(dish_id: dish_ids, :created_at => Time.zone.now.beginning_of_month..Time.zone.now.end_of_month)
+        @total_sales = 0
+        @sales_by_dish = Hash.new{0}
+        @sales_by_day = Hash.new{0}
+        @orders_by_dish = Hash.new{0}
+        @customers = Hash.new{0}
+        @sales_by_suburb = Hash.new{0}
+        @week = @orders.where("created_at >= ?", 1.week.ago.utc)
+        @weekly_sales = Hash.new{0}
+        
+        @week.each do |order|
+            @weekly_sales[DateFormat.change_to(order.created_at, "ONLY_CURRENT_DATE_ALPHABET")] += order.get_total
+        end
+        
+        @orders.each do |order|
+            @sales_by_dish[order.get_dish.name] += order.get_total
+            @orders_by_dish[order.get_dish.name] += 1
+            @sales_by_day[DateFormat.change_to(order.created_at, "SHORT_DATE")] += order.get_total
+            @total_sales += order.get_total
+            @customers[order.get_user.name] += 1
+            @sales_by_suburb[order.get_user.location] += order.get_total
+        end 
+        @sales_by_dish = @sales_by_dish.sort_by(&:last).reverse
+        @aov = @total_sales / @orders.length
+
         render layout: "dashboard"
     end
 

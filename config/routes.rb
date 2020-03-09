@@ -85,7 +85,7 @@ Rails.application.routes.draw do
   get "/chefheroes", to: "user#chefs", as: "chefs" 
 
   # manager resources view
-  get "/dashboard/resources", to: "user#resources", as: "resources"
+  get "/dashboard/analytics", to: "user#analytics", as: "analytics"
 
   # create review request
   post "/review/create", to: "review#create", as: "create_review"
