@@ -1,11 +1,12 @@
 
+<%# Auto redirect script after 3 seconds %>
 <script>
     setTimeout(function(){
     window.location.href = '<%=root_url%>order/summary/<%=@order_id%>';
     }, 3000);
 </script>
 
-
+<%# Redirect Notification with a link to summary %>
 <div class="payment-succeess-container">
 
     <p> Thank you for placing your order, <%= current_user.first_name %> ! </p>

@@ -22,20 +22,26 @@ class User < ApplicationRecord
     end
     
 	# search method to filter according to params parsed (fuzzy)
-    def self.search(search)
+    def self.search(search, type)
 		if search
-			if search == "" || search == " "
-				return User.where(account_type: "chefhero")
+            if search == "" || search == " "
+                if type == "all"
+                    return User.all
+                end
+				return User.where(account_type: type)
             end
-            chefs = User.where(account_type: "chefhero")
-			result = chefs.where("LOWER(first_name) LIKE ?", "%#{search.downcase}%")
-			if result.length > 0
-				return result
-			else
-				return self.where("LOWER(last_name) LIKE ?", "%#{search.downcase}%")
-			end
-		else
-			User.where(account_type: "chefhero")
+            if type == "all"
+                users = User.all
+                return users.where("LOWER(first_name) LIKE :search OR LOWER(last_name) LIKE :search OR LOWER(email) LIKE :search", search: "%#{search.downcase}%")
+            else
+                chefs = User.where(account_type: type)
+                return chefs.where("LOWER(first_name) LIKE :search OR LOWER(last_name) LIKE :search OR LOWER(email) LIKE :search", search: "%#{search.downcase}%")
+            end
+        else
+            if type == "all"
+                return User.all
+            end
+			return User.where(account_type: type)
         end
         
 	end

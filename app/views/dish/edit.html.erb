@@ -5,6 +5,7 @@
     <div class="alert"><%= flash[:alert] %></div>
 <% end %>
 
+<%# Dish edit form with default values set as current %>
 <div class="edit-dish-container">
     <%= form_with model: @dish, url: update_dish_path(@dish.id), method: :patch do |form| %>
         <div class="edit-dish-form">
@@ -29,6 +30,7 @@
     <% end %>
 </div>
 
+<%# Script for previewing uploaded images %>
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {

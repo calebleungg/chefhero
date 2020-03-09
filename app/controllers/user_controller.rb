@@ -13,7 +13,7 @@ class UserController < ApplicationController
 
     # method for chef index page with sort options
     def chefs
-        @chefs = User.search(params[:search])
+        @chefs = User.search(params[:search], "chefhero")
         if params[:location]
             @chefs = @chefs.sort_by_location(params[:location])
         end

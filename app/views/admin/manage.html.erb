@@ -1,6 +1,9 @@
 <div class="admin-manage-container">
 
-    <% if user_signed_in? %>
+    <%# display check to limit on admin acess %>
+    <% if user_signed_in? && current_user.account_type == "admin" %>
+
+        <%# Total website statistics %>
         <div class="admin-statistics">
             <p> Website Users:<br/> <span> <%= @total_users %> </span> </p>
             <p> Dishes Made:<br/> <span> <%= @total_dishes %> </span> </p>
@@ -8,9 +11,13 @@
             <p> Orders Placed:<br/> <span> <%= @total_orders %> </span> </p>
             <p> Reviews Made:<br/> <span> <%= @total_reviews %> </span> </p>
         </div>
+
+        <%# Main control panel section display all live models created %>
         <h1> Control Panel </h1>
 
         <div class="user-management-section">
+
+            <%# General User List %>
             <div class="foodie-list-manager">
                 <div class="title-search">
                     <p> Foodies 
@@ -36,7 +43,7 @@
                     <% for user in @foodie_database %>
                         <tr>
                             <td> <%= user.id %> </td>
-                            <td id="name-col-admin"> <%= user.name %> </td>
+                            <td id="name-col-admin"> <%= link_to user.name, user_path(user.id) %> </td>
                             <td id="email"> <%= user.email %> </td>
                             <td id="joined-on-col"> <%= DateFormat.change_to(user.created_at, "MEDIUM_DATE") %> </td>
                             <td id="info-col"> <%= user.orders.length > 0 ? user.orders.length.to_i : 0 %> </td>
@@ -49,6 +56,7 @@
                 </table>
             </div>
 
+            <%# Chef User List %>
             <div class="chef-list-manager">
                 <div class="title-search">
                     <p> ChefHeroes 
@@ -73,7 +81,7 @@
                     <% for user in @chef_database %>
                         <tr>
                             <td> <%= user.id %> </td>
-                            <td id="name-col-admin"> <%= user.name %> </td>
+                            <td id="name-col-admin"> <%= link_to user.name, user_path(user.id) %> </td>
                             <td id="email"> <%= user.email %> </td>
                             <td> <%= user.get_total_orders > 0 ? user.get_total_orders : 0 %> </td>
                             <td> <%= number_to_currency user.get_total_sales > 0 ? user.get_total_sales : 0 %> </td>
@@ -86,7 +94,10 @@
             </div>
         </div>
         <br/><br/>
+
         <div class="user-management-section">
+
+            <%# Dish List %>
             <div class="dish-list-manager">
                 <div class="title-search">
                     <p> Dishes 
@@ -126,6 +137,8 @@
             </div>
 
             <div class="dish-list-manager">
+
+                <%# Orders List %>
                 <div class="title-search">
                     <p> Orders 
                         <%= form_tag(admin_manage_path+"#order-table-admin", method: :get) do %>
@@ -165,6 +178,7 @@
 
         <div class="user-management-section">
 
+            <%# Reviews List %>
             <div class="review-list-manager">
                 <div class="title-search">
                     <p> Reviews 

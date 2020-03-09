@@ -9,11 +9,15 @@ class Dish < ApplicationRecord
 			if search == "" || search == " "
 				return Dish.all
 			end
-			result = self.where("LOWER(name) LIKE ?", "%#{search.downcase}%")
-			if result.length > 0
-				return result
+			users = User.search(search, "chefhero")
+			ids = []
+			users.each do |user|
+				ids.push(user.id)
+			end
+			if ids.length > 0
+				return self.where(user_id: ids)
 			else
-				return self.where("LOWER(category) LIKE ?", "%#{search.downcase}%")
+				return self.where("LOWER(name) LIKE :search OR LOWER(category) LIKE :search", search: "%#{search.downcase}%")
 			end
 		else
 			Dish.all

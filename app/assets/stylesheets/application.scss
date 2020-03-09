@@ -55,8 +55,7 @@
     }
     #dashboard-link {
         font-weight: 600;
-        background-color: $secondary-color;
-        color: white;
+        color: $secondary-color;
     }
    
 
@@ -423,7 +422,7 @@
      width: 300px;
      #map {
         width: 100%;
-        height: 500px;
+        height: 300px;
      }
      p {
         font-size: 80%;
@@ -1862,6 +1861,9 @@
   }
 
   #messages {
+      i {
+          color: $secondary-color;
+      }
     
     #notif-message {
         max-height: 50vh;

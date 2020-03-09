@@ -1,6 +1,28 @@
 class Order < ApplicationRecord
 	belongs_to :dish	
 
+	# method for searching orders by name and id
+	def self.search(search)
+		if search
+			if search == "" || search == " "
+				return Order.all
+			end
+			
+            if Order.where(id: search).length == 1
+                return Order.where(id: search)
+			elsif Dish.search(search).first
+				dish = Dish.search(search).first
+				return Order.where(dish_id: dish.id)
+			else
+                user = User.search(search, "all").first
+                return Order.where(user_id: user.id)
+			end
+		end
+
+		return Order.all
+        
+	end
+
 	# class method for filtering orders by dates- and dishes if parsed
 	def self.filter_by_date(user, from_date, to_date, dishes)
 		orders = user.orders

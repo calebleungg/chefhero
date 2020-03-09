@@ -198,19 +198,11 @@
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
     center: <%= @address_coordinates %>, // starting position [lng, lat]
-    zoom: 12 // starting zoom
+    zoom: 14 // starting zoom
     });
 
-
-    map.on('load', function() {
-        var directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-            controls: {instructions: false}
-        });
-        
-        map.addControl(directions, 'top-left');
-        
-        directions.setDestination('<%= @user.address.display_full %>');
-    });
+    var marker = new mapboxgl.Marker()
+    .setLngLat(<%= @address_coordinates %>)
+    .addTo(map);
 
 </script>
