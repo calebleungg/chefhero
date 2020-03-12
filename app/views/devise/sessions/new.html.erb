@@ -1,20 +1,23 @@
 <section class="signup-form">
-    <h1>Log in</h1>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field form-group">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter Email"%>
-        </div>
+    <%= image_tag "log-in-img.jpg", id:"log-in-img"%>
+    <div class="sign-up-form-wrapper" id="log-in-form">
+        <h1>Log <span>In</span></h1>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="field form-group">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter Email"%>
+            </div>
 
-        <div class="field form-group">
-            <%= f.password_field :password, autocomplete: "current-password", placeholder: "Enter Password" %>
-        </div>
+            <div class="field form-group">
+                <%= f.password_field :password, autocomplete: "current-password", placeholder: "Enter Password" %>
+            </div>
 
-        <div class="actions">
-            <%= f.submit "Log in" %>
-        </div>
-    <% end %>
-    <br/>    
-    <%= render "devise/shared/links" %>
+            <div class="actions">
+                <%= f.submit "Log in" %>
+            </div>
+        <% end %>
+        <br/>    
+        <%= render "devise/shared/links" %>
+    </div>
 
 </section>

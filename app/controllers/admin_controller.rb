@@ -10,13 +10,13 @@ class AdminController < ApplicationController
         @order_database = Order.search(params[:order_search]).order("created_at DESC")
         @review_database = Review.search(params[:review_search]).order("created_at DESC")
         
-        @total_users = User.all.length
         
         @total_sales = 0
-        @chef_database.each do |chef|
+        User.where(account_type: "chefhero").each do |chef|
             @total_sales += chef.get_total_sales
         end
         
+        @total_users = User.all.length
         @total_dishes = Dish.all.length
         @total_orders = Order.all.length
         @total_reviews = Review.all.length

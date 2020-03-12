@@ -278,7 +278,29 @@
      justify-content: flex-start;
      align-items: center;
      flex-direction: column;
-     font-family: $headings;
+    font-family: $headings;
+     .sign-up-form-wrapper {
+         padding: 50px;
+         background-color: #f0f0f0;
+         position: absolute;
+         top: 15vh;
+         right: 20vw;
+     }
+     #log-in-img {
+         padding-left: 20vw;
+     }
+     #sign-up-img {
+         padding-right: 20vw; 
+     }
+     #log-in-form {
+         position: absolute;
+         top: 25vh;
+         right: 60vw;
+     }
+     img {
+         width: auto;
+         height: 70vh;
+     }
      h1 {
          font-weight: 700;
          margin-bottom: 50px;
@@ -287,8 +309,8 @@
          width: 300px;
          padding: 5px;
          border: none;
-         background-color: #f0f0f0;
          color: black;
+         box-shadow: 0 0 1px grey;
      }
      #signup-error-message {
          font-size: 13px;
@@ -800,7 +822,6 @@
      }
 
      #img-prev {
-         max-width: 500px;
          max-height: 500px;
          border-radius: 0px;
      }
@@ -2101,9 +2122,10 @@
   .analytics-container {
     //   width: 70vw;
       .monthly-section{
-          width: 70vw;
+          width: 80vw;
           display: flex;
-          flex-wrap: wrap
+        //   flex-wrap: wrap
+        flex-direction: row;
       }
     .weekly-chart {
         max-width: 60vw;

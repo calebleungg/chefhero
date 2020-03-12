@@ -1,49 +1,52 @@
 <div class="signup-form">
-    <h1>Sign <span>Up</span></h1>
+    <%= image_tag "sign-up-img.jpg", id:"sign-up-img"%>
+    <div class="sign-up-form-wrapper">
+        <h1>Sign <span>Up</span></h1>
 
-    <%= form_for(resource, as: resource_name, class: "form-group", url: registration_path(resource_name)) do |f| %>
+        <%= form_for(resource, as: resource_name, class: "form-group", url: registration_path(resource_name)) do |f| %>
 
-        <%= f.hidden_field :account_type, value: "foodie" %>
+            <%= f.hidden_field :account_type, value: "foodie" %>
 
-        <div class="field form-group">
-            <%= f.text_field :first_name, autofocus: true, placeholder: "First Name" %>
-        </div>
+            <div class="field form-group">
+                <%= f.text_field :first_name, autofocus: true, placeholder: "First Name" %>
+            </div>
 
-        <div class="field form-group">
-            <%= f.text_field :last_name, autofocus: true, placeholder: "Last Name" %>
-        </div>
+            <div class="field form-group">
+                <%= f.text_field :last_name, autofocus: true, placeholder: "Last Name" %>
+            </div>
 
-        <div class="field form-group">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
-        </div>
+            <div class="field form-group">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
+            </div>
 
-        <div class="field form-group" id="phone-input">
-            <%= f.number_field :phone, autofocus: true, autocomplete: "email", placeholder: "Phone Number" %>
-        </div>
+            <div class="field form-group" id="phone-input">
+                <%= f.number_field :phone, autofocus: true, autocomplete: "email", placeholder: "Phone Number" %>
+            </div>
 
-        <div class="field form-group">          
-            <%= f.text_field :location, autofocus: true, autocomplete: "location", placeholder: "Suburb"%>
-        </div>
+            <div class="field form-group">          
+                <%= f.text_field :location, autofocus: true, autocomplete: "location", placeholder: "Suburb"%>
+            </div>
 
-        <div class="field form-group">
-            <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em>
-            <% end %><br />
-            <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password" %>
-        </div>
+            <div class="field form-group">
+                <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br />
+                <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password" %>
+            </div>
 
-        <div class="actions">
-            <%= f.submit "Sign up" %>
-        </div>
+            <div class="actions">
+                <%= f.submit "Sign up" %>
+            </div>
+
+            <%= render "devise/shared/error_messages", resource: resource %>
+
+        <% end %>
+
+        <br/>
+
+        <%= link_to "Already have an account? Sign in now.", new_user_session_path %>
 
         <%= render "devise/shared/error_messages", resource: resource %>
-
-    <% end %>
-
-    <br/>
-
-    <%= link_to "Already have an account? Sign in now.", new_user_session_path %>
-
-    <%= render "devise/shared/error_messages", resource: resource %>
+    </div>
 
 </div>

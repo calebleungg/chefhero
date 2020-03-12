@@ -174,23 +174,30 @@ class UserController < ApplicationController
         redirect_back(fallback_location: root_path)
     end
 
+    # method for displaying analytics 
     def analytics
         user = current_user
         dish_ids = user.get_dish_ids
+
+        # instancing dishes for the past month
         @orders = Order.where(dish_id: dish_ids, :created_at => Time.zone.now.beginning_of_month..Time.zone.now.end_of_month)
+
+        # hash variables for sorting 
         @total_sales = 0
         @sales_by_dish = Hash.new{0}
         @sales_by_day = Hash.new{0}
         @orders_by_dish = Hash.new{0}
         @customers = Hash.new{0}
         @sales_by_suburb = Hash.new{0}
+
+        # instancing information of orders for the past week
         @week = @orders.where("created_at >= ?", 1.week.ago.utc)
-        @weekly_sales = Hash.new{0}
-        
+        @weekly_sales = Hash.new{0} 
         @week.each do |order|
             @weekly_sales[DateFormat.change_to(order.created_at, "ONLY_CURRENT_DATE_ALPHABET")] += order.get_total
         end
         
+        # interating through monthly orders and appending key value pairs for info sorting
         @orders.each do |order|
             @sales_by_dish[order.get_dish.name] += order.get_total
             @orders_by_dish[order.get_dish.name] += 1
@@ -199,8 +206,10 @@ class UserController < ApplicationController
             @customers[order.get_user.name] += 1
             @sales_by_suburb[order.get_user.location] += order.get_total
         end 
+
         @sales_by_dish = @sales_by_dish.sort_by(&:last).reverse
-        @aov = @total_sales / @orders.length
+        # average order value
+        @aov = @orders.length > 0 ? @total_sales / @orders.length : 0
 
         render layout: "dashboard"
     end
