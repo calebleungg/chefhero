@@ -14,6 +14,8 @@ class CheckoutController < ApplicationController
         dish = Dish.find(params[:dish])
         quantity = params[:quantity]
         user = current_user
+        
+        # cancelling if dish is non-existent
         if dish.nil?
             redirect_to root_path
             return

@@ -8,6 +8,7 @@ class WithdrawController < ApplicationController
         request = user.get_total_sales - user.get_withdrawn_total - params[:amount].to_i
         if request >= 0 
             user.withdrawals.create(amount: params[:amount])
+            # creationg validation
             if user.valid? && user.save
                 flash[:notice] = "Withdrawal successful."
                 redirect_back(fallback_location: earnings_manager_path(:option => "Earnings"))

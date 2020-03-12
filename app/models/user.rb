@@ -25,13 +25,16 @@ class User < ApplicationRecord
     def self.search(search, type)
 		if search
             if search == "" || search == " "
+                # returning all if parsed type variable is "all"
                 if type == "all"
                     return User.all
                 end
+                # returning all users of account_type of parsed type variable
 				return User.where(account_type: type)
             end
             if type == "all"
                 users = User.all
+                # query returning all users with fuzzy similarity to multiple columns first_name, last_name, or email
                 return users.where("LOWER(first_name) LIKE :search OR LOWER(last_name) LIKE :search OR LOWER(email) LIKE :search", search: "%#{search.downcase}%")
             else
                 chefs = User.where(account_type: type)
@@ -89,22 +92,33 @@ class User < ApplicationRecord
 
     # method to return top 5 chefs ordered by total orders
     def self.top_five_chefs
+        # instancing all chefs
         chefs = User.where(account_type: "chefhero")
+
+        # interating through chefs and appending to new hash a key, pair value of chef_id => total orders
         chef_to_orders = {}
         for chef in chefs
             chef_to_orders[chef.id] = chef.get_total_orders
         end
+
+        # sorting by total orders
         sorted = chef_to_orders.sort_by(&:last).reverse[0..3]
         return sorted
     end
 
     # method return types of dishes to be displayed in chef bio on chef#index page
     def dish_types
+
+        # instancing all dishes by parsed dish ids (of current user)
         dishes = Dish.find(self.get_dish_ids)
+
+        # appending the categories of dish to types array without repeats
         types = []
         dishes.each do |dish|
             types.push(dish.category) if types.include?(dish.category) == false
         end
+
+        # adding each category to a string to be returned in display
         string = ""
         types.each_with_index do |type, index|
             if types.length == (index + 1)
@@ -121,6 +135,8 @@ class User < ApplicationRecord
 
     # sort method to sort chefs by orders
     def self.sort_by_orders
+
+        # similar sort method as seen in Order, Dish models (see there for explanation)
 		chef_to_orders = {}
 		for chef in self.where(account_type: "chefhero")
             chef_to_orders[chef.id] = chef.get_total_orders
@@ -135,6 +151,8 @@ class User < ApplicationRecord
     
     # sort method to sort chefs by averating review rating
     def self.sort_by_rating
+
+        # similar sort method as seen in Order, Dish models (see there for explanation)
         chef_to_rating = {}
 		for chef in self.where(account_type: "chefhero")
             chef_to_rating[chef.id] = chef.reviews.length > 0 ? chef.reviews.average(:rating) : 0
@@ -149,6 +167,7 @@ class User < ApplicationRecord
 
     # sort method by location
     def self.sort_by_location(search)
+        # query return for fuzzy input in location search
         return self.where("LOWER(location) LIKE ?", "%#{search.downcase}%" )
     end
 

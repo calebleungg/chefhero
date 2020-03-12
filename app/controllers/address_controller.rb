@@ -11,6 +11,7 @@ class AddressController < ApplicationController
             postcode: params[:address][:postcode],
             country: params[:address][:country],
         )
+        # validation check
         if user.valid? && user.save
             redirect_to manager_path(:option => "Manager")
         end

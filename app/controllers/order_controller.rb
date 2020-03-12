@@ -10,7 +10,7 @@ class OrderController < ApplicationController
         payment_id = params[:data][:object][:payment_intent]
         payment = Stripe::PaymentIntent.retrieve(payment_id)
 
-        #instancing models
+        # queries for instancing models through parsed webhook metadata
         dish = Dish.find(payment.metadata.dish_id)
         user = User.find(payment.metadata.user_id)
 
@@ -41,9 +41,10 @@ class OrderController < ApplicationController
     # method for displaying single order summary
     def summary
 
-        # checking if path received from notification click- if so then changing to read = true
+        # checking if path received from notification click- if so then marking read and destroying
         if params[:notification_id]
             Notification.find(params[:notification_id]).destroy
+            # page refresh to update icon number
             redirect_to order_summary_path(params[:id])
         else
             # instancing order details for view display
@@ -72,6 +73,7 @@ class OrderController < ApplicationController
         order = Order.find(params[:id])
         order.status = "ready"
         user = User.find(order.user_id)
+        # verification check
         if order.save
             # creating a notification for user displaying order ready message
             user.notifications.create(
@@ -89,6 +91,7 @@ class OrderController < ApplicationController
         order = Order.find(params[:id])
         order.status = "collected"
         user = User.find(order.user_id)
+        # verification check
         if order.save
             # creating a notification for user as above
             user.notifications.create(
@@ -103,12 +106,14 @@ class OrderController < ApplicationController
 
     # method for managing chef orders
     def manager
-        # checking if path received from notification click- if so then changing to read = true
+        # checking if path received from notification click- if so then marking read and destroying
         if params[:notification_id]
             Notification.find(params[:notification_id]).destroy
             redirect_to orders_manager_path(:option => "Manager")
         else
             # instancing orders in correct progression column to be managed
+            # obtaining orders through parsed array of dish ids associated with user (chef) dishes
+            # last query to order by newest created
             @orders_placed = Order.where(dish_id: current_user.get_dish_ids, status:"placed").order("created_at DESC")
             @orders_ready = Order.where(dish_id: current_user.get_dish_ids, status:"ready").order("created_at DESC")
             @orders_collected = Order.where(dish_id: current_user.get_dish_ids, status:"collected").order("updated_at DESC").limit(10)
@@ -117,6 +122,7 @@ class OrderController < ApplicationController
     
             # instancing small order history list
             for order in Order.where(dish_id: current_user.get_dish_ids).order("created_at DESC")
+                # check comparing order created is equal to today of summing daily revenue total
                 if order.created_at.in_time_zone('Australia/Brisbane').day == Time.now.in_time_zone('Australia/Brisbane').day
                     @daily_total += order.get_total
                     @orders_today += 1
@@ -126,7 +132,7 @@ class OrderController < ApplicationController
         end
     end
 
-    # method for instancing order history- filtered by date if parsed
+    # method for instancing order history- filtered by date between parsed dates if given
     def chef_history
         @orders = Order.filter_by_date(current_user, params[:from_date], params[:to_date], current_user.get_dish_ids).order("updated_at DESC")
         render layout: "dashboard"
@@ -141,6 +147,8 @@ class OrderController < ApplicationController
         render layout: "dashboard"
     end
 
+    # method querying notifications with matching data ids then destroying
+    # querying all associated orders with parsed id to destroy also
     def delete
         Notification.where(data: params[:id]).destroy_all
         Order.find(params[:id]).destroy

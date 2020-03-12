@@ -1,6 +1,7 @@
 class Review < ApplicationRecord
     belongs_to :user
 
+    # search method similar to Dish, Order, and User models
     def self.search(search)
         if search
             if search == "" || search == " "

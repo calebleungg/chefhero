@@ -12,6 +12,7 @@ class AvailabilityController < ApplicationController
             saturday: params[:availability][:saturday],
             sunday: params[:availability][:sunday],
         )
+        # validation check
         if user.valid? && user.save
             redirect_to manager_path(:option => "Manager")
         end

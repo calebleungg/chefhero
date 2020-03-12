@@ -6,20 +6,27 @@ class Dish < ApplicationRecord
 	# search method to filter according to params parsed (fuzzy)
 	def self.search(search)
 		if search
+			# checking if input is empty- if so return all
 			if search == "" || search == " "
 				return Dish.all
 			end
+
+			# instancing all chef ids into array
 			users = User.search(search, "chefhero")
 			ids = []
 			users.each do |user|
 				ids.push(user.id)
 			end
+
 			if ids.length > 0
+				# return query of all dishes associated with chef id
 				return self.where(user_id: ids)
 			else
+				# return query of fuzzy name search if dish array is empty (assume user input is name search)
 				return self.where("LOWER(name) LIKE :search OR LOWER(category) LIKE :search", search: "%#{search.downcase}%")
 			end
 		else
+			# return all if search is nil
 			Dish.all
 		end
 	end
@@ -36,6 +43,7 @@ class Dish < ApplicationRecord
 	
 	# method to return total quantity ordered for a dish (unique)
 	def total_quantity
+		# querying all orders with associated dish id (single)
 		orders = Order.where(dish_id: self.id)
 		total_quantity = 0
 		for order in orders
@@ -51,7 +59,10 @@ class Dish < ApplicationRecord
 
 	# method to return top 5 dishes sorted by total quantity
 	def self.top_five_dishes
+		# querying all dishes currently available on market
 		dishes = Dish.where(available: true)
+
+		# creating a hash of dish_id => total quantity to be sorted by quantity
 		dish_to_orders = {}
 		for dish in dishes
             dish_to_orders[dish.id] = dish.total_quantity
@@ -62,6 +73,7 @@ class Dish < ApplicationRecord
 
 	# method to sort search filter by orders desc
 	def self.sort_by_orders
+		# similar method as above but sorting by orders
 		dish_to_orders = {}
 		for dish in self.all
             dish_to_orders[dish.id] = dish.total_quantity
@@ -76,6 +88,7 @@ class Dish < ApplicationRecord
 
 	# method to sort search filter by created_at desc
 	def self.sort_by_newest
+		# similar method as above but sorting by date created
 		dish_to_created = {}
 		for dish in self.all
 			dish_to_created[dish.id] = dish.created_at

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     before_action :set_variables
 
     # instancing notifications for current_user
+    # queried by created_at ordered latest first
     def set_variables
         @notifications = current_user.notifications.order("created_at DESC") if user_signed_in?
     end
