@@ -27,7 +27,7 @@
             <% for dish, sales in @sales_by_dish %>  
                 <table> 
                     <tr>
-                        <td id="analytics-dish-name"> <%= dish %> </td>
+                        <td id="analytics-dish-name"> <%= dish.name %> </td>
                         <td> <%= number_to_currency sales %> </td>
                     </tr>
                 </table>
