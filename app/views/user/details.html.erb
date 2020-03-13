@@ -35,9 +35,9 @@
             <h5> Favourites <i class='fas fa-heart'></i> </h5>
             <% if current_user.favourites_list %>
                 <% for item in @list %>
-                    <%= link_to user_path(User.find(item.user_id)) do %>
+                    <%= link_to user_path(item.get_user) do %>
                         <div class="fav-item">
-                            <%= image_tag User.find(item.user_id).get_display_picture %> <%= User.find(item.user_id).name %>
+                            <%= image_tag item.get_user.get_display_picture %> <%= item.get_user.name %>
                         </div>
                     <% end %>
                 <% end %>

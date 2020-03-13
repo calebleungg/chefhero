@@ -98,7 +98,7 @@ class User < ApplicationRecord
         # interating through chefs and appending to new hash a key, pair value of chef_id => total orders
         chef_to_orders = {}
         for chef in chefs
-            chef_to_orders[chef.id] = chef.get_total_orders
+            chef_to_orders[chef] = chef.get_total_orders
         end
 
         # sorting by total orders

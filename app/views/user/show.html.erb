@@ -156,10 +156,10 @@
                 <h6 class="review-date"> <%= DateFormat.change_to(review.created_at, "ONLY_DATE") %> </h6>
                 <p> <%= review.comments %> </p>
                 <div class="reviewer-item"> 
-                    <%= image_tag User.find(review.left_by).get_display_picture %>
+                    <%= image_tag review.get_left_by_user.get_display_picture %>
                     <div>
-                        <span> <%= link_to User.find(review.left_by).name, user_path(User.find(review.left_by)) %> </span> <br>
-                        <span> Joined in <%= User.find(review.left_by).created_at.year %>  </span>
+                        <span> <%= link_to review.get_left_by_user.name, user_path(review.get_left_by_user) %> </span> <br>
+                        <span> Joined in <%= review.get_left_by_user.created_at.year %>  </span>
                     </div>
                 </div>
                 <hr>

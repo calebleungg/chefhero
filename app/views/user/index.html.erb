@@ -38,14 +38,13 @@
             <div class="chef-list">
                 <% top = true %>
                 <% for dish, orders in @top_dishes %>
-                    <% record = Dish.find(dish)%>
-                    <%= link_to user_path(record.get_chef.id) do %>
+                    <%= link_to user_path(dish.get_chef.id) do %>
                         <div class="chef-card">
-                            <%= image_tag record.get_image %>
-                            <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= record.name %></p>
+                            <%= image_tag dish.get_image %>
+                            <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= dish.name %></p>
                             <p> 
-                                <%= image_tag "hat-icon.png"%> <%= User.find(record.get_chef.id).name %><br/>
-                                <i class="fas fa-star"></i> <%= User.find(record.get_chef.id).reviews.length > 0 ? "%.2f" % User.find(record.get_chef.id).reviews.average(:rating) : 0 %>(<%= User.find(record.get_chef.id).reviews.length %>)<br/>
+                                <%= image_tag "hat-icon.png"%> <%= dish.get_chef.name %><br/>
+                                <i class="fas fa-star"></i> <%= dish.get_chef.reviews.length > 0 ? "%.2f" % dish.get_chef.reviews.average(:rating) : 0 %>(<%= dish.get_chef.reviews.length %>)<br/>
                                 <span><%= orders.to_i %></span> total orders
                             </p>
                         </div>
@@ -82,11 +81,11 @@
                 <% for chef, orders in @top_chefs %>
                     <%= link_to user_path(chef) do %>
                         <div class="chef-card">
-                            <%= image_tag User.find(chef).get_display_picture%>
-                            <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= User.find(chef).name %></p>
+                            <%= image_tag chef.get_display_picture%>
+                            <p id="chef-name"> <% if top %> <i class="fas fa-crown"></i> <% end%> <%= chef.name %></p>
                             <p> 
-                                <i class='fas fa-heart' id="fav-count"></i> <%= User.find(chef).total_favourites %><br/>
-                                <i class="fas fa-star"></i> <%= User.find(chef).reviews.length > 0 ? "%.2f" % User.find(chef).reviews.average(:rating) : 0 %>(<%= User.find(chef).reviews.length %>)<br/>
+                                <i class='fas fa-heart' id="fav-count"></i> <%= chef.total_favourites %><br/>
+                                <i class="fas fa-star"></i> <%= chef.reviews.length > 0 ? "%.2f" % chef.reviews.average(:rating) : 0 %>(<%= chef.reviews.length %>)<br/>
                                 <span><%= orders %></span> total orders
                             </p>
                         </div>

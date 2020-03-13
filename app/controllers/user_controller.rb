@@ -204,7 +204,7 @@ class UserController < ApplicationController
         # instancing dishes for the past month
         @orders = Order.where(dish_id: dish_ids, :created_at => Time.zone.now.beginning_of_month..Time.zone.now.end_of_month)
 
-        # hash variables for sorting 
+        # hash variables for sorting g
         @total_sales = 0
         @sales_by_dish = Hash.new{0}
         @sales_by_day = Hash.new{0}
@@ -221,7 +221,7 @@ class UserController < ApplicationController
         
         # interating through monthly orders and appending key value pairs for info sorting
         @orders.each do |order|
-            @sales_by_dish[order.get_dish.name] += order.get_total                                      # summing total revenue by dish
+            @sales_by_dish[order.get_dish] += order.get_total                                      # summing total revenue by dish
             @orders_by_dish[order.get_dish.name] += 1                                                   # counting total orders
             @sales_by_day[DateFormat.change_to(order.created_at, "SHORT_DATE")] += order.get_total      # summing total revenue by day
             @total_sales += order.get_total                                                             # summing total revenue overall

@@ -204,11 +204,11 @@
                         <tr>
                             <td> <%= review.id %> </td>
                             <td id="rating-col"> <%= "%.2f" % review.rating %> </td>
-                            <td id="name-col-admin"> <%= User.find(review.left_by).name %> </td>
-                            <td id="name-col-admin"> <%= User.find(review.user_id).name %> </td>
+                            <td id="name-col-admin"> <%= review.get_left_by_user.name %> </td>
+                            <td id="name-col-admin"> <%= review.get_user.name %> </td>
                             <td id="review-message"> <%= review.comments %> </td>
                             <td> <%= link_to "<i class='far fa-trash-alt'> </i>".html_safe, delete_review_path(review.id), method: :delete, 
-                            data: { confirm: "Are you sure you want to delete review left by #{User.find(review.left_by).name}? This cannot be undone."} %> </td>
+                            data: { confirm: "Are you sure you want to delete review left by #{review.get_left_by_user.name}? This cannot be undone."} %> </td>
                         </tr>
                     <% end %>
                     </tbody>

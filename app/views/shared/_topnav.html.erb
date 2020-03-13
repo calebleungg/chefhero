@@ -32,21 +32,21 @@
                                         </div>
                                     <% end %>
                                 <% when "order-ready" %>
-                                    <%= link_to order_summary_path(Order.find(notification.data), :notification_id => notification.id) do %>
+                                    <%= link_to order_summary_path(notification.get_order, :notification_id => notification.id) do %>
                                         <div class="notif-single">
                                             <h6>Order Ready</h6>
                                             <p><%= notification.message %> </p>
                                         </div>
                                     <% end %>
                                 <% when "review-request" %>
-                                    <%= link_to order_summary_path(Order.find(notification.data), :notification_id => notification.id) do %>
+                                    <%= link_to order_summary_path(notification.get_order, :notification_id => notification.id) do %>
                                         <div class="notif-single">
                                             <h6>Thank you!</h6>
                                             <p><%= notification.message %> </p>
                                         </div>
                                     <% end %>
                                 <% when "new-dish" %>
-                                    <%= link_to user_path(User.find(notification.data), :notification_id => notification.id) do %>
+                                    <%= link_to user_path(notification.get_user, :notification_id => notification.id) do %>
                                         <div class="notif-single">
                                             <h6>New dish!</h6>
                                             <p><%= notification.message %> </p>

@@ -7,7 +7,7 @@ class ReviewController < ApplicationController
         review = chef.reviews.create(
             rating: params[:rating],
             comments: params[:comments],
-            left_by: current_user.id
+            left_by: current_user.id.to_i
         )
         # validation check
         if review.valid? && review.save

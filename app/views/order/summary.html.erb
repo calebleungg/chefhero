@@ -1,6 +1,6 @@
 <div class="container order-summary-container">
     <h2> Food is ordered! </h2>
-    <p> Hi <%= User.find(@order.user_id).first_name %>- Thank you for your order.  </p>
+    <p> Hi <%= @order.get_user.first_name %>- Thank you for your order.  </p>
     <p> And thank you for supporting one of your local ChefHeroes <%= link_to @chef.first_name, user_path(@chef) %> </p>
     <% if @order.reviewed == false && @order.status == "collected" %> <p id="review-prompt"> Be sure to leave them a  <a type="button" data-toggle="modal" data-target="#reviewModal"> review! </a> <% end %>
     <% if @order.reviewed == true %> <p id="review-thanks"> Thank you for leaving <%=@chef.first_name%> a review, the community appreciates it greatly! </p> <% end %>

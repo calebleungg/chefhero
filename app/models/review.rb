@@ -19,4 +19,14 @@ class Review < ApplicationRecord
         return Review.all
     end
 
+    # method for returning user leaving review
+    def get_left_by_user
+        return User.find(self.left_by)
+    end
+
+    # method for returning user review for
+    def get_user
+        return User.find(self.user_id)
+    end
+
 end

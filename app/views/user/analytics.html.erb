@@ -13,8 +13,8 @@
             <div>
                 <div class="analytics-card">
                     <h4> Top Selling Dish </h4>
-                    <p> <%= @sales_by_dish[0][0]%> </p>
-                    <p> <%= image_tag Dish.where(name: @sales_by_dish[0][0]).first.get_image %> 
+                    <p> <%= @sales_by_dish[0][0].name%> </p>
+                    <p> <%= image_tag @sales_by_dish[0][0].get_image %> 
                     </p>
                 </div>
             </div>

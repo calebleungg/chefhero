@@ -65,7 +65,7 @@ class Dish < ApplicationRecord
 		# creating a hash of dish_id => total quantity to be sorted by quantity
 		dish_to_orders = {}
 		for dish in dishes
-            dish_to_orders[dish.id] = dish.total_quantity
+            dish_to_orders[dish] = dish.total_quantity
 		end
 		sorted = dish_to_orders.sort_by(&:last).reverse[0..3]
 		return sorted
