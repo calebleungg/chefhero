@@ -1,7 +1,11 @@
 <div class="container index-page-container">
 
     <div class="splash-page"> 
-        <h4> Hi, explore great food! </h4>
+        <% if user_signed_in?%>
+            <h4> Hi <%= current_user.first_name %>, whats for today? </h4>
+        <% else %>
+            <h4> Hi, explore great food! </h4>
+        <% end %>
         <div class="splash-suggestions">
             <%= link_to dishes_path(:search => "japanese") do %>
                 <div class="suggest-label">

@@ -100,8 +100,8 @@
             <%# Dish List %>
             <div class="dish-list-manager">
                 <div class="title-search">
-                    <p> Dishes 
-                        <%= form_tag(admin_manage_path+"#dish-table-admin", method: :get) do %>
+                    <p id="dish-table-title"> Dishes 
+                        <%= form_tag(admin_manage_path+"#dish-table-title", method: :get) do %>
                             <%= text_field_tag(:dish_search, params[:dish_search], placeholder: "Search Dishes") %>
                             <%= submit_tag("Search", id:"search-button")%>
                         <% end %>
@@ -140,8 +140,8 @@
 
                 <%# Orders List %>
                 <div class="title-search">
-                    <p> Orders 
-                        <%= form_tag(admin_manage_path+"#order-table-admin", method: :get) do %>
+                    <p id="order-table-title"> Orders 
+                        <%= form_tag(admin_manage_path+"#order-table-title", method: :get) do %>
                             <%= text_field_tag(:order_search, params[:order_search], placeholder: "Search Orders") %>
                             <%= submit_tag("Search", id:"search-button")%>
                         <% end %>
@@ -181,8 +181,8 @@
             <%# Reviews List %>
             <div class="review-list-manager">
                 <div class="title-search">
-                    <p> Reviews 
-                        <%= form_tag(admin_manage_path+'#review-table', method: :get) do %>
+                    <p id="review-table-title"> Reviews 
+                        <%= form_tag(admin_manage_path+'#review-table-title', method: :get) do %>
                             <%= text_field_tag(:review_search, params[:review_search], placeholder: "Search Reviews") %>
                             <%= submit_tag("Search", id:"search-button")%>
                         <% end %>
