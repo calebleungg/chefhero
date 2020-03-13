@@ -39,7 +39,7 @@
             <div class="field form-group" id="dish-image">
                 <%= form.label :image, "Show off your dish!"%><br/>
                 <%= image_tag "default-dish.png", id: "img_prev" %> <br/>
-                <%= form.file_field :image, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %><br/>
+                <%= form.file_field :image, required: true, accept: 'image/png,image/gif,image/jpeg,image/jpg', onchange: "readURL(this)" %><br/>
                 <br/>
                 <div id="info-warning">
                     <h5> <strong>Tips:</strong> </h5>
